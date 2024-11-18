@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Banner from "../component/home/banner";
+import Value from "../component/home/value";
 
 const Home: React.FC = () => {
   return (
@@ -10,6 +11,8 @@ const Home: React.FC = () => {
           <Text>🗓️ 출석체크하고 포인트 가져가세요!</Text>
         </AttendanceBox>
         <Banner />
+        <ValueTitle>MOA가 조명하는 가치들이에요.</ValueTitle>
+        <Value />
       </Content>
     </HomeContainer>
   );
@@ -17,6 +20,19 @@ const Home: React.FC = () => {
 
 export default Home;
 
+const ValueTitle = styled.h2`
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-right: 105px;
+  color: #353f3f;
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 22px;
+  letter-spacing: -0.408px;
+`;
 const HomeContainer = styled.div`
   display: flex;
   flex-direction: column;

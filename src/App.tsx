@@ -22,9 +22,9 @@ const GlobalStyles = createGlobalStyle`
   #root {
     width: 360px;
     height: 640px;
-    background-color: white;
     border: 1px solid #ccc;
     overflow-y:auto;
+    background: #FAFAFA;
   }
 `;
 const router = createBrowserRouter([

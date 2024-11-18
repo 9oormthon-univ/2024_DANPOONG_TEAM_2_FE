@@ -51,16 +51,15 @@ const Overlay = styled.div`
 const Tag = styled.div`
   background: black;
   font-weight: bold;
-  border-radius: 10px;
+  border-radius: 6px;
   width: 76px;
   height: 23px;
   flex-shrink: 0;
   align-self: flex-start;
-  margin-bottom: 150px;
+  margin-bottom: 165px;
   color: #fafafa;
   font-family: Pretendard;
   font-size: 10px;
-  font-style: normal;
   font-weight: 400;
   line-height: 22px;
   letter-spacing: -0.408px;
