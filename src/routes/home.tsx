@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Banner from "../component/home/banner";
 import Value from "../component/home/value";
+import ProjectRecommend from "../component/home/project_recommend";
 
 const Home: React.FC = () => {
   return (
@@ -13,6 +14,7 @@ const Home: React.FC = () => {
         <Banner />
         <ValueTitle>MOA가 조명하는 가치들이에요.</ValueTitle>
         <Value />
+        <ProjectRecommend />
       </Content>
     </HomeContainer>
   );

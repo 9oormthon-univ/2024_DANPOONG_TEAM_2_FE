@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const Navigation = () => {
+const Navigation: React.FC = () => {
   return (
     <NavContainer>
       <NavItem isActive>

@@ -2,7 +2,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import { AuthProvider } from "./AuthContext";
 import Home from "./routes/home";
-// import LayoutNavigation from "./component/layout_navigation";
+import Layout from "./component/layout_navigation";
 const GlobalStyles = createGlobalStyle`
   * {
     margin: 0;
@@ -17,20 +17,21 @@ const GlobalStyles = createGlobalStyle`
     align-items: center;
     justify-content: center;
     background-color: black;
+    overflow-y: auto;
   }
 
   #root {
     width: 360px;
     height: 640px;
     border: 1px solid #ccc;
-    overflow-y:auto;
     background: #FAFAFA;
   }
 `;
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
+    element: <Layout />,
+    children: [{ path: "", element: <Home /> }],
   },
 ]);
 function App() {
