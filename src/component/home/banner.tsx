@@ -56,7 +56,7 @@ const Tag = styled.div`
   height: 23px;
   flex-shrink: 0;
   align-self: flex-start;
-  margin-bottom: 165px;
+  margin-bottom: 160px;
   color: #fafafa;
   font-family: Pretendard;
   font-size: 10px;
@@ -71,20 +71,20 @@ const Content = styled.div`
 `;
 
 const Subtitle = styled.div`
-  font-size: 14px;
+  font-size: 13px;
   margin-bottom: 8px;
-  margin-right: 115px;
+  margin-right: 100px;
 `;
 
 const Title = styled.h1`
-  font-size: 22px;
+  font-size: 20px;
   font-weight: bold;
   margin: 0;
 `;
 
 const DetailButton = styled.button`
   margin-top: 12px;
-  margin-left: 210px;
+  margin-left: 190px;
   color: #fafafa;
   font-family: Pretendard;
   font-size: 10px;

@@ -17,7 +17,6 @@ const GlobalStyles = createGlobalStyle`
     align-items: center;
     justify-content: center;
     background-color: black;
-    overflow-y: auto;
   }
 
   #root {
