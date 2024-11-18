@@ -14,7 +14,16 @@ const Home: React.FC = () => {
         <Banner />
         <ValueTitle>MOA가 조명하는 가치들이에요.</ValueTitle>
         <Value />
-        <ProjectRecommend />
+        <ProjectRecommendTitle>프로젝트 추천</ProjectRecommendTitle>
+        <ProjectRecommendSemiTitle>
+          모모님의 가치관에 맞는 프로젝트를 찾았어요!
+        </ProjectRecommendSemiTitle>
+        <HorizontalScrollContainer>
+          <ProjectRecommend />
+          <ProjectRecommend />
+          <ProjectRecommend />
+          <ProjectRecommend />
+        </HorizontalScrollContainer>
       </Content>
     </HomeContainer>
   );
@@ -35,6 +44,7 @@ const ValueTitle = styled.h2`
   line-height: 22px;
   letter-spacing: -0.408px;
 `;
+
 const HomeContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -66,6 +76,46 @@ const Text = styled.span`
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
-  line-height: 22px; /* 157.143% */
+  line-height: 22px;
   letter-spacing: -0.408px;
+`;
+
+const ProjectRecommendTitle = styled.h2`
+  color: #353f3f;
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 22px;
+  letter-spacing: -0.408px;
+  margin-top: 10px;
+  margin-right: 218px;
+  margin-bottom: -7px;
+`;
+
+const ProjectRecommendSemiTitle = styled.div`
+  color: #818787;
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: -0.408px;
+  margin-right: 135px;
+  margin-bottom: 10px;
+`;
+
+const HorizontalScrollContainer = styled.div`
+  display: flex;
+  overflow-x: auto;
+  gap: 16px;
+  padding: 10px 0;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 `;

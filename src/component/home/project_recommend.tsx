@@ -31,11 +31,13 @@ export default ProjectRecommend;
 
 const Card = styled.div`
   width: 280px;
+  height: 260px;
   background-color: #ffffff;
   border-radius: 0px 0px 12px 12px;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   font-family: Arial, sans-serif;
+  flex-shrink: 0;
 `;
 
 const ImageContainer = styled.div`
@@ -53,9 +55,10 @@ const Tag = styled.div`
   border-radius: 54px;
   background: #00df82;
   color: white;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: bold;
   padding: 4px 8px;
+  margin-top: 2px;
 `;
 
 const Image = styled.div`
@@ -78,7 +81,8 @@ const Category = styled.div`
   font-weight: 600;
   line-height: normal;
   letter-spacing: -0.408px;
-  margin-right: 220px;
+  margin-right: 200px;
+  margin-top: 3px;
 `;
 
 const Title = styled.h3`
@@ -90,7 +94,8 @@ const Title = styled.h3`
   font-weight: 600;
   line-height: 22px;
   letter-spacing: -0.408px;
-  margin-right: 133px;
+  margin-bottom: 10px;
+  margin-right: 113px;
 `;
 
 const Details = styled.div`
