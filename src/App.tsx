@@ -44,12 +44,12 @@ const router = createBrowserRouter([
 ]);
 function App() {
   return (
-    <div>
+    <>
       <GlobalStyles />
       <AuthProvider>
         <RouterProvider router={router} />
       </AuthProvider>
-    </div>
+    </>
   );
 }
 
