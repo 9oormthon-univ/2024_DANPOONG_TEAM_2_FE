@@ -3,8 +3,13 @@ import styled from "styled-components";
 import Banner from "../component/home/banner";
 import Value from "../component/home/value";
 import ProjectRecommend from "../component/home/project_recommend";
+import ProjectWhere from "../component/home/project_where";
 
 const Home: React.FC = () => {
+  const dummyData = {
+    nickname: "모아",
+  };
+
   return (
     <HomeContainer>
       <Content>
@@ -16,7 +21,7 @@ const Home: React.FC = () => {
         <Value />
         <ProjectRecommendTitle>프로젝트 추천</ProjectRecommendTitle>
         <ProjectRecommendSemiTitle>
-          모모님의 가치관에 맞는 프로젝트를 찾았어요!
+          {dummyData.nickname}님의 가치관에 맞는 프로젝트를 찾았어요!
         </ProjectRecommendSemiTitle>
         <HorizontalScrollContainer>
           <ProjectRecommend />
@@ -24,6 +29,11 @@ const Home: React.FC = () => {
           <ProjectRecommend />
           <ProjectRecommend />
         </HorizontalScrollContainer>
+        <ProjectWhereTitle>관심 지역 프로젝트</ProjectWhereTitle>
+        <ProjectWhereSemiTitle>
+          {dummyData.nickname}님의 관심 지역에서 새로 올라온 프로젝트에요.
+        </ProjectWhereSemiTitle>
+        <ProjectWhere />
       </Content>
     </HomeContainer>
   );
@@ -118,4 +128,31 @@ const HorizontalScrollContainer = styled.div`
   }
   -ms-overflow-style: none;
   scrollbar-width: none;
+`;
+
+const ProjectWhereTitle = styled.h2`
+  color: #353f3f;
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 22px;
+  letter-spacing: -0.408px;
+  margin-top: 10px;
+  margin-right: 190px;
+  margin-bottom: -7px;
+`;
+const ProjectWhereSemiTitle = styled.div`
+  color: #818787;
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: -0.408px;
+  margin-right: 118px;
+  margin-top: 2px;
+  margin-bottom: 10px;
 `;
