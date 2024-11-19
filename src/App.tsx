@@ -3,6 +3,8 @@ import { createGlobalStyle } from "styled-components";
 import { AuthProvider } from "./AuthContext";
 import reset from "styled-reset";
 import MapPage from "./pages/mapPage/MapPage";
+import Home from "./routes/home";
+import Layout from "./component/layout_navigation";
 
 const GlobalStyles = createGlobalStyle`
   * {
@@ -17,24 +19,25 @@ const GlobalStyles = createGlobalStyle`
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
     background-color: black;
   }
 
   #root {
-    width: 360px;
-    height: 640px;
-    background-color: white;
+    width: 100%;
+    max-width: 360px;
+    min-height: 640px;
+    height: 100vh;
     border: 1px solid #ccc;
+    background: #FAFAFA;
   }
 
   ${reset}
 `;
-
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <main />,
+    element: <Layout />,
+    children: [{ path: "", element: <Home /> }],
   },
   {
     path: "/map",
