@@ -1,12 +1,18 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const MyList: React.FC = () => {
+  const navigate = useNavigate();
+
+  const handleInvestClick = () => {
+    navigate("/invest-list");
+  };
   return (
     <Card>
       <Image src="/assets/list_logo.png" alt="리스트" />
       <Title>MY 투자 내역</Title>
-      <Button>자세히 보기</Button>
+      <Button onClick={handleInvestClick}>자세히 보기</Button>
     </Card>
   );
 };

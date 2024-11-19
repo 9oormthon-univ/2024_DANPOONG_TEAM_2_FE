@@ -5,6 +5,7 @@ import Home from "./routes/home";
 import Layout from "./component/layout_navigation";
 import Portfolio from "./routes/portfolio";
 import Coupon from "./routes/coupon";
+import InvestList from "./routes/invest_list";
 
 const GlobalStyles = createGlobalStyle`
   * {
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
     children: [
       { path: "", element: <Home /> },
       { path: "portfolio", element: <Portfolio /> },
+      {
+        path: "/invest-list",
+        element: <InvestList />,
+      },
     ],
   },
   {
