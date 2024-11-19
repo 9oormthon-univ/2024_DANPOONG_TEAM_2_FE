@@ -20,8 +20,10 @@ const GlobalStyles = createGlobalStyle`
   }
 
   #root {
-    width: 360px;
-    height: 640px;
+    width: 100%;
+    max-width: 360px;
+    min-height: 640px;
+    height: 100vh;
     border: 1px solid #ccc;
     background: #FAFAFA;
   }

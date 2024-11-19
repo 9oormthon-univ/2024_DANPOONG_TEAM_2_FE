@@ -1,9 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 import Navigation from "./home/navigation";
 import styled from "styled-components";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 
 const Layout: React.FC = () => {
+  const location = useLocation();
+
+  const getActiveItem = () => {
+    switch (location.pathname) {
+      case "/":
+        return "home";
+      case "/category":
+        return "category";
+      case "/map":
+        return "map";
+      case "/portfolio":
+        return "portfolio";
+      case "/mypage":
+        return "mypage";
+      default:
+        return "home";
+    }
+  };
+
+  const [activeItem, setActiveItem] = useState<
+    "home" | "category" | "map" | "portfolio" | "mypage"
+  >(getActiveItem());
+
+  React.useEffect(() => {
+    setActiveItem(getActiveItem());
+  }, [location]);
+
   return (
     <Container>
       <Header>
@@ -13,7 +40,7 @@ const Layout: React.FC = () => {
         <Outlet />
       </Main>
       <Footer>
-        <Navigation />
+        <Navigation activeItem={activeItem} />
       </Footer>
     </Container>
   );
@@ -55,7 +82,7 @@ const Main = styled.main`
 const Footer = styled.footer`
   position: sticky;
   bottom: 0;
-  width: 356px;
+  width: 100%;
   background-color: #ffffff;
   z-index: 10;
   padding: 10px 0;
