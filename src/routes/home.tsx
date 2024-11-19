@@ -4,6 +4,7 @@ import Banner from "../component/home/banner";
 import Value from "../component/home/value";
 import ProjectRecommend from "../component/home/project_recommend";
 import ProjectWhere from "../component/home/project_where";
+import ProjectLank from "../component/home/project_lank";
 
 const Home: React.FC = () => {
   const dummyData = {
@@ -34,6 +35,11 @@ const Home: React.FC = () => {
           {dummyData.nickname}님의 관심 지역에서 새로 올라온 프로젝트에요.
         </ProjectWhereSemiTitle>
         <ProjectWhere />
+        <ProjecLankTitle>인기 프로젝트</ProjecLankTitle>
+        <ProjecLankSemiTitle>
+          현재 가장 인기있는 프로젝트들이에요.
+        </ProjecLankSemiTitle>
+        <ProjectLank />
       </Content>
     </HomeContainer>
   );
@@ -155,4 +161,30 @@ const ProjectWhereSemiTitle = styled.div`
   margin-right: 118px;
   margin-top: 2px;
   margin-bottom: 10px;
+`;
+const ProjecLankTitle = styled.h2`
+  color: #353f3f;
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 22px;
+  letter-spacing: -0.408px;
+  margin-top: 20px;
+  margin-right: 190px;
+  margin-bottom: -7px;
+`;
+const ProjecLankSemiTitle = styled.div`
+  color: #818787;
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: -0.408px;
+  margin-right: 135px;
+  margin-top: 2px;
+  margin-bottom: 7px;
 `;

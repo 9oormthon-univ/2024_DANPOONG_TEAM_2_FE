@@ -19,7 +19,7 @@ const ProjectRecommend: React.FC = () => {
         <Category>{dummyData.category}</Category>
         <Title>{dummyData.title}</Title>
         <Details>
-          <Likes>★ {dummyData.likes}</Likes>
+          <Likes>⭐ {dummyData.likes}</Likes>
           <Button>상세 보기</Button>
         </Details>
       </Content>
