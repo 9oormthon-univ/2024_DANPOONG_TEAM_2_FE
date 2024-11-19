@@ -1,6 +1,8 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import { AuthProvider } from "./AuthContext";
+import reset from "styled-reset";
+
 const GlobalStyles = createGlobalStyle`
   * {
     margin: 0;
@@ -24,6 +26,8 @@ const GlobalStyles = createGlobalStyle`
     background-color: white;
     border: 1px solid #ccc;
   }
+
+  ${reset}
 `;
 
 const router = createBrowserRouter([
@@ -34,13 +38,12 @@ const router = createBrowserRouter([
 ]);
 function App() {
   return (
-    <div>
-      <GlobalStyles>
-        <AuthProvider>
-          <RouterProvider router={router} />
-        </AuthProvider>
-      </GlobalStyles>
-    </div>
+    <>
+      <GlobalStyles />
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
+    </>
   );
 }
 
