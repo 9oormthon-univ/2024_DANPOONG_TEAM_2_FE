@@ -4,6 +4,8 @@ import { AuthProvider } from "./AuthContext";
 import Home from "./routes/home";
 import Layout from "./component/layout_navigation";
 import Portfolio from "./routes/portfolio";
+import Coupon from "./routes/coupon";
+
 const GlobalStyles = createGlobalStyle`
   * {
     margin: 0;
@@ -38,8 +40,12 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       { path: "", element: <Home /> },
-      { path: "/portfolio", element: <Portfolio /> },
+      { path: "portfolio", element: <Portfolio /> },
     ],
+  },
+  {
+    path: "/coupon",
+    element: <Coupon />,
   },
 ]);
 function App() {
