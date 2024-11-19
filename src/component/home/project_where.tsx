@@ -81,14 +81,14 @@ const Title = styled.h3`
   font-size: 16px;
   font-weight: 600;
   color: #353f3f;
-  margin: 0;
+  margin-right: 12px;
 `;
 
 const Description = styled.p`
   font-size: 12px;
   font-weight: 400;
   color: #818787;
-  margin: 4px 0 0;
+  margin-right: 70px;
 `;
 
 const Pagination = styled.div`
