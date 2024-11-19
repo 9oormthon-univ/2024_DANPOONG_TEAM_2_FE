@@ -2,6 +2,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import { AuthProvider } from "./AuthContext";
 import reset from "styled-reset";
+import MapPage from "./pages/mapPage/MapPage";
 
 const GlobalStyles = createGlobalStyle`
   * {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <main />,
+  },
+  {
+    path: "/map",
+    element: <MapPage />,
   },
 ]);
 function App() {
