@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Navigation from "./home/navigation";
+import Navigation from "./navigation";
 import styled from "styled-components";
 import { Outlet, useLocation } from "react-router-dom";
 

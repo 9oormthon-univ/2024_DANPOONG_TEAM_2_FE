@@ -3,6 +3,7 @@ import { createGlobalStyle } from "styled-components";
 import { AuthProvider } from "./AuthContext";
 import Home from "./routes/home";
 import Layout from "./component/layout_navigation";
+import Portfolio from "./routes/portfolio";
 const GlobalStyles = createGlobalStyle`
   * {
     margin: 0;
@@ -17,6 +18,9 @@ const GlobalStyles = createGlobalStyle`
     align-items: center;
     justify-content: center;
     background-color: black;
+    &::-webkit-scrollbar {
+    display: none;
+  }
   }
 
   #root {
@@ -32,7 +36,10 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
-    children: [{ path: "", element: <Home /> }],
+    children: [
+      { path: "", element: <Home /> },
+      { path: "/portfolio", element: <Portfolio /> },
+    ],
   },
 ]);
 function App() {
