@@ -1,6 +1,8 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import { AuthProvider } from "./AuthContext";
+import Login from "./pages/Login/Login";
+import Signup from "./pages/Signup/Signup";
 const GlobalStyles = createGlobalStyle`
   * {
     margin: 0;
@@ -31,15 +33,22 @@ const router = createBrowserRouter([
     path: "/",
     element: <main />,
   },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/signup",
+    element: <Signup />,
+  },
 ]);
 function App() {
   return (
     <div>
-      <GlobalStyles>
-        <AuthProvider>
-          <RouterProvider router={router} />
-        </AuthProvider>
-      </GlobalStyles>
+      <GlobalStyles />
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
     </div>
   );
 }
