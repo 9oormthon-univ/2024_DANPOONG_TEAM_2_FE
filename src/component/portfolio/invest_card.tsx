@@ -14,21 +14,28 @@ const InvestCard: React.FC<InvestCardProps> = ({
 }) => {
   return (
     <CardContainer>
-      <Date>{date}</Date>
-      <Content>
+      <TopRow>
+        <Date>{date}</Date>
+        <Arrow>&gt;</Arrow>
+      </TopRow>
+      <BottomRow>
         <Description>{description}</Description>
         <Points>-{points}P</Points>
-      </Content>
-      <Arrow>&gt;</Arrow>
+      </BottomRow>
     </CardContainer>
   );
 };
 
 export default InvestCard;
-
+const TopRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
 const CardContainer = styled.div`
   display: flex;
   align-items: center;
+  flex-direction: column;
   justify-content: space-between;
   background: #ffffff;
   border-radius: 8px;
@@ -38,33 +45,50 @@ const CardContainer = styled.div`
 `;
 
 const Date = styled.span`
+  color: #03624c;
+  text-align: center;
+  font-family: Pretendard;
   font-size: 12px;
-  color: #818787;
-  flex-shrink: 0;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: -0.408px;
 `;
 
-const Content = styled.div`
-  flex: 1;
-  margin-left: 16px;
+const BottomRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 5px;
 `;
 
 const Description = styled.div`
-  font-size: 14px;
-  font-weight: 600;
-  color: #353f3f;
-  margin-bottom: 4px;
+  color: #000;
+  font-family: Pretendard;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: -0.408px;
 `;
 
 const Points = styled.div`
-  font-size: 14px;
-  font-weight: 600;
-  color: #ff4d4f;
+  color: #000;
   text-align: right;
+  font-family: Pretendard;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: -0.408px;
+  text-align: right;
+  margin-left: 120px;
 `;
 
 const Arrow = styled.span`
+  width: 9px;
   font-size: 14px;
   color: #818787;
   flex-shrink: 0;
-  margin-left: 8px;
+  margin-left: 267px;
 `;
