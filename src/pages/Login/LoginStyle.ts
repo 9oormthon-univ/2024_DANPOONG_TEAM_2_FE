@@ -39,6 +39,7 @@ export const Input = styled.input`
   border: 1px solid #ccc;
   border-radius: 12px;
   font-size: 14px;
+  color: black;
   background-color: #fafafa;
 `;
 
@@ -68,8 +69,17 @@ export const CustomCheckbox = styled.label`
   background-color: #fafafa;
   border: 2px solid #ccc;
   border-radius: 4px;
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
+
+  &::after {
+    content: "✔"; /* 항상 ✔ 표시 */
+    color: #ffffff; /* 체크 여부에 따라 색상 변경 */
+    font-size: 10px;
+    font-weight: lighter;
+  }
 `;
 
 export const LoginButton = styled.button`
@@ -96,6 +106,8 @@ export const LinkContainer = styled.div`
   font-size: 12px;
   color: #818787;
   margin: 10px 0;
+  cursor: pointer;
+
 `;
 
 export const SocialLoginContainer = styled.div`

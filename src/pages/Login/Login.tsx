@@ -14,9 +14,22 @@ import {
   Tag,
   CustomCheckbox,
 } from "./LoginStyle";
+import ConsentModal from "../../components/Login/SocialConsentModal";
+import { useNavigate } from "react-router-dom";
 
 const Login: React.FC = () => {
+  const [showModal, setShowModal] = useState(false);
   const [activeTab, setActiveTab] = useState("investor"); // 투자자 회원 기본값
+    const navigate = useNavigate();
+  const handleSocialLoginClick = () => {
+    setShowModal(true); // 소셜 로그인 클릭 시 모달 표시
+  };
+
+  const handleAgree = () => {
+    setShowModal(false);
+    // 이후 소셜 로그인 API 호출
+    console.log("소셜 로그인 api 호출로 소셜 로그인으로 이동 해야 함");
+  };
 
   return (
     <LoginContainer>
@@ -48,10 +61,10 @@ const Login: React.FC = () => {
         <span>|</span>
         <span>비밀번호 찾기</span>
         <span>|</span>
-        <span>회원가입</span>
+        <span onClick={() => navigate('/signup')} >회원가입</span>
       </LinkContainer>
       <SocialLoginContainer>
-        <SocialButton bgColor="#FFD400">
+        <SocialButton onClick={handleSocialLoginClick} bgColor="#FFD400">
           <img src="/assets/kakao_logo.png" alt="Kakao Login" />
         </SocialButton>
         <SocialButton bgColor="#000000">
@@ -62,6 +75,7 @@ const Login: React.FC = () => {
         </SocialButton>
       </SocialLoginContainer>
       <Tag>소셜 아이디어로 간편 로그인</Tag>
+      {showModal && <ConsentModal onClose={() => setShowModal(false)} onAgree={handleAgree} />}
     </LoginContainer>
   );
 };
