@@ -17,7 +17,7 @@ export const AgreeMentHeaderContainer = styled.div`
 
 export const AgreeMentBottomContainer = styled.div`
   width: 100%;
-  height: 10%;
+  height: 5%;
 `;
 
 export const AgreeMentMainContainer = styled.div`
@@ -26,7 +26,7 @@ export const AgreeMentMainContainer = styled.div`
   padding: 20px 20px;
   justify-content: center; /* 수직 가운데 정렬 */
   width: 100%;
-  height: 70%;
+  height: 80%;
 `;
 
 export const Title = styled.h2`

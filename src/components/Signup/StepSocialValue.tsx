@@ -21,7 +21,7 @@ export const InterestMainContainer = styled.div`
   margin-bottom: 50px;
   justify-content: flex-start;
   width: 100%;
-  height: 70%;
+  height: 75%;
 `;
 
 export const Title = styled.h2`
@@ -67,7 +67,7 @@ export const InterestItem = styled.div<{ selected: boolean }>`
 
 export const InterestBottomContainer = styled.div`
   width: 100%;
-  height: 10%;
+  height: 5%;
 `;
 
 export interface Props {
