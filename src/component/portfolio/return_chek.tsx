@@ -6,8 +6,13 @@ interface ReturnCheckModalProps {
 }
 
 const ReturnCheckModal: React.FC<ReturnCheckModalProps> = ({ onClose }) => {
+  const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
   return (
-    <ModalOverlay>
+    <ModalOverlay onClick={handleOverlayClick}>
       <ModalContent>
         <ModalHeader>
           <FlagImage src="/assets/flag.png" alt="flag" />

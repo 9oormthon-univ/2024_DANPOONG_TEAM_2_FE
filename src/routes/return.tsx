@@ -169,10 +169,15 @@ const BackButton = styled.button`
 `;
 
 const HeaderTitle = styled.h1`
-  margin-left: 10px;
-  font-size: 18px;
-  font-weight: 600;
+  margin-left: 30px;
   color: #000;
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: -0.408px;
 `;
 
 const ImageContainer = styled.div`
