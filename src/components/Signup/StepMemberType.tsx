@@ -22,12 +22,12 @@ export const MemberTypeMainContainer = styled.div `
   padding: 0px 20px;
   justify-content: flex-start;
   
-  height: 80%;
+  height: 85%;
 `;
 
 export const MemberTypeBottomContainer = styled.div`
   width: 100%;
-  height: 10%;
+  height: 5%;
 `;
 
 const Title = styled.h2`
