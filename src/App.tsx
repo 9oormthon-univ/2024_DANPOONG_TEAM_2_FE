@@ -11,6 +11,9 @@ import CouponSelect from "./routes/coupon_select";
 
 import Login from "./pages/Login/Login";
 import Signup from "./pages/Signup/Signup";
+import Layout from "./component/layout_navigation";
+import Home from "./routes/home";
+
 const GlobalStyles = createGlobalStyle`
   * {
     margin: 0;
