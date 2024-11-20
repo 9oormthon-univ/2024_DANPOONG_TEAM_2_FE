@@ -14,22 +14,19 @@ import {
   Tag,
   CustomCheckbox,
 } from "./LoginStyle";
-import ConsentModal from "../../components/Login/SocialConsentModal";
+
 import { useNavigate } from "react-router-dom";
 
 const Login: React.FC = () => {
-  const [showModal, setShowModal] = useState(false);
+  
   const [activeTab, setActiveTab] = useState("investor"); // 투자자 회원 기본값
     const navigate = useNavigate();
+
   const handleSocialLoginClick = () => {
-    setShowModal(true); // 소셜 로그인 클릭 시 모달 표시
+    navigate('/member-type')
   };
 
-  const handleAgree = () => {
-    setShowModal(false);
-    // 이후 소셜 로그인 API 호출
-    console.log("소셜 로그인 api 호출로 소셜 로그인으로 이동 해야 함");
-  };
+
 
   return (
     <LoginContainer>
@@ -75,7 +72,7 @@ const Login: React.FC = () => {
         </SocialButton>
       </SocialLoginContainer>
       <Tag>소셜 아이디어로 간편 로그인</Tag>
-      {showModal && <ConsentModal onClose={() => setShowModal(false)} onAgree={handleAgree} />}
+     
     </LoginContainer>
   );
 };
