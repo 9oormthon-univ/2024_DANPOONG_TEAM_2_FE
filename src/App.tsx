@@ -16,22 +16,23 @@ const GlobalStyles = createGlobalStyle`
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
     background-color: black;
   }
 
   #root {
-    width: 360px;
-    height: 640px;
-    background-color: white;
+    width: 100%;
+    max-width: 360px;
+    min-height: 640px;
+    height: 100vh;
     border: 1px solid #ccc;
+    background: #FAFAFA;
   }
 `;
-
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <main />,
+    element: <Layout />,
+    children: [{ path: "", element: <Home /> }],
   },
   {
     path: "/login",
