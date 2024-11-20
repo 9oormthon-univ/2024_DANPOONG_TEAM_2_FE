@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const LoginContainer = styled.div`
   width: 360px;
-  height: 640px;
+  height: 100%;
   margin: 0 auto;
   background-color: white;
   border: 1px solid #ccc;
@@ -14,7 +14,7 @@ export const LoginContainer = styled.div`
 
 export const Logo = styled.img`
   width: 100px;
-  margin-bottom: 60px;
+  margin-bottom: 72px;
 `;
 
 export const TabContainer = styled.div`
@@ -112,7 +112,7 @@ export const LinkContainer = styled.div`
 
 export const SocialLoginContainer = styled.div`
   width: 40%;
-  margin-top: 20px;
+  margin-top: 70px;
   display: flex;
   justify-content: space-between;
 `;
