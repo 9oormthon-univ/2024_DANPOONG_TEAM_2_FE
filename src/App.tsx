@@ -3,6 +3,12 @@ import { createGlobalStyle } from "styled-components";
 import { AuthProvider } from "./AuthContext";
 import Home from "./routes/home";
 import Layout from "./component/layout_navigation";
+import Portfolio from "./routes/portfolio";
+import Coupon from "./routes/coupon";
+import InvestList from "./routes/invest_list";
+import Return from "./routes/return";
+import CouponSelect from "./routes/coupon_select";
+
 const GlobalStyles = createGlobalStyle`
   * {
     margin: 0;
@@ -17,6 +23,9 @@ const GlobalStyles = createGlobalStyle`
     align-items: center;
     justify-content: center;
     background-color: black;
+    &::-webkit-scrollbar {
+    display: none;
+  }
   }
 
   #root {
@@ -32,8 +41,21 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
-    children: [{ path: "", element: <Home /> }],
+    children: [
+      { path: "", element: <Home /> },
+      { path: "portfolio", element: <Portfolio /> },
+      {
+        path: "/invest-list",
+        element: <InvestList />,
+      },
+    ],
   },
+  {
+    path: "/coupon",
+    element: <Coupon />,
+  },
+  { path: "/return/:invest_id", element: <Return /> },
+  { path: "/coupon_select", element: <CouponSelect /> },
 ]);
 function App() {
   return (
