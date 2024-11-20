@@ -3,18 +3,14 @@ import styled from "styled-components";
 
 interface MileageHeaderProps {
   mileage: number;
-  onCheckDetails: () => void;
 }
 
-const MileageHeader: React.FC<MileageHeaderProps> = ({
-  mileage,
-  onCheckDetails,
-}) => {
+const MileageHeader: React.FC<MileageHeaderProps> = ({ mileage }) => {
   return (
     <Container>
       <Title>나의 마일리지</Title>
       <Mileage>{mileage.toLocaleString()} P</Mileage>
-      <CheckButton onClick={onCheckDetails}>리턴 확인하기</CheckButton>
+      <CheckButton>리턴 확인하기</CheckButton>
     </Container>
   );
 };

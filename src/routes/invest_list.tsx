@@ -7,20 +7,46 @@ import InvestCard from "../component/portfolio/invest_card";
 const InvestList: React.FC = () => {
   const dummyMileage = 1000;
   const dummyData = [
-    { date: "11.23", description: "강원도 민우네 찰옥수수", points: "5,000" },
-    { date: "10.16", description: "차로 하는 이야기 녹차담", points: "10,000" },
-    { date: "10.15", description: "차로 하는 이야기 녹차담", points: "10,000" },
-    { date: "10.14", description: "강원도 민우네 찰옥수수", points: "8,000" },
-    { date: "10.13", description: "강원도 민우네 찰옥수수", points: "12,000" },
+    {
+      date: "11.23",
+      description: "강원도 민우네 찰옥수수",
+      points: "5,000",
+      invest_id: "1",
+    },
+    {
+      date: "10.16",
+      description: "차로 하는 이야기 녹차담",
+      points: "10,000",
+      invest_id: "2",
+    },
+    {
+      date: "10.15",
+      description: "차로 하는 이야기 녹차담",
+      points: "10,000",
+      invest_id: "3",
+    },
+    {
+      date: "10.14",
+      description: "강원도 민우네 찰옥수수",
+      points: "8,000",
+      invest_id: "4",
+    },
+    {
+      date: "10.13",
+      description: "강원도 민우네 찰옥수수",
+      points: "12,000",
+      invest_id: "5",
+    },
     {
       date: "10.12",
       description: "시장떡볶이 프렌차이즈",
       points: "6,500",
+      invest_id: "6",
     },
   ];
   const navigate = useNavigate();
-  const handleCheckDetails = () => {
-    navigate("/return_check");
+  const handleCardClick = (invest_id: string) => {
+    navigate(`/return/${invest_id}`);
   };
 
   return (
@@ -30,10 +56,7 @@ const InvestList: React.FC = () => {
         <Title>투자 관리</Title>
       </Header>
       <Divider />
-      <MileageHeader
-        mileage={dummyMileage}
-        onCheckDetails={handleCheckDetails}
-      />
+      <MileageHeader mileage={dummyMileage} />
       <ScrollableArea>
         {dummyData.map((item, index) => (
           <InvestCard
@@ -41,6 +64,8 @@ const InvestList: React.FC = () => {
             date={item.date}
             description={item.description}
             points={item.points}
+            invest_id={item.invest_id}
+            onClick={handleCardClick}
           />
         ))}
       </ScrollableArea>

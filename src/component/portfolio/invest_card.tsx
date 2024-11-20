@@ -1,22 +1,31 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 interface InvestCardProps {
   date: string;
   description: string;
   points: string;
+  invest_id: string;
+  onClick: (invest_id: string) => void;
 }
 
 const InvestCard: React.FC<InvestCardProps> = ({
   date,
   description,
   points,
+  invest_id,
 }) => {
+  const navigate = useNavigate();
+
+  const handleCheckDetails = (id: string) => {
+    navigate(`/return/${id}`);
+  };
   return (
     <CardContainer>
       <TopRow>
         <Date>{date}</Date>
-        <Arrow>&gt;</Arrow>
+        <Arrow onClick={() => handleCheckDetails(invest_id)}>&gt;</Arrow>
       </TopRow>
       <BottomRow>
         <Description>{description}</Description>
@@ -85,7 +94,7 @@ const Points = styled.div`
   margin-left: 120px;
 `;
 
-const Arrow = styled.span`
+const Arrow = styled.button`
   width: 9px;
   font-size: 14px;
   color: #818787;
