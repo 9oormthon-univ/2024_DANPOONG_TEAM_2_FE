@@ -40,12 +40,12 @@ const Mileage = styled.h1`
 `;
 
 const CheckButton = styled.button`
+  border-radius: 10px;
   background: #03624c;
   color: #fff;
   font-size: 14px;
   padding: 10px 20px;
   border: none;
-  border-radius: 20px;
   cursor: pointer;
   font-family: Pretendard, sans-serif;
 

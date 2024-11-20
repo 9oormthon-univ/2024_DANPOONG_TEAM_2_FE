@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 interface ReturnCheckModalProps {
@@ -11,6 +12,10 @@ const ReturnCheckModal: React.FC<ReturnCheckModalProps> = ({ onClose }) => {
       onClose();
     }
   };
+  const navigate = useNavigate();
+  const handleCouponClick = () => {
+    navigate("/coupon_select");
+  };
   return (
     <ModalOverlay onClick={handleOverlayClick}>
       <ModalContent>
@@ -20,7 +25,9 @@ const ReturnCheckModal: React.FC<ReturnCheckModalProps> = ({ onClose }) => {
         </ModalHeader>
         <ButtonContainer>
           <OptionButton>마일리지로 받을래요.</OptionButton>
-          <OptionButton>바로 상품권 교환할래요.</OptionButton>
+          <OptionButton onClick={handleCouponClick}>
+            바로 상품권 교환할래요.
+          </OptionButton>
         </ButtonContainer>
       </ModalContent>
     </ModalOverlay>

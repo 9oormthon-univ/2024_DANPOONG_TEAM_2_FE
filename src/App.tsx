@@ -7,6 +7,7 @@ import Portfolio from "./routes/portfolio";
 import Coupon from "./routes/coupon";
 import InvestList from "./routes/invest_list";
 import Return from "./routes/return";
+import CouponSelect from "./routes/coupon_select";
 
 const GlobalStyles = createGlobalStyle`
   * {
@@ -54,6 +55,7 @@ const router = createBrowserRouter([
     element: <Coupon />,
   },
   { path: "/return/:invest_id", element: <Return /> },
+  { path: "/coupon_select", element: <CouponSelect /> },
 ]);
 function App() {
   return (

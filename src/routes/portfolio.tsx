@@ -11,8 +11,8 @@ const Portfolio: React.FC = () => {
   const dummyData = {
     userName: "모아",
     topCategories: [
-      { category: "region", ratio: 80 },
-      { category: "energy", ratio: 20 },
+      { category: "region", ratio: 70 },
+      { category: "energy", ratio: 30 },
     ],
     purpose: "투자 그래프 끌어~올려~!",
   };
