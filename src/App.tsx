@@ -13,6 +13,7 @@ import CouponSelect from "./routes/coupon_select";
 
 
 import Home from "./routes/home";
+import Category from "./routes/category";
 
 const GlobalStyles = createGlobalStyle`
   * {
@@ -49,6 +50,7 @@ const router = createBrowserRouter([
     children: [
       { path: "", element: <Home /> },
       { path: "portfolio", element: <Portfolio /> },
+      { path: "category", element: <Category />},
       {
         path: "/invest-list",
         element: <InvestList />,
