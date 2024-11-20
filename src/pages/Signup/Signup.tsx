@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import StepAgreement from "../../components/Signup/StepAgreement";
-import StepMemberType from "../../components/Signup/StepMemberType";
+import StepAgreement from "../../component/Signup/StepAgreement";
+import StepMemberType from "../../component/Signup/StepMemberType";
 import styled from "styled-components";
-import InvestorForm from "../../components/Signup/StepInvestorForm";
-import StepSocialValue from "../../components/Signup/StepSocialValue";
-import StepWelcomeScreen from "../../components/Signup/StepWelcomeScreen";
+import InvestorForm from "../../component/Signup/StepInvestorForm";
+import StepSocialValue from "../../component/Signup/StepSocialValue";
+import StepWelcomeScreen from "../../component/Signup/StepWelcomeScreen";
 
 export const SignupContainer = styled.div`
   width: 100%;
