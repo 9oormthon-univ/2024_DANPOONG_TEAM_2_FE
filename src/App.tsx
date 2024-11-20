@@ -3,8 +3,16 @@ import { createGlobalStyle } from "styled-components";
 import { AuthProvider } from "./AuthContext";
 import reset from "styled-reset";
 import MapPage from "./pages/mapPage/MapPage";
-import Home from "./routes/home";
+import Login from "./pages/Login/Login";
+import Signup from "./pages/Signup/Signup";
 import Layout from "./component/layout_navigation";
+import Portfolio from "./routes/portfolio";
+import Coupon from "./routes/coupon";
+import InvestList from "./routes/invest_list";
+import Return from "./routes/return";
+import CouponSelect from "./routes/coupon_select";
+
+import Home from "./routes/home";
 
 const GlobalStyles = createGlobalStyle`
   * {
@@ -20,6 +28,9 @@ const GlobalStyles = createGlobalStyle`
     align-items: center;
     justify-content: center;
     background-color: black;
+    &::-webkit-scrollbar {
+    display: none;
+  }
   }
 
   #root {
@@ -37,8 +48,30 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
-    children: [{ path: "", element: <Home /> }],
+    children: [
+      { path: "", element: <Home /> },
+      { path: "portfolio", element: <Portfolio /> },
+      {
+        path: "/invest-list",
+        element: <InvestList />,
+      },
+    ],
   },
+  {
+    path: "/coupon",
+    element: <Coupon />,
+  },
+  { path: "/return/:invest_id", element: <Return /> },
+  { path: "/coupon_select", element: <CouponSelect /> },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/signup",
+    element: <Signup />,
+  },
+
   {
     path: "/map",
     element: <MapPage />,
