@@ -1,12 +1,14 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 2.5rem;
+  cursor: default;
 `;
-const Hr = styled.hr`
-  width: 100%;
+const Hr = styled.div`
+  width: 96%;
   height: 1px;
   background: #d9d9d9;
 `;
@@ -15,6 +17,7 @@ const ImageContainer = styled.div`
   gap: 10px;
   overflow-x: auto;
   margin: 1rem 0;
+  padding-right: 1rem;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -53,7 +56,7 @@ const Badge = styled.div`
   color: #fff;
   text-align: center;
   font-family: Pretendard;
-  font-size: 8px;
+  font-size: 0.5rem;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
@@ -63,13 +66,14 @@ const DefaultContainer = styled.div`
   justify-content: space-between;
   padding-right: 1rem;
   margin-bottom: 2rem;
+  cursor: pointer;
 `;
 const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: start;
 `;
-const Name = styled.span`
+const Name = styled(Link)`
   color: #000;
   font-family: Pretendard;
   font-size: 1.25rem;

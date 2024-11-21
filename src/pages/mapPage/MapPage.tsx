@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import Maps from "../../components/map/Maps";
+import Maps from "../../component/map/Maps";
 import { Search } from "./MapPage.style";
-import SearchBar from "../../components/map/searchBar/SearchBar";
-import FilterContainer from "../../components/map/filter/FilterContainer";
-import ProjectListBS from "../../components/bottomSheet/ProjectListBS";
+import SearchBar from "../../component/map/searchBar/SearchBar";
+import FilterContainer from "../../component/map/filter/FilterContainer";
+import ProjectListBS from "../../component/bottomSheet/ProjectListBS";
 import { useEffect, useState } from "react";
 import useMeasure from "react-use-measure";
 
@@ -11,7 +11,6 @@ export default function MapPage() {
   const [searchVal, setSearchVal] = useState<string | undefined>(undefined);
   const [viewportRef, { height: viewportHeight }] = useMeasure();
   const dummyLocationKeyword = "경기도 용인시";
-  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState<boolean>(false);
 
   useEffect(() => {
     if (searchVal) {
@@ -22,7 +21,7 @@ export default function MapPage() {
 
   return (
     <Page ref={viewportRef}>
-      <Maps draggable={!isBottomSheetOpen} />
+      <Maps />
       <Search>
         <SearchBar handleSearchVal={setSearchVal} />
         <FilterContainer />
@@ -30,14 +29,12 @@ export default function MapPage() {
       <ProjectListBS
         viewport={`${viewportHeight}px`}
         title={dummyLocationKeyword}
-        setIsBottomSheetOpen={setIsBottomSheetOpen}
       />
     </Page>
   );
 }
 
 const Page = styled.div`
-  width: 360px;
   height: 100vh;
   position: relative;
   display: flex;

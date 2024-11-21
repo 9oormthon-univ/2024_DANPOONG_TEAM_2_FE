@@ -22,7 +22,7 @@ const ProjectPrev = () => {
       </S.BadgeContainer>
       <S.DefaultContainer>
         <S.InfoContainer>
-          <S.Name>민우네 찰옥수수</S.Name>
+          <S.Name to="/map/1">민우네 찰옥수수</S.Name>
           <S.Address>강원도 고성군 간성읍 222</S.Address>
           <S.PopularInfoContainer>
             <S.PopularInfo>

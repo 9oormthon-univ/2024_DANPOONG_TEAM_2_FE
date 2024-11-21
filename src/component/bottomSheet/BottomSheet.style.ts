@@ -1,5 +1,4 @@
 import styled from "styled-components";
-
 import { motion } from "framer-motion";
 
 const BackgroundOverlay = styled(motion.div)`
@@ -9,18 +8,17 @@ const BackgroundOverlay = styled(motion.div)`
   width: 100%;
   height: 100dvh;
   background: black;
+  z-index: 20;
 `;
-
 const SheetBackground = styled(motion.div)`
   position: absolute;
-  top: 0;
   bottom: 0;
   left: 0;
   width: 100%;
   border-radius: 20px 20px 0px 0px;
   background: #fff;
   box-shadow: 0px -2px 4px 0px rgba(0, 0, 0, 0.25);
-  padding: 12px 0 24px 0;
+  padding-top: 12px;
   will-change: transform;
   z-index: 20;
   overflow-y: auto;
@@ -28,13 +26,11 @@ const SheetBackground = styled(motion.div)`
     display: none;
   }
 `;
-
 const BottomHeader = styled.div`
   height: 30px;
   cursor: grab;
   user-select: none;
 `;
-
 const HandleBar = styled.div`
   width: 51px;
   height: 5px;
@@ -42,17 +38,17 @@ const HandleBar = styled.div`
   border-radius: 403px;
   background: #9f9f9f;
 `;
-
 const SheetContentWrapper = styled.div`
   width: 100%;
   padding: 0 0 0 1rem;
+  &.fundingpage {
+    padding: 0 1rem;
+  }
 `;
-
 const SheetContent = styled.div`
   width: 100%;
   background-color: pink;
 `;
-
 const TitleContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -80,8 +76,9 @@ const Title = styled.span`
 const Projects = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 2.5rem;
+  padding-bottom: 10px;
 `;
+
 export {
   BackgroundOverlay,
   SheetBackground,
