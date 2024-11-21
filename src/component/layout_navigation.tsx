@@ -7,6 +7,9 @@ const Layout: React.FC = () => {
   const location = useLocation();
 
   const getActiveItem = () => {
+    if (location.pathname.startsWith("/map")) {
+      return "map";
+    }
     switch (location.pathname) {
       case "/":
         return "home";
