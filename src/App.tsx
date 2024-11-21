@@ -13,8 +13,12 @@ import Return from "./routes/return";
 import CouponSelect from "./routes/coupon_select";
 
 import Home from "./routes/home";
+import ProjectDetailPage from "./pages/projectDetailPage/ProjectDetailPage";
+import FundingSuccessPage from "./pages/fundingSuccessPage.jsx/FundingSuccessPage";
 
 const GlobalStyles = createGlobalStyle`
+  ${reset}
+
   * {
     margin: 0;
     padding: 0;
@@ -42,7 +46,42 @@ const GlobalStyles = createGlobalStyle`
     background: #FAFAFA;
   }
 
-  ${reset}
+  a {
+    text-decoration: none;
+	  color: inherit;
+
+    &:hover {
+        text-decoration: none;
+      color: none;
+    }
+      
+    &:active {
+        text-decoration: none;
+      color: black;
+    }
+          
+    &:visited {
+        text-decoration: none;
+      color: black;
+    }
+          
+    &:link {
+        text-decoration: none;
+      color: black; 
+    }
+  }
+  button {
+    background: inherit; 
+    border:none; 
+    box-shadow:none; 
+    border-radius:0; 
+    padding:0; 
+    overflow:visible; 
+    cursor:pointer;
+    &:focus {
+      outline:none
+    }
+  }
 `;
 const router = createBrowserRouter([
   {
@@ -55,6 +94,8 @@ const router = createBrowserRouter([
         path: "/invest-list",
         element: <InvestList />,
       },
+      { path: "/map", element: <MapPage /> },
+      { path: "/map/:id", element: <ProjectDetailPage /> },
     ],
   },
   {
@@ -71,10 +112,9 @@ const router = createBrowserRouter([
     path: "/signup",
     element: <Signup />,
   },
-
   {
-    path: "/map",
-    element: <MapPage />,
+    path: "/fundingSuccess",
+    element: <FundingSuccessPage />,
   },
 ]);
 function App() {
