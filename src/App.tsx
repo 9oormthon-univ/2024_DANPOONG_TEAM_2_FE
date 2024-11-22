@@ -14,7 +14,7 @@ import CouponSelect from "./routes/coupon_select";
 
 import Home from "./routes/home";
 import ProjectDetailPage from "./pages/projectDetailPage/ProjectDetailPage";
-import FundingSuccessPage from "./pages/fundingSuccessPage.jsx/FundingSuccessPage";
+import FundingSuccessPage from "./component/fundingSuccess/FundingSuccess";
 
 const GlobalStyles = createGlobalStyle`
   ${reset}

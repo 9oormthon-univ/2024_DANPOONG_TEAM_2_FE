@@ -1,6 +1,8 @@
 import { useMemo } from "react";
 import useMeasure from "react-use-measure";
 import FundingForm from "../fundingForm/FundingForm";
+import { useParams } from "react-router-dom";
+
 import {
   BackgroundOverlay,
   SheetBackground,
@@ -15,11 +17,11 @@ import {
 const FundingBS = ({
   isOpened,
   setIsOpened,
-  title,
+  handlepage,
 }: {
   isOpened: boolean;
   setIsOpened: Function;
-  title: string;
+  handlepage: Function;
 }) => {
   const [contentRef, contentBounds] = useMeasure();
 
@@ -57,10 +59,10 @@ const FundingBS = ({
         </BottomHeader>
         <SheetContentWrapper ref={contentRef} className="fundingpage">
           <TitleContainer className="fundingpage">
-            <Title>{title}</Title>
+            <Title className="fundingpage">펀딩하기</Title>
           </TitleContainer>
           <Projects>
-            <FundingForm />
+            <FundingForm handlePage={handlepage} />
           </Projects>
         </SheetContentWrapper>
       </SheetBackground>

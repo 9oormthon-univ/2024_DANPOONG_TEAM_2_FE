@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { useDragControls } from "framer-motion";
 import useMeasure from "react-use-measure";
+import { projectDetailDummy } from "../../moks/projectDetailDummy";
 import ProjectPrev from "../projectPrev/ProjectPrev";
 import {
   BackgroundOverlay,
@@ -90,7 +91,9 @@ const ProjectListBS = ({
             <Title>{title}</Title>
           </TitleContainer>
           <Projects>
-            <ProjectPrev />
+            {projectDetailDummy.map((proj) => {
+              return <ProjectPrev data={proj} />;
+            })}
           </Projects>
         </SheetContentWrapper>
       </SheetBackground>
