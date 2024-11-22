@@ -11,10 +11,8 @@ import Coupon from "./routes/coupon";
 import InvestList from "./routes/invest_list";
 import Return from "./routes/return";
 import CouponSelect from "./routes/coupon_select";
-
 import Home from "./routes/home";
 import ProjectDetailPage from "./pages/projectDetailPage/ProjectDetailPage";
-import FundingSuccessPage from "./component/fundingSuccess/FundingSuccess";
 import Category from "./routes/category";
 
 const GlobalStyles = createGlobalStyle`
@@ -91,7 +89,7 @@ const router = createBrowserRouter([
     children: [
       { path: "", element: <Home /> },
       { path: "portfolio", element: <Portfolio /> },
-      { path: "category", element: <Category />},
+      { path: "category", element: <Category /> },
       {
         path: "/invest-list",
         element: <InvestList />,
@@ -113,10 +111,6 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <Signup />,
-  },
-  {
-    path: "/fundingSuccess",
-    element: <FundingSuccessPage />,
   },
 ]);
 function App() {
