@@ -7,6 +7,9 @@ const Layout: React.FC = () => {
   const location = useLocation();
 
   const getActiveItem = () => {
+    if (location.pathname.startsWith("/map")) {
+      return "map";
+    }
     switch (location.pathname) {
       case "/":
         return "home";
@@ -59,6 +62,9 @@ const Main = styled.main`
   flex: 1;
   overflow-y: auto;
   padding: 0px;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const Footer = styled.footer`
@@ -67,6 +73,6 @@ const Footer = styled.footer`
   width: 100%;
   background-color: #ffffff;
   z-index: 10;
-  padding: 10px 0;
+  /* padding: 10px 0; */
   box-shadow: 0px -2px 4px rgba(0, 0, 0, 0.1);
 `;
