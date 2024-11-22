@@ -69,7 +69,7 @@ const Title = styled.span`
   font-weight: 500;
   line-height: normal;
   &.fundingpage {
-    font-size: 0.88rem;
+    font-size: 1.125rem;
     font-weight: 700;
   }
 `;
