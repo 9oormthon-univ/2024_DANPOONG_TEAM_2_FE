@@ -1,15 +1,16 @@
-import IAddress from "./AddressType";
 export default interface IProjectInfo {
-  id: number;
-  name: string;
-  profileImg?: string;
-  caption: string;
-  fundingTarget: number;
-  fundingCurrent: number;
-  images?: string[];
-  content: string;
-  address: IAddress;
-  certifiedType: string[];
+  id: number | undefined;
+  name: string | undefined;
+  profileImg: string | undefined;
+  caption: string | undefined;
+  fundingTarget: number | 0;
+  fundingCurrent: number | 0;
+  images?: string[] | undefined;
+  content: string | undefined;
+  address: string;
+  x: number;
+  y: number;
+  certifiedType: string[] | undefined;
   fundedCount: number | 0;
   likeCount: number | 0;
 }

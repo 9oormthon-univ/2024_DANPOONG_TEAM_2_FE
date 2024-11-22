@@ -2,10 +2,13 @@ import { useEffect } from "react";
 import * as S from "./FundingSuccess.style";
 import { Pillar, PillarsContainer } from "../Signup/StepWelcomeScreen";
 import completeIcon from "../../assets/completeIcon.svg";
-import IProjectInfo from "../../types/ProjectnfoType";
 import confetti from "canvas-confetti";
 import { useNavigate } from "react-router-dom";
-const FundingSuccess = ({ data }: { data: IProjectInfo }) => {
+const FundingSuccess = ({
+  data,
+}: {
+  data: { name: string; profileImg: string };
+}) => {
   const navigate = useNavigate();
 
   const fundingAmount = () => {
@@ -58,7 +61,11 @@ const FundingSuccess = ({ data }: { data: IProjectInfo }) => {
       <S.Amount>{fundingAmount()}원</S.Amount>
       <S.GreetingContainer>
         <S.Profile
-          src={data.profileImg}
+          src={
+            data.profileImg
+              ? data.profileImg
+              : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+          }
           width="67px"
           height="67px"
           alt="프로젝트 이미지"
