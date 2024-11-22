@@ -27,10 +27,29 @@ const Input = styled.input`
   border-radius: 10px;
   border: 1px solid #9f9f9f;
   padding: 0 1.12rem;
+  margin-bottom: 16px;
+  color: #030f0f;
+  font-family: Pretendard;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  &::placeholder {
+    color: #9f9f9f;
+    font-family: Pretendard;
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
   &:focus {
     outline: none;
   }
-  margin-bottom: 16px;
 `;
 const ChipContainer = styled.div`
   display: flex;
