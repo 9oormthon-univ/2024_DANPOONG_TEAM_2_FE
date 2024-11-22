@@ -14,12 +14,12 @@ const StepWelcomeScreenContainer = styled.div`
 
 const WelcomeScreenHeaderContainer = styled.div`
   width: 100%;
-  height: 10%;
+  height: 5%;
 `;
 
 const WelcomeScreenMainContainer = styled.div`
   width: 100%;
-  height: 85%;
+  height: 90%;
   justify-content: center;
   display: flex;
   flex-direction: column;
@@ -35,6 +35,7 @@ export const PillarsContainer = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
+  pointer-events: none; /* 클릭 이벤트 무시 */
 `;
 
 export const Pillar = styled.div<{ top: string; left: string; color: string; rotation: number }>`
@@ -78,6 +79,7 @@ const StartButton = styled.button`
   color: white;
   border: none;
   font-size: 16px;
+  
   cursor: pointer;
   &:hover {
     background-color: #00c774;

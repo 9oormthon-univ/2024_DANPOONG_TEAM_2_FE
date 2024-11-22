@@ -1,6 +1,8 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import { AuthProvider } from "./AuthContext";
+import reset from "styled-reset";
+import MapPage from "./pages/mapPage/MapPage";
 import Login from "./pages/Login/Login";
 import Signup from "./pages/Signup/Signup";
 import Layout from "./component/layout_navigation";
@@ -10,12 +12,13 @@ import InvestList from "./routes/invest_list";
 import Return from "./routes/return";
 import CouponSelect from "./routes/coupon_select";
 
-
-
-
 import Home from "./routes/home";
+import ProjectDetailPage from "./pages/projectDetailPage/ProjectDetailPage";
+import FundingSuccessPage from "./component/fundingSuccess/FundingSuccess";
 
 const GlobalStyles = createGlobalStyle`
+  ${reset}
+
   * {
     margin: 0;
     padding: 0;
@@ -42,6 +45,43 @@ const GlobalStyles = createGlobalStyle`
     border: 1px solid #ccc;
     background: #FAFAFA;
   }
+
+  a {
+    text-decoration: none;
+	  color: inherit;
+
+    &:hover {
+        text-decoration: none;
+      color: none;
+    }
+      
+    &:active {
+        text-decoration: none;
+      color: black;
+    }
+          
+    &:visited {
+        text-decoration: none;
+      color: black;
+    }
+          
+    &:link {
+        text-decoration: none;
+      color: black; 
+    }
+  }
+  button {
+    background: inherit; 
+    border:none; 
+    box-shadow:none; 
+    border-radius:0; 
+    padding:0; 
+    overflow:visible; 
+    cursor:pointer;
+    &:focus {
+      outline:none
+    }
+  }
 `;
 const router = createBrowserRouter([
   {
@@ -54,6 +94,8 @@ const router = createBrowserRouter([
         path: "/invest-list",
         element: <InvestList />,
       },
+      { path: "/map", element: <MapPage /> },
+      { path: "/map/:id", element: <ProjectDetailPage /> },
     ],
   },
   {
@@ -69,6 +111,10 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <Signup />,
+  },
+  {
+    path: "/fundingSuccess",
+    element: <FundingSuccessPage />,
   },
 ]);
 function App() {

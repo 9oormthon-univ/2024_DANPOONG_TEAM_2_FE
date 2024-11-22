@@ -20,7 +20,7 @@ export const InvestorFormMainContainer = styled.div`
   padding: 0px 20px;
   justify-content: flex-start;
   width: 100%;
-  height: 70%;
+  height: 80%;
   gap: 10px; /* 필드 간 간격 */
 `;
 
@@ -62,7 +62,7 @@ export const Input = styled.input`
 
 export const InvestorFormBottomContainer = styled.div`
   width: 100%;
-  height: 10%;
+  height: 5%;
 `;
 
 
