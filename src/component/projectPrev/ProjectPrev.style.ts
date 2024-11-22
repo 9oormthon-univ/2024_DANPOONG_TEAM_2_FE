@@ -83,8 +83,8 @@ const Name = styled(Link)`
   margin-bottom: 0.5rem;
 `;
 const Address = styled.span`
+  width: 100%;
   color: #818787;
-  text-align: center;
   font-family: Pretendard;
   font-size: 0.9375rem;
   font-style: normal;
