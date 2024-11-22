@@ -8,22 +8,22 @@ import { useEffect, useState } from "react";
 import useMeasure from "react-use-measure";
 
 export default function MapPage() {
-  const [searchVal, setSearchVal] = useState<string | undefined>(undefined);
+  const [Keyword, setKeyword] = useState("");
   const [viewportRef, { height: viewportHeight }] = useMeasure();
   const dummyLocationKeyword = "경기도 용인시";
 
   useEffect(() => {
-    if (searchVal) {
+    if (Keyword) {
       // 지도 좌표 변경 및 api 호출 예정
-      console.log("검색어 : ", searchVal);
+      console.log("검색어 : ", Keyword);
     }
-  }, [searchVal]);
+  }, [Keyword]);
 
   return (
     <Page ref={viewportRef}>
-      <Maps />
+      <Maps searchKeyword={Keyword} />
       <Search>
-        <SearchBar handleSearchVal={setSearchVal} />
+        <SearchBar handleKeyword={setKeyword} />
         <FilterContainer />
       </Search>
       <ProjectListBS
