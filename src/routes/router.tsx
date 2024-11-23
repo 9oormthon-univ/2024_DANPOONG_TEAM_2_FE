@@ -13,6 +13,7 @@ import Login from "../pages/Login/Login";
 import Signup from "../pages/Signup/Signup";
 import StepMemberType from "../component/Signup/StepMemberType";
 import FundingSuccessPage from "../component/fundingSuccess/FundingSuccess";
+import Category from "./category";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,8 @@ const router = createBrowserRouter([
       { path: "/invest-list", element: <InvestList /> },
       { path: "/map", element: <MapPage /> },
       { path: "/map/:id", element: <ProjectDetailPage /> },
+      { path: "/map/:id", element: <ProjectDetailPage /> },
+      { path: "/category", element: <Category />},
     ],
   },
   { path: "/coupon", element: <Coupon /> },
