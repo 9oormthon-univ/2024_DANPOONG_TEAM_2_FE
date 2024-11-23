@@ -1,12 +1,14 @@
 import testImg from "../../assets/image.png";
 import populationIcon from "../../assets/projectDetail/populationIcon.svg";
 import starIcon from "../../assets/projectDetail/starIcon.svg";
-import favIcon from "../../assets/projectDetail/favIcon.svg";
+import { translateToKorean } from "../../utils/CertifiedTypeConverter";
 import IProjectInfo from "../../types/ProjectnfoType";
+import ScrapButton from "../ScrapButton";
 
 import * as S from "./ProjectPrev.style";
 
 const ProjectPrev = ({ data }: { data: IProjectInfo }) => {
+  console.log(data.id);
   return (
     <S.Container>
       <S.Hr />
@@ -19,14 +21,16 @@ const ProjectPrev = ({ data }: { data: IProjectInfo }) => {
         ⭐ MOA PICK! 지역 생산 인증을 받은 업체에요.
       </S.CertificationComment>
       <S.BadgeContainer>
-        {data.certifiedType.map((el: string) => {
-          return <S.Badge>{el}</S.Badge>;
-        })}
+        {data && data.certifiedType
+          ? data.certifiedType.map((el: string, idx) => (
+              <S.Badge key={idx}>{translateToKorean(el)}</S.Badge>
+            ))
+          : null}
       </S.BadgeContainer>
       <S.DefaultContainer>
         <S.InfoContainer>
           <S.Name to={`/map/${data.id}`}>{data.name}</S.Name>
-          <S.Address>{data.address.roadName}</S.Address>
+          <S.Address>{data.address}</S.Address>
           <S.PopularInfoContainer>
             <S.PopularInfo>
               <S.PopularIcon src={populationIcon} />
@@ -38,7 +42,7 @@ const ProjectPrev = ({ data }: { data: IProjectInfo }) => {
             </S.PopularInfo>
           </S.PopularInfoContainer>
         </S.InfoContainer>
-        <S.FavBtn src={favIcon} />
+        {data.id !== undefined && <ScrapButton storeId={data.id} />}
       </S.DefaultContainer>
       <S.FundInfoContainer>
         <S.FundInfo>
