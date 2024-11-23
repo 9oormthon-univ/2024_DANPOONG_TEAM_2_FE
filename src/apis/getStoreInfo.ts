@@ -12,6 +12,7 @@ export const getStoreInfo = async (id: number) => {
       config
     );
     if (response.status === 200) {
+      console.log("상점 정보", response.data);
       return response.data;
     } else {
       console.log("Error from getStoreInfo", response);
