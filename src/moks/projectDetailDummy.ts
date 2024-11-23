@@ -13,7 +13,7 @@ export const projectDetailDummy = [
     address: "경기도 성남시 분당구 분당내곡로 131",
     x: 37.395864,
     y: 127.111543,
-    certifiedType: ["맛집", "역세권"],
+    certifiedType: ["CO2_FOOTPRINT", "EMPLOY_VULNERABLE_CLASS"],
     fundedCount: 30,
     likeCount: 50,
   },
@@ -32,7 +32,7 @@ export const projectDetailDummy = [
     x: 37.395219,
     y: 127.109401,
 
-    certifiedType: ["맛집", "역세권", "맛도리"],
+    certifiedType: ["CO2_FOOTPRINT", "EMPLOY_VULNERABLE_CLASS", "ORGANIC"],
     fundedCount: 1132,
     likeCount: 22,
   },
@@ -52,7 +52,7 @@ export const projectDetailDummy = [
     x: 37.394377,
     y: 127.112648,
 
-    certifiedType: ["감성", "솜사탕", "미니멀"],
+    certifiedType: ["EMPLOY_VULNERABLE_CLASS", "LOCAL_PRODUCT", "ORGANIC"],
     fundedCount: 1132,
     likeCount: 22,
   },

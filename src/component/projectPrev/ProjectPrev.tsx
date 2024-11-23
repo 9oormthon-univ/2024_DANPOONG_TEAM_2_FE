@@ -1,7 +1,7 @@
 import testImg from "../../assets/image.png";
 import populationIcon from "../../assets/projectDetail/populationIcon.svg";
 import starIcon from "../../assets/projectDetail/starIcon.svg";
-import favIcon from "../../assets/projectDetail/favIcon.svg";
+import { translateToKorean } from "../../utils/CertifiedTypeConverter";
 import IProjectInfo from "../../types/ProjectnfoType";
 import ScrapButton from "../ScrapButton";
 
@@ -23,7 +23,7 @@ const ProjectPrev = ({ data }: { data: IProjectInfo }) => {
       <S.BadgeContainer>
         {data && data.certifiedType
           ? data.certifiedType.map((el: string, idx) => (
-              <S.Badge key={idx}>{el}</S.Badge>
+              <S.Badge key={idx}>{translateToKorean(el)}</S.Badge>
             ))
           : null}
       </S.BadgeContainer>

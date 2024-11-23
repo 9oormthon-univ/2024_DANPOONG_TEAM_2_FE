@@ -23,6 +23,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import getStoreInfo from "../../apis/getStoreInfo";
 import IProjectInfo from "../../types/ProjectnfoType";
+import { translateToKorean } from "../../utils/CertifiedTypeConverter";
 
 const ProjectDetailPage = () => {
   const [page, setPage] = useState("detail");
@@ -95,7 +96,7 @@ const ProjectDetailPage = () => {
             <S.BadgeContainer>
               {data && data.certifiedType
                 ? data.certifiedType.map((el: string, idx) => (
-                    <S.Badge key={idx}>{el}</S.Badge>
+                    <S.Badge key={idx}>{translateToKorean(el)}</S.Badge>
                   ))
                 : null}
             </S.BadgeContainer>
