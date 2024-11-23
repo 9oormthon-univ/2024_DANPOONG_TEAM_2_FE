@@ -17,8 +17,8 @@ export default function Maps() {
           return (
             <MapMarker
               position={{
-                lat: project.address.lat,
-                lng: project.address.lng,
+                lat: project.x,
+                lng: project.y,
               }}
               image={{
                 src: `${project.profileImg}`,
