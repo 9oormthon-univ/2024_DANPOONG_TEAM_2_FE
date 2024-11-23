@@ -1,62 +1,90 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import ReturnCheckModal from "../component/portfolio/return_chek";
+import token from "../component/token";
 
 const certificationIcons: Record<string, string> = {
-  organic: "/assets/organic.png",
-  region: "/assets/region.png",
-  animal: "/assets/animal.png",
-  energy: "/assets/energy.png",
-  hire: "/assets/hire.png",
+  ORGANIC: "/assets/organic.png",
+  LOCAL_PRODUCT: "/assets/region.png",
+  ANIMAL_FRIENDLY: "/assets/animal.png",
+  RECYCLE_ENERGY: "/assets/energy.png",
+  EMPLOY_VULNERABLE_CLASS: "/assets/hire.png",
+  CULTURAL_PRESERVE: "/assets/culture.png",
+  CO2_FOOTPRINT: "/assets/footprint.png",
 };
+
+interface StoreData {
+  id: number;
+  name: string;
+  category: string;
+  profileImage: string;
+  caption: string;
+  fundingTarget: number;
+  fundingCurrent: number;
+  images: string[];
+  content: string;
+  address: string;
+  certifiedType: string[];
+  startAt: string;
+  endAt: string;
+  fundedCount: number;
+  likeCount: number;
+  isFinished: boolean;
+}
 
 const Return: React.FC = () => {
   const navigate = useNavigate();
-  const { invest_id } = useParams<{ invest_id: string }>();
-  const [isModalVisible, setModalVisible] = useState(false);
-  const handleOpenModal = () => {
-    setModalVisible(true);
+  const { id } = useParams<{ id: string }>();
+  const [data, setData] = useState<StoreData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const handleReturnMileage = async () => {
+    try {
+      const response = await token.post("/api/vouchers/return-mileage", {
+        storeId: id,
+      });
+      console.log("API Response:", response.data);
+      alert("마일리지가 성공적으로 반환되었습니다.");
+    } catch (error) {
+      console.error("Error while returning mileage:", error);
+      alert("마일리지 반환 중 오류가 발생했습니다.");
+    }
   };
 
-  const handleCloseModal = () => {
-    setModalVisible(false);
-  };
+  useEffect(() => {
+    console.log("useEffect triggered with id:", id);
+    const fetchData = async () => {
+      try {
+        console.log("Fetching data for ID:", id);
+        const response = await token.get(`/api/store/${id}`);
+        console.log("API Response:", response.data);
+        setData(response.data.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setError("데이터를 가져오는 데 실패했습니다.");
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const dummyData = [
-    {
-      invest_id: "1",
-      finish: false,
-      title: "강원도 민우네 찰옥수수",
-      location: "강원도 고성군 간성읍 222",
-      tagline:
-        "맛있고 건강한 간식, 성실과 집중으로 키우는 찰옥수수입니다. 옥수수를 이용한 빵, 음료 제품으로 나아갑니다. 믿어보십시오, 벌써 40년입니다.",
-      industry: "생산 | 식품제조",
-      certification: ["organic", "region"],
-      fundingPeriod: "2024.09.13 ~ 2024.11.23",
-      fundingAmount: "34,140,000원",
-      fundingCompleteAmount: "1,280,000원",
-      imageUrl: "/assets/sample_corn.png",
-      profileUrl: "/assets/sample_farmer.png",
-    },
-    {
-      invest_id: "2",
-      finish: true,
-      title: "차로 하는 이야기 녹차담",
-      location: "서울특별시 종로구",
-      tagline:
-        "맛있고 건강한 간식, 성실과 집중으로 키우는 찰옥수수입니다. 옥수수를 이용한 빵, 음료 제품으로 나아갑니다. 믿어보십시오, 벌써 40년입니다.",
-      industry: "프랜차이즈 | 요식업",
-      certification: ["region"],
-      fundingPeriod: "2024.01.01 ~ 2024.06.01",
-      fundingAmount: "50,000,000원",
-      fundingCompleteAmount: "50,000,000원",
-      imageUrl: "/assets/sample_corn.png",
-      profileUrl: "/assets/sample_farmer.png",
-    },
-  ];
+    if (id) fetchData();
+  }, [id]);
 
-  const data = dummyData.find((item) => item.invest_id === invest_id);
+  if (loading) {
+    return <LoadingContainer>로딩 중...</LoadingContainer>;
+  }
+
+  if (error) {
+    return (
+      <Container>
+        <Header>
+          <BackButton onClick={() => navigate(-1)}>{"<"}</BackButton>
+          <HeaderTitle>오류 발생</HeaderTitle>
+        </Header>
+        <ErrorMessage>{error}</ErrorMessage>
+      </Container>
+    );
+  }
 
   if (!data) {
     return (
@@ -65,76 +93,74 @@ const Return: React.FC = () => {
           <BackButton onClick={() => navigate(-1)}>{"<"}</BackButton>
           <HeaderTitle>투자 정보 없음</HeaderTitle>
         </Header>
-        <InfoContent>해당 투자 정보를 찾을 수 없습니다.</InfoContent>
+        <ErrorMessage>해당 투자 정보를 찾을 수 없습니다.</ErrorMessage>
       </Container>
     );
   }
 
   const {
-    finish,
-    title,
-    location,
-    tagline,
-    industry,
-    certification,
-    fundingPeriod,
-    fundingAmount,
-    fundingCompleteAmount,
-    imageUrl,
-    profileUrl,
+    name,
+    category,
+    profileImage,
+    fundingTarget,
+    fundingCurrent,
+    images,
+    content,
+    address,
+    certifiedType,
+    startAt,
+    endAt,
+    isFinished,
   } = data;
 
   return (
     <Container>
       <Header>
         <BackButton onClick={() => navigate(-1)}>{"<"}</BackButton>
-        <HeaderTitle>{title}</HeaderTitle>
+        <HeaderTitle>{name}</HeaderTitle>
       </Header>
       <ImageContainer>
-        <MainImage src={imageUrl} alt={title} />
-        <StatusButton>{finish ? "펀딩 완료!" : "진행 중"}</StatusButton>
+        {images?.[0] && <MainImage src={images[0]} alt={name} />}
       </ImageContainer>
       <ProfileContainer>
-        <ProfileImage src={profileUrl} alt="profile" />
-        <BusinessTitle>{title}</BusinessTitle>
-        <Location>{location}</Location>
+        <ProfileImage src={profileImage} alt="profile" />
+        <BusinessTitle>{name}</BusinessTitle>
+        <Location>{address}</Location>
       </ProfileContainer>
       <Divider />
       <Section>
         <SectionTitle>기업 한 마디</SectionTitle>
-        <SectionContent>{tagline}</SectionContent>
+        <SectionContent>{content}</SectionContent>
       </Section>
       <Divider />
-      <InfoRow>
-        <InfoTitle>업종</InfoTitle>
-        <InfoContent>{industry}</InfoContent>
-      </InfoRow>
-      <InfoRow>
-        <InfoTitle>인증 확인</InfoTitle>
-        <CertificationContainer>
-          {certification.map((cert, index) => (
-            <Certification key={index}>
-              <CertificationIcon src={certificationIcons[cert]} alt={cert} />
-            </Certification>
-          ))}
-        </CertificationContainer>
-      </InfoRow>
-      <InfoRow>
-        <InfoTitle>펀딩 기간</InfoTitle>
-        <InfoContent>{fundingPeriod}</InfoContent>
-      </InfoRow>
-      <InfoRow>
-        <InfoTitle>펀딩 완료 금액</InfoTitle>
-        <InfoContent>
-          {finish ? fundingAmount : fundingCompleteAmount}
-        </InfoContent>
-      </InfoRow>
-      {finish ? (
-        <ActionButton onClick={handleOpenModal}>리턴 받기</ActionButton>
+      <InfoRow title="업종" content={category} />
+      <InfoRow title="펀딩 기간" content={`${startAt} ~ ${endAt}`} />
+      <InfoRow
+        title="펀딩 목표 금액"
+        content={`${fundingTarget.toLocaleString()}원`}
+      />
+      <InfoRow
+        title="현재 펀딩 금액"
+        content={`${fundingCurrent.toLocaleString()}원`}
+      />
+      <InfoRow
+        title="인증 확인"
+        content={
+          <CertificationContainer>
+            {certifiedType.map((cert, index) => (
+              <Certification key={index}>
+                <CertificationIcon src={certificationIcons[cert]} alt={cert} />
+              </Certification>
+            ))}
+          </CertificationContainer>
+        }
+      />
+      <Divider />
+      {isFinished ? (
+        <ActionButton onClick={handleReturnMileage}>리턴 받기</ActionButton>
       ) : (
         <InactiveButton>아직 진행 중이에요.</InactiveButton>
       )}
-      {isModalVisible && <ReturnCheckModal onClose={handleCloseModal} />}
     </Container>
   );
 };
@@ -147,6 +173,15 @@ const Container = styled.div`
   padding: 20px;
   background: #ffffff;
   min-height: 100vh;
+`;
+
+const LoadingContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 18px;
+  color: #333;
 `;
 
 const Header = styled.div`
@@ -162,6 +197,7 @@ const BackButton = styled.button`
   font-weight: bold;
   color: #333;
   cursor: pointer;
+  margin-right: 60px;
 
   &:hover {
     color: #00c853;
@@ -180,6 +216,13 @@ const HeaderTitle = styled.h1`
   letter-spacing: -0.408px;
 `;
 
+const ErrorMessage = styled.div`
+  color: #ff5252;
+  font-size: 16px;
+  text-align: center;
+  margin-top: 20px;
+`;
+
 const ImageContainer = styled.div`
   position: relative;
 `;
@@ -187,34 +230,22 @@ const ImageContainer = styled.div`
 const MainImage = styled.img`
   width: 100%;
   border-radius: 8px;
-`;
-
-const StatusButton = styled.div`
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: #00c853;
-  color: #fff;
-  padding: 5px 10px;
-  border-radius: 8px;
-  font-size: 12px;
-  font-weight: bold;
+  height: 140px;
 `;
 
 const ProfileContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: -15px;
-  position: relative;
+  margin-top: -40px;
+  z-index: 1;
 `;
 
 const ProfileImage = styled.img`
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  position: absolute;
-  top: -40px;
+  border: 2px solid #d9d9d9;
 `;
 
 const BusinessTitle = styled.h2`
@@ -226,8 +257,6 @@ const BusinessTitle = styled.h2`
   font-weight: 500;
   line-height: normal;
   text-transform: capitalize;
-  text-align: center;
-  margin-top: 50px;
 `;
 
 const Location = styled.span`
@@ -239,7 +268,6 @@ const Location = styled.span`
   font-weight: 400;
   line-height: normal;
   text-transform: capitalize;
-  margin-top: 5px;
 `;
 
 const Divider = styled.hr`
@@ -261,8 +289,6 @@ const SectionTitle = styled.h3`
   font-weight: 700;
   line-height: 24px;
   text-transform: capitalize;
-  margin-bottom: 5px;
-  margin-left: 120px;
 `;
 
 const SectionContent = styled.p`
@@ -275,31 +301,45 @@ const SectionContent = styled.p`
   text-transform: capitalize;
 `;
 
-const InfoRow = styled.div`
+const InfoRow = ({
+  title,
+  content,
+}: {
+  title: string;
+  content: React.ReactNode;
+}) => (
+  <InfoRowContainer>
+    <InfoTitle>{title}</InfoTitle>
+    <InfoContent>{content}</InfoContent>
+  </InfoRowContainer>
+);
+
+const InfoRowContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
   margin: 10px 0;
 `;
 
 const InfoTitle = styled.span`
-  color: #6c6c6c;
+  color: #000;
+  text-align: center;
   font-family: Pretendard;
-  font-size: 13px;
+  font-size: 14px;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 500;
   line-height: normal;
   text-transform: capitalize;
 `;
 
 const InfoContent = styled.span`
+  color: #000;
+  text-align: right;
   font-family: Pretendard;
-  font-size: 15px;
+  font-size: 13px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
   text-transform: capitalize;
-  color: #333;
 `;
 
 const CertificationContainer = styled.div`
@@ -317,8 +357,8 @@ const Certification = styled.div`
 `;
 
 const CertificationIcon = styled.img`
-  width: 50px;
-  height: 18px;
+  width: 35px;
+  height: 35px;
 `;
 
 const ActionButton = styled.button`

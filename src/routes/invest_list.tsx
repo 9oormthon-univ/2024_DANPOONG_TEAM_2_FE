@@ -1,52 +1,63 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import MileageHeader from "../component/portfolio/mileage_header";
 import { useNavigate } from "react-router-dom";
 import InvestCard from "../component/portfolio/invest_card";
+import token from "../component/token";
+
+interface FundingHistory {
+  storeId: number;
+  fundingDate: string;
+  storeName: string;
+  amount: number;
+}
+
+interface ResponseData {
+  data: {
+    totalMileageAmount: number;
+    historyInfoResDtos: FundingHistory[];
+    investmentGoal: string;
+  };
+}
 
 const InvestList: React.FC = () => {
-  const dummyMileage = 1000;
-  const dummyData = [
-    {
-      date: "11.23",
-      description: "강원도 민우네 찰옥수수",
-      points: "5,000",
-      invest_id: "1",
-    },
-    {
-      date: "10.16",
-      description: "차로 하는 이야기 녹차담",
-      points: "10,000",
-      invest_id: "2",
-    },
-    {
-      date: "10.15",
-      description: "차로 하는 이야기 녹차담",
-      points: "10,000",
-      invest_id: "3",
-    },
-    {
-      date: "10.14",
-      description: "강원도 민우네 찰옥수수",
-      points: "8,000",
-      invest_id: "4",
-    },
-    {
-      date: "10.13",
-      description: "강원도 민우네 찰옥수수",
-      points: "12,000",
-      invest_id: "5",
-    },
-    {
-      date: "10.12",
-      description: "시장떡볶이 프렌차이즈",
-      points: "6,500",
-      invest_id: "6",
-    },
-  ];
+  const [mileage, setMileage] = useState<number>(0);
+  const [fundingHistory, setFundingHistory] = useState<FundingHistory[]>([]);
+  const [loading, setLoading] = useState(true);
+
   const navigate = useNavigate();
-  const handleCardClick = (invest_id: string) => {
-    navigate(`/return/${invest_id}`);
+  useEffect(() => {
+    const fetchFundingHistory = async () => {
+      try {
+        console.log("Fetching funding history...");
+        const response = await token.get<ResponseData>(
+          "/api/members/my-punding-history"
+        );
+        console.log("API Response:", response.data);
+
+        setMileage(response.data.data.totalMileageAmount ?? 0);
+        setFundingHistory(
+          Array.isArray(response.data.data.historyInfoResDtos)
+            ? response.data.data.historyInfoResDtos
+            : []
+        );
+      } catch (error) {
+        console.error("Error fetching funding history:", error);
+        setMileage(0);
+        setFundingHistory([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFundingHistory();
+  }, []);
+
+  if (loading) {
+    return <Container>로딩 중...</Container>;
+  }
+  const handleCardClick = (storeId: number) => {
+    navigate(`/return/${storeId}`);
   };
 
   return (
@@ -56,15 +67,15 @@ const InvestList: React.FC = () => {
         <Title>투자 관리</Title>
       </Header>
       <Divider />
-      <MileageHeader mileage={dummyMileage} />
+      <MileageHeader mileage={mileage} />
       <ScrollableArea>
-        {dummyData.map((item, index) => (
+        {fundingHistory.map((item, index) => (
           <InvestCard
             key={index}
-            date={item.date}
-            description={item.description}
-            points={item.points}
-            invest_id={item.invest_id}
+            fundingDate={item.fundingDate}
+            storeName={item.storeName}
+            amount={`${item.amount}원`}
+            storeId={item.storeId}
             onClick={handleCardClick}
           />
         ))}
@@ -86,7 +97,8 @@ const Container = styled.div`
 const Header = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
+  margin-top: 20px;
 `;
 
 const BackButton = styled.button`
@@ -96,7 +108,8 @@ const BackButton = styled.button`
   font-weight: bold;
   color: #333;
   cursor: pointer;
-  margin-right: 10px;
+  margin-right: 5px;
+  margin-left: 10px;
   margin-bottom: 5px;
   &:hover {
     color: #00c853;
@@ -112,7 +125,7 @@ const Title = styled.h1`
   font-weight: 500;
   line-height: 22px;
   letter-spacing: -0.408px;
-  margin-left: 75px;
+  margin-left: 120px;
 `;
 
 const Divider = styled.div`

@@ -3,9 +3,21 @@ import styled from "styled-components";
 
 const ProjectWhere: React.FC = () => {
   const dummyData = [
-    { name: "기업 프로젝트 명 1", description: "어필 한 마디 1" },
-    { name: "기업 프로젝트 명 2", description: "어필 한 마디 2" },
-    { name: "기업 프로젝트 명 3", description: "어필 한 마디 3" },
+    {
+      name: "차로 하는 이야기, 녹차담",
+      description: "하동에서 전하는 초록빛 소리로 일상에 쉼을",
+      image: "assets/tea_image.png",
+    },
+    {
+      name: "새김 백자 공방 프로젝트",
+      description: "백자에 새기는 나만의 이야기, 맞춤 제작 새김 백자",
+      image: "assets/bottle_image.png",
+    },
+    {
+      name: "Bind of AHN ",
+      description: "안동 전통 직조로 만든 소품으로 가득한 패션 편집샵",
+      image: "assets/shoes_image.png",
+    },
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -19,7 +31,7 @@ const ProjectWhere: React.FC = () => {
       <Slider currentIndex={currentIndex}>
         {dummyData.map((project, index) => (
           <Card key={index}>
-            <CardImg />
+            <CardImg src={project.image} alt={project.name} />
             <Content>
               <Title>{project.name}</Title>
               <Description>{project.description}</Description>
@@ -64,12 +76,11 @@ const Card = styled.div`
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
 `;
 
-const CardImg = styled.div`
+const CardImg = styled.img`
   width: 60px;
   height: 60px;
-  background-color: #d9d9d9;
   border-radius: 8px;
-  margin-right: 16px;
+  margin-right: 30px;
 `;
 
 const Content = styled.div`
@@ -78,17 +89,23 @@ const Content = styled.div`
 `;
 
 const Title = styled.h3`
-  font-size: 16px;
-  font-weight: 600;
   color: #353f3f;
-  margin-right: 12px;
+  font-family: Pretendard;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 22px;
+  letter-spacing: -0.408px;
 `;
 
 const Description = styled.p`
-  font-size: 12px;
+  color: #353f3f;
+  font-family: Pretendard;
+  font-size: 8px;
+  font-style: normal;
   font-weight: 400;
-  color: #818787;
-  margin-right: 70px;
+  line-height: 22px;
+  letter-spacing: -0.408px;
 `;
 
 const Pagination = styled.div`

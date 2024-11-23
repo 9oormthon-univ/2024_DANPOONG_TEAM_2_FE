@@ -21,7 +21,7 @@ import axios from "axios";
 const Login: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>("investor"); // 투자자 회원 기본값
   const navigate = useNavigate();
-  const { token, setToken } = useAuth();
+  const { setToken } = useAuth();
   // 인증 로직 처리
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -34,12 +34,6 @@ const Login: React.FC = () => {
     }
   }, []);
 
-  useEffect(() => {
-    if (token) {
-      console.log("Token 변경 후:", token);
-    }
-  }, [token]);
-
   const handleAuth = async (code: string, provider: string) => {
     try {
       // 토큰 요청
@@ -49,8 +43,6 @@ const Login: React.FC = () => {
       );
       const accessToken = response.data.data.accessToken;
 
-      console.log("발급된 Access Token:", accessToken);
-
       // 로컬 스토리지에 저장
       localStorage.setItem("accessToken", accessToken);
 
@@ -58,7 +50,6 @@ const Login: React.FC = () => {
       setToken(accessToken);
 
       // 사용자 정보 조회
-      console.log("Authorization 헤더:", `Bearer ${accessToken}`);
       const userInfoResponse = await axios.get(
         `https://moa-api.duckdns.org/api/members`,
         {
@@ -67,7 +58,6 @@ const Login: React.FC = () => {
       );
 
       const memberType = userInfoResponse.data.data.memberType;
-      console.log("회원 유형:", memberType);
 
       // 회원 유형에 따라 경로 설정
       if (memberType === "null") {
@@ -86,8 +76,9 @@ const Login: React.FC = () => {
   // 카카오 로그인 버튼 클릭 시
   const kakaoHandleLogin = () => {
     localStorage.setItem("provider", "kakao"); // 선택된 소셜 로그인 제공자 저장
-    window.location.href =
-      "https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=c88d155ce18616f58d5b8694aafec094&redirect_uri=http://localhost:5173";
+    const clientId = import.meta.env.VITE_KAKAO_CLIENT_ID;
+    const redirectUri = import.meta.env.VITE_KAKAO_REDIRECT_URI;
+    window.location.href = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}`;
   };
 
   return (

@@ -13,6 +13,10 @@ const PortfolioList: React.FC<PortfolioListProps> = ({ mileage }) => {
     navigate("/coupon");
   };
 
+  const handleValueClick = () => {
+    navigate("/coupon_select");
+  };
+
   return (
     <Container>
       <Item>
@@ -20,7 +24,7 @@ const PortfolioList: React.FC<PortfolioListProps> = ({ mileage }) => {
         <Label>가치 뱃지</Label>
       </Item>
       <Divider />
-      <Item>
+      <Item onClick={handleValueClick}>
         <Label>
           <Value>💰{mileage.toLocaleString()} </Value>
         </Label>

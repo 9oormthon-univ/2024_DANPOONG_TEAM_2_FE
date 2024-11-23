@@ -1,28 +1,41 @@
 import React from "react";
 import styled from "styled-components";
-import { BackgroundOverlay } from "../bottomSheet/BottomSheet.style";
 
 interface ProjectRecommendProps {
   tag: string;
   category: string;
   title: string;
   likes: number;
+  profileImage: string;
 }
+
+const categories = [
+  { id: "ANIMAL_FRIENDLY", label: "🐶 동물 복지" },
+  { id: "LOCAL_PRODUCT", label: "🌍 지역 생산" },
+  { id: "RECYCLE_ENERGY", label: "🌿 재생에너지" },
+  { id: "CULTURAL_PRESERVE", label: "🏛️ 문화 보존" },
+  { id: "EMPLOY_VULNERABLE_CLASS", label: "💪 취약계층 고용" },
+  { id: "CO2_FOOTPRINT", label: "♻️ 탄소발자국 절감" },
+  { id: "ORGANIC", label: "🍀 유기농" },
+];
 
 const ProjectRecommend: React.FC<ProjectRecommendProps> = ({
   tag,
   category,
   title,
   likes,
+  profileImage,
 }) => {
+  const matchedCategory = categories.find((item) => item.id === tag);
+  const label = matchedCategory ? matchedCategory.label : "💡 기타";
+
   const Data = {
-    tag: tag,
+    tag: label,
     category: category,
     title: title,
     likes: likes,
-    image: "https://i.imgur.com/mznW94d.png",
+    image: profileImage,
   };
-
   return (
     <Card>
       <ImageContainer>
@@ -57,7 +70,7 @@ const Card = styled.div`
 const ImageContainer = styled.div`
   position: relative;
   width: 100%;
-  height: 150px;
+  height: 160px;
   border-radius: 12px 12px 0px 0px;
   background-color: #f2f2f2;
 `;
@@ -88,7 +101,8 @@ const Content = styled.div`
 
 const Category = styled.div`
   color: #9f9f9f;
-  text-align: center;
+  text-align: left;
+  width: 80px;
   font-family: Pretendard;
   font-size: 10px;
   font-style: normal;
@@ -97,6 +111,7 @@ const Category = styled.div`
   letter-spacing: -0.408px;
   margin-right: 200px;
   margin-top: 3px;
+  margin-bottom: 3px;
 `;
 
 const Title = styled.h3`
@@ -108,7 +123,7 @@ const Title = styled.h3`
   font-weight: 600;
   line-height: 22px;
   letter-spacing: -0.408px;
-  margin-bottom: 10px;
+  margin-bottom: 3px;
   margin-right: 113px;
 `;
 

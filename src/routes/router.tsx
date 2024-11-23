@@ -1,23 +1,23 @@
-// src/routes/router.tsx
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "../component/layout_navigation";
 import Home from "./home";
 import Portfolio from "./portfolio";
-import InvestList from "./invest_list";
 import MapPage from "../pages/mapPage/MapPage";
 import ProjectDetailPage from "../pages/projectDetailPage/ProjectDetailPage";
 import Coupon from "./coupon";
 import CouponSelect from "./coupon_select";
 import Return from "./return";
 import Login from "../pages/Login/Login";
-import Signup from "../pages/Signup/Signup";
+// import Signup from "../pages/Signup/Signup";
 import StepMemberType from "../component/Signup/StepMemberType";
 import FundingSuccessPage from "../pages/fundingSuccessPage/FundingSuccessPage";
 import Category from "./category";
 import Mypage from "../pages/mypage/Mypage";
-import { path } from "framer-motion/client";
+import Change from "./change";
+import ChangeFinish from "./change_finish";
 import MyInterestValue from "../pages/mypage/MyInterestValue";
 import MyScrap from "../pages/mypage/MyScrap";
+import InvestList from "./invest_list";
 
 const router = createBrowserRouter([
   { path: "/", element: <Login /> }, // 로그인 페이지
@@ -56,9 +56,12 @@ const router = createBrowserRouter([
     children: [{ path: "", element: <ProjectDetailPage /> }],
   }, // 프로젝트 상세 페이지
   { path: "/coupon", element: <Coupon /> }, // 쿠폰
-  { path: "/return/:invest_id", element: <Return /> }, // 반환
+  { path: "/invest-list", element: <InvestList /> }, //투자관리
+  { path: "/change", element: <Change /> },
+  { path: "/change_finish", element: <ChangeFinish /> },
+  { path: "/return/:id", element: <Return /> }, // 반환
   { path: "/coupon_select", element: <CouponSelect /> }, // 쿠폰 선택
-  { path: "/signup", element: <Signup /> }, // 회원가입
+  // { path: "/signup", element: <Signup /> }, // 회원가입
   { path: "/select-type", element: <StepMemberType /> }, // 회원 유형 선택
   { path: "/fundingSuccess", element: <FundingSuccessPage /> }, // 펀딩 성공 페이지
 ]);

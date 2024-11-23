@@ -1,44 +1,83 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import token from "../component/token";
 
 interface Coupon {
-  id: number;
   image: string;
+  myFundingAmount: number;
 }
 
 const coupons: Coupon[] = [
-  { id: 1, image: "/assets/5000.png" },
-  { id: 2, image: "/assets/10000.png" },
-  { id: 3, image: "/assets/50000.png" },
+  { image: "/assets/5000.png", myFundingAmount: 5000 },
+  { image: "/assets/10000.png", myFundingAmount: 10000 },
+  { image: "/assets/50000.png", myFundingAmount: 50000 },
 ];
 
 const CouponSelect: React.FC = () => {
   const [selectedCoupon, setSelectedCoupon] = useState<number | null>(null);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const handleSelect = (id: number) => {
-    setSelectedCoupon(id);
+
+  const handleSelect = (myFundingAmount: number) => {
+    setSelectedCoupon(myFundingAmount);
+  };
+
+  const handleConfirm = async () => {
+    const selectedCouponData = coupons.find(
+      (coupon) => coupon.myFundingAmount === selectedCoupon
+    );
+
+    if (!selectedCouponData) {
+      alert("상품권을 선택하세요.");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      console.log("Sending voucherAmount:", selectedCoupon);
+      const response = await token.post("/api/vouchers/exchange-voucher", {
+        voucherAmount: selectedCoupon,
+      });
+
+      console.log("API Response:", response.data);
+
+      navigate("/change_finish", {
+        state: { myFundingAmount: selectedCouponData.myFundingAmount },
+      });
+    } catch (error) {
+      console.error("Error exchanging voucher:", error);
+      alert("상품권 교환에 실패했습니다. 다시 시도해주세요.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <Container>
       <Header>
-        <BackButton onClick={() => navigate("/invest-list")}>{"<"}</BackButton>
+        <BackButton onClick={() => navigate(-1)}>{"<"}</BackButton>
         <Title>상품권 선택하기</Title>
       </Header>
       <Divider />
       {coupons.map((coupon) => (
-        <CouponCard key={coupon.id} onClick={() => handleSelect(coupon.id)}>
+        <CouponCard
+          key={coupon.myFundingAmount}
+          onClick={() => handleSelect(coupon.myFundingAmount)}
+        >
           <CouponImage src={coupon.image} alt="쿠폰" />
           <CheckboxWrapper>
             <Checkbox
               type="radio"
-              checked={selectedCoupon === coupon.id}
-              onChange={() => handleSelect(coupon.id)}
+              checked={selectedCoupon === coupon.myFundingAmount}
+              onChange={() => handleSelect(coupon.myFundingAmount)}
             />
           </CheckboxWrapper>
         </CouponCard>
       ))}
+      <ConfirmButton onClick={handleConfirm} disabled={loading}>
+        {loading ? "처리 중..." : "확인"}
+      </ConfirmButton>
     </Container>
   );
 };
@@ -81,7 +120,7 @@ const Title = styled.h1`
   font-weight: 500;
   line-height: 22px;
   letter-spacing: -0.408px;
-  margin-left: 40px;
+  margin-left: 80px;
 `;
 
 const Divider = styled.div`
@@ -125,4 +164,25 @@ const Checkbox = styled.input`
   stroke-width: 4px;
   stroke: #d9d9d9;
   cursor: pointer;
+`;
+
+const ConfirmButton = styled.button`
+  width: 100%;
+  padding: 10px;
+  background-color: #36c787;
+  border: none;
+  border-radius: 50px;
+  background: #00df82;
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  text-transform: capitalize;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #2ca06f;
+  }
 `;
