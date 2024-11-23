@@ -1,25 +1,39 @@
 import React from "react";
 import styled from "styled-components";
+import { BackgroundOverlay } from "../bottomSheet/BottomSheet.style";
 
-const ProjectRecommend: React.FC = () => {
-  const dummyData = {
-    tag: "🐶동물 복지",
-    category: "요식업",
-    title: "지역 특산물 활용 요리",
-    likes: 75,
+interface ProjectRecommendProps {
+  tag: string;
+  category: string;
+  title: string;
+  likes: number;
+}
+
+const ProjectRecommend: React.FC<ProjectRecommendProps> = ({
+  tag,
+  category,
+  title,
+  likes,
+}) => {
+  const Data = {
+    tag: tag,
+    category: category,
+    title: title,
+    likes: likes,
+    image: "https://i.imgur.com/mznW94d.png",
   };
 
   return (
     <Card>
       <ImageContainer>
-        <Tag>{dummyData.tag}</Tag>
-        <Image />
+        <Tag>{Data.tag}</Tag>
+        <Image src={Data.image} />
       </ImageContainer>
       <Content>
-        <Category>{dummyData.category}</Category>
-        <Title>{dummyData.title}</Title>
+        <Category>{Data.category}</Category>
+        <Title>{Data.title}</Title>
         <Details>
-          <Likes>⭐ {dummyData.likes}</Likes>
+          <Likes>⭐ {Data.likes}</Likes>
           <Button>상세 보기</Button>
         </Details>
       </Content>
@@ -61,7 +75,7 @@ const Tag = styled.div`
   margin-top: 2px;
 `;
 
-const Image = styled.div`
+const Image = styled.img`
   width: 100%;
   height: 100%;
   background-color: #d9d9d9;

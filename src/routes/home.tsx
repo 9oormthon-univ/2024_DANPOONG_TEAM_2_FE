@@ -1,15 +1,55 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Banner from "../component/home/banner";
 import Value from "../component/home/value";
 import ProjectRecommend from "../component/home/project_recommend";
 import ProjectWhere from "../component/home/project_where";
 import ProjectLank from "../component/home/project_lank";
+import getProjectRecommend from "../apis/getProjectRecommend";
+
+interface Store {
+  storeId: number;
+  isFinished: boolean;
+  name: string;
+  category: string;
+  profileImage: string;
+  caption: string;
+  fundingTarget: number;
+  fundingCurrent: number;
+  images: string[];
+  content: string;
+  address: string;
+  x: number;
+  y: number;
+  certifiedType: string[];
+  startAt: string;
+  endAt: string;
+  fundedCount: number;
+  likeCount: number;
+}
 
 const Home: React.FC = () => {
   const dummyData = {
     nickname: "모아",
   };
+
+  const [projectData, setProjectData] = useState([] as Store[]);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      getProjectRecommend()
+        .then((data: any) => {
+          if (!data || data.statusCode != 200) {
+            throw new Error("프로젝트 추천 가져오기 실패");
+          }
+          return data.data;
+        })
+        .then((data: Store[]) => {
+          setProjectData(data);
+        });
+    };
+    fetchProjects();
+  }, []);
 
   return (
     <HomeContainer>
@@ -28,10 +68,15 @@ const Home: React.FC = () => {
           {dummyData.nickname}님의 가치관에 맞는 프로젝트를 찾았어요!
         </ProjectRecommendSemiTitle>
         <HorizontalScrollContainer>
-          <ProjectRecommend />
-          <ProjectRecommend />
-          <ProjectRecommend />
-          <ProjectRecommend />
+          {projectData.map((store, _) => (
+            <ProjectRecommend
+              key={store.storeId}
+              tag={store.certifiedType[0]}
+              category={store.category}
+              title={store.name}
+              likes={store.likeCount}
+            />
+          ))}
         </HorizontalScrollContainer>
         <ProjectWhereTitle>관심 지역 프로젝트</ProjectWhereTitle>
         <ProjectWhereSemiTitle>

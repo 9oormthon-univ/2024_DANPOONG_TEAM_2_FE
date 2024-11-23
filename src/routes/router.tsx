@@ -16,6 +16,8 @@ import FundingSuccessPage from "../pages/fundingSuccessPage/FundingSuccessPage";
 import Category from "./category";
 import Mypage from "../pages/mypage/Mypage";
 import { path } from "framer-motion/client";
+import MyInterestValue from "../pages/mypage/MyInterestValue";
+import MyScrap from "../pages/mypage/MyScrap";
 
 const router = createBrowserRouter([
   { path: "/", element: <Login /> }, // 로그인 페이지
@@ -42,7 +44,11 @@ const router = createBrowserRouter([
   {
     path: "/mypage",
     element: <Layout />,
-    children: [{ path: "", element: <Mypage /> }],
+    children: [
+      { path: "", element: <Mypage /> },
+      { path: "social-value", element: <MyInterestValue />},
+      { path: "scrap", element: <MyScrap />},
+    ],
   }, // 마이페이지
   {
     path: "/map/:id",
@@ -53,7 +59,7 @@ const router = createBrowserRouter([
   { path: "/return/:invest_id", element: <Return /> }, // 반환
   { path: "/coupon_select", element: <CouponSelect /> }, // 쿠폰 선택
   { path: "/signup", element: <Signup /> }, // 회원가입
-  { path: "/select-member-type", element: <StepMemberType /> }, // 회원 유형 선택
+  { path: "/select-type", element: <StepMemberType /> }, // 회원 유형 선택
   { path: "/fundingSuccess", element: <FundingSuccessPage /> }, // 펀딩 성공 페이지
 ]);
 
