@@ -1,10 +1,9 @@
-import React, { useState } from "react";
 import styled from "styled-components";
-import {
-  StyledCheckbox,
-  NextButton,
-} from "./StepCommonStyle";
-
+import React, { useState } from "react";
+import { StyledCheckbox } from "./StepCommonStyle";
+import axios from "axios";
+import { useAuth } from "../../AuthContext";
+import StepWelcomeScreen from "./StepWelcomeScreen";
 export const StepMemberTypeContainer = styled.div`
   height: 100%;
   width: 100%;
@@ -16,12 +15,12 @@ export const MemberTypeHeaderContainer = styled.div`
   height: 10%;
 `;
 
-export const MemberTypeMainContainer = styled.div `
+export const MemberTypeMainContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0px 20px;
   justify-content: flex-start;
-  
+
   height: 85%;
 `;
 
@@ -78,28 +77,66 @@ const MemberTypeDescription = styled.p`
   line-height: 20px;
 `;
 
-
-
-interface Props {
-    onNext: () => void;
-    setSelectedType: (type: string) => void; // New prop to pass selected type
+export const SubmitButton = styled.button`
+  width: 100%;
+  height: 100%;
+  background-color: #00df82;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  border-radius: 0px;
+  cursor: pointer;
+  &:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
   }
+`;
 
-const StepMemberType: React.FC<Props> = ({
-  onNext,
-  setSelectedType,
-}) => {
-    const [selectedType, setSelectedTypeLocal] = useState<string | null>(null);
+const StepMemberType: React.FC = () => {
+  const [selectedType, setSelectedType] = useState<string | null>(null);
+  const [isSubmitted, setIsSubmitted] = useState<boolean | null>(false); // 제출 여부 상태 추가
+ 
+  const { token } = useAuth(); // AuthContext에서 토큰 가져오기
 
-    const handleSelection = (type: string) => {
-        setSelectedTypeLocal(type); // 로컬 상태 업데이트
-        setSelectedType(type); // 부모한테 선택한 회원 유형 넘김
-      };
+  const handleSelection = (type: string) => {
+    setSelectedType(type); // 로컬 상태 업데이트
+  };
+  const handleSubmit = async () => {
+    console.log("현재 사용중인 토큰:", token);
+    if (!token) {
+      console.error("토큰이 없습니다. 인증이 필요합니다.");
+      return;
+    }
+    if (!selectedType) return;
+
+    try {
+      // 회원 유형 업데이트 API 호출
+      await axios.patch(
+        `https://moa-api.duckdns.org/api/members/type`,
+        { memberType: selectedType },
+        {
+          headers: { Authorization: `Bearer ${token}` }, // AuthContext에서 가져온 토큰 사용
+        }
+      );
+
+      // 제출 완료 상태 업데이트
+      setIsSubmitted(true);
+    } catch (error) {
+      console.error("Error updating member type:", error);
+    }
+  };
+
+  // 제출 완료 상태에 따라 화면 전환
+  if (isSubmitted) {
+    return (
+     <StepWelcomeScreen />
+    );
+  }
 
   return (
     <StepMemberTypeContainer>
-      <MemberTypeHeaderContainer>
-      </MemberTypeHeaderContainer>
+      <MemberTypeHeaderContainer></MemberTypeHeaderContainer>
       <MemberTypeMainContainer>
         <Title>회원 유형을 선택해주세요.</Title>
         <MemberTypeList>
@@ -137,9 +174,9 @@ const StepMemberType: React.FC<Props> = ({
         </MemberTypeList>
       </MemberTypeMainContainer>
       <MemberTypeBottomContainer>
-        <NextButton onClick={onNext} disabled={!selectedType}>
+        <SubmitButton onClick={handleSubmit} disabled={!selectedType}>
           다음
-        </NextButton>
+        </SubmitButton>
       </MemberTypeBottomContainer>
     </StepMemberTypeContainer>
   );

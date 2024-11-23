@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {  
+import {
   LoginContainer,
   Logo,
   TabContainer,
@@ -15,42 +15,71 @@ import {
   CustomCheckbox,
 } from "./LoginStyle";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../AuthContext";
 import axios from "axios";
-import { useAuth } from "../../AuthContext"; // AuthContext 사용
 
 const Login: React.FC = () => {
-  const { token, setToken } = useAuth(); // AuthContext에서 token과 setToken 사용
   const [activeTab, setActiveTab] = useState<string>("investor"); // 투자자 회원 기본값
   const navigate = useNavigate();
-
-  // 카카오 소셜 로그인 처리
+  const { token, setToken } = useAuth();
+  // 인증 로직 처리
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get("code");
-    const provider = localStorage.getItem("provider"); // kakao, google, apple 등
+    const provider = localStorage.getItem("provider") || "kakao";
 
     if (code) {
-      getToken(code, provider || ""); // 인증 코드로 토큰 요청
+      handleAuth(code, provider);
+      window.history.replaceState({}, document.title, window.location.pathname); // URL 파라미터 제거
     }
-  }, [navigate]);
+  }, []);
 
-  // Access Token 요청 함수
-  const getToken = async (authCode: string, provider: string) => {
+  useEffect(() => {
+    if (token) {
+      console.log("Token 변경 후:", token);
+    }
+  }, [token]);
+
+  const handleAuth = async (code: string, provider: string) => {
     try {
+      // 토큰 요청
       const response = await axios.post(
         `https://moa-api.duckdns.org/api/${provider}/token`,
-        { code: authCode }
+        { code }
       );
       const accessToken = response.data.data.accessToken;
 
-      // Context에 Access Token 저장
+      console.log("발급된 Access Token:", accessToken);
+
+      // 로컬 스토리지에 저장
+      localStorage.setItem("accessToken", accessToken);
+
+      // Context에 토큰 저장
       setToken(accessToken);
-      navigate("/home"); // 로그인 성공 시 홈 화면으로 이동
-      /**{이 부분에서 로그인 한 사람이 멤버 유형이 없는 사람이라면
-       * 멤버타입 유형을 선택할 수 있게 /home이 아닌 유형 고르는 곳으로 이동.
-      } */
+
+      // 사용자 정보 조회
+      console.log("Authorization 헤더:", `Bearer ${accessToken}`);
+      const userInfoResponse = await axios.get(
+        `https://moa-api.duckdns.org/api/members`,
+        {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        }
+      );
+
+      const memberType = userInfoResponse.data.data.memberType;
+      console.log("회원 유형:", memberType);
+
+      // 회원 유형에 따라 경로 설정
+      if (memberType === "null") {
+        navigate("/select-member-type"); // 회원 유형 선택 페이지로 이동
+      } else {
+        navigate("/home"); // 홈으로 이동
+      }
     } catch (error) {
-      console.error("Error fetching token:", error);
+      console.error("Error during authentication:", error);
+      if (axios.isAxiosError(error)) {
+        console.error("Axios Error Response:", error.response?.data);
+      }
     }
   };
 
@@ -58,7 +87,7 @@ const Login: React.FC = () => {
   const kakaoHandleLogin = () => {
     localStorage.setItem("provider", "kakao"); // 선택된 소셜 로그인 제공자 저장
     window.location.href =
-      "https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=c88d155ce18616f58d5b8694aafec094&redirect_uri=http://localhost:3000";
+      "https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=c88d155ce18616f58d5b8694aafec094&redirect_uri=http://localhost:5173";
   };
 
   return (
@@ -91,7 +120,7 @@ const Login: React.FC = () => {
         <span>|</span>
         <span>비밀번호 찾기</span>
         <span>|</span>
-        <span onClick={() => navigate('/signup')}>회원가입</span>
+        <span onClick={() => navigate("/signup")}>회원가입</span>
       </LinkContainer>
       <SocialLoginContainer>
         <SocialButton onClick={kakaoHandleLogin} bgColor="#FFD400">
