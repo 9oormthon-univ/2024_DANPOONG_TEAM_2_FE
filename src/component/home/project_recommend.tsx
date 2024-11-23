@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { BackgroundOverlay } from "../bottomSheet/BottomSheet.style";
 
 interface ProjectRecommendProps {
   tag: string;

@@ -1,6 +1,5 @@
 import * as S from "./GeneralNavBar.style";
 import backIcon from "../../assets/generalNavBar/backIcon.svg";
-import favBtn from "../../assets/projectDetail/favIcon.svg";
 import { useNavigate } from "react-router-dom";
 import ScrapButton from "../ScrapButton";
 import { useParams } from "react-router-dom";

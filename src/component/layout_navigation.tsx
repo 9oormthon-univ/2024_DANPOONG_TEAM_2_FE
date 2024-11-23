@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import Navigation from "./navigation";
 import styled from "styled-components";
 import { Outlet, useLocation } from "react-router-dom";
-import { useAuth } from "../AuthContext";
+
 const Layout: React.FC = () => {
   const location = useLocation();
-  
+
   const getActiveItem = () => {
     if (location.pathname.startsWith("/map")) {
       return "map";

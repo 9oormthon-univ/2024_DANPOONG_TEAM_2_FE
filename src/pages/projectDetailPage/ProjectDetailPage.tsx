@@ -23,7 +23,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import getStoreInfo from "../../apis/getStoreInfo";
 import IProjectInfo from "../../types/ProjectnfoType";
-import { translateToKorean } from "../../utils/CertifiedTypeConverter";
+import { translateToKorean } from "../../utils/certifiedTypeConverter";
 
 const ProjectDetailPage = () => {
   const [page, setPage] = useState("detail");

@@ -65,7 +65,7 @@ const ProjectListBS = ({
         dragListener={false}
         dragConstraints={{ top: 0, bottom: 0 }}
         dragElastic={0.2}
-        onDragEnd={(event, info) => {
+        onDragEnd={(_, info) => {
           const offsetThreshold = 150;
           const deltaThreshold = 5;
 
