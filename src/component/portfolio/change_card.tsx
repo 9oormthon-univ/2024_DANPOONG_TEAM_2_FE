@@ -21,7 +21,7 @@ const ChangeCard: React.FC<ChangeCardProps> = ({
   const [isReturned, setIsReturned] = useState(false);
 
   const handleReturnClick = async (storeId: number) => {
-    if (!isProjectCompleted || isReturned) return;
+    if (isReturned) return;
 
     try {
       setLoading(true);
@@ -34,9 +34,14 @@ const ChangeCard: React.FC<ChangeCardProps> = ({
       console.log("리턴 성공:", response.data);
       alert("마일리지가 성공적으로 리턴되었습니다!");
       setIsReturned(true);
-    } catch (error) {
+    } catch (error: any) {
       console.error("리턴 요청 실패:", error);
-      alert("리턴 요청에 실패했습니다. 다시 시도해주세요.");
+
+      if (error.response?.data?.message === "이미 환급된 마일리지입니다.") {
+        setIsReturned(true);
+      } else {
+        alert("리턴 요청에 실패했습니다. 다시 시도해주세요.");
+      }
     } finally {
       setLoading(false);
     }
@@ -60,17 +65,10 @@ const ChangeCard: React.FC<ChangeCardProps> = ({
         </Details>
       </HorizontalContainer>
       <ActionButton
-        completed={!loading && isProjectCompleted}
-        disabled={isReturned || !isProjectCompleted}
+        isReturned={isReturned}
         onClick={() => handleReturnClick(storeId)}
       >
-        {loading
-          ? "처리 중..."
-          : isReturned
-          ? "리턴 완료"
-          : isProjectCompleted
-          ? "리턴 받기"
-          : "진행 중"}
+        {loading ? "처리 중..." : isReturned ? "리턴 완료" : "리턴 받기"}
       </ActionButton>
     </CardContainer>
   );
@@ -167,11 +165,11 @@ const FundingAmount = styled.p`
   letter-spacing: -0.408px;
 `;
 
-const ActionButton = styled.button<{ completed: boolean }>`
+const ActionButton = styled.button<{ isReturned: boolean }>`
   width: 100%;
   padding: 12px 16px;
-  background-color: ${({ completed }) => (completed ? "#36c787" : "#ccc")};
-  color: #fff;
+  background-color: ${({ isReturned }) => (isReturned ? "#d9d9d9" : "#36c787")};
+  color: ${({ isReturned }) => (isReturned ? "#000" : "#fff")};
   border: none;
   border-radius: 4px;
   font-family: Pretendard;
@@ -182,11 +180,12 @@ const ActionButton = styled.button<{ completed: boolean }>`
   letter-spacing: -0.408px;
   font-size: 16px;
   margin-top: 10px;
-  cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
-  pointer-events: ${({ disabled }) => (disabled ? "none" : "auto")};
+  cursor: ${({ isReturned }) => (isReturned ? "not-allowed" : "pointer")};
+  pointer-events: ${({ isReturned }) => (isReturned ? "none" : "auto")};
   transition: background-color 0.3s;
 
   &:hover {
-    background-color: ${({ completed }) => (completed ? "#2ca06f" : "#ccc")};
+    background-color: ${({ isReturned }) =>
+      isReturned ? "#d9d9d9" : "#2ca06f"};
   }
 `;

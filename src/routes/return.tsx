@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import ReturnCheckModal from "../component/portfolio/return_chek";
+import ReturnCheckModal from "../component/portfolio/return_check";
 import token from "../component/token";
 
 const certificationIcons: Record<string, string> = {

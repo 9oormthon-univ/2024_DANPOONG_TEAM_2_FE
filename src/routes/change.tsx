@@ -49,38 +49,53 @@ const Change: React.FC = () => {
   };
 
   if (loading) {
-    return <div>로딩 중...</div>;
+    return <Container>로딩 중...</Container>;
   }
 
   if (error) {
-    return <div>{error}</div>;
+    return <Container>{error}</Container>;
   }
 
   return (
-    <div style={{ display: "flex", flexWrap: "wrap" }}>
+    <Container>
       <Header>
-        <BackButton onClick={() => navigate("/portfolio")}>{"<"}</BackButton>
+        <BackButton onClick={() => navigate(-1)}>{"<"}</BackButton>
         <Title>교환하기</Title>
       </Header>
-      {projects.map((project) => (
-        <ChangeCard
-          key={project.storeId}
-          storeId={project.storeId}
-          storeName={project.storeName}
-          storePicture={project.storePicture}
-          isProjectCompleted={project.isProjectCompleted}
-          myFundingAmount={project.myFundingAmount}
-          onClick={() => handleClick()}
-        />
-      ))}
-    </div>
+      <ScrollableContent>
+        {projects.map((project) => (
+          <ChangeCard
+            key={project.storeId}
+            storeId={project.storeId}
+            storeName={project.storeName}
+            storePicture={project.storePicture}
+            isProjectCompleted={project.isProjectCompleted}
+            myFundingAmount={project.myFundingAmount}
+            onClick={() => handleClick()}
+          />
+        ))}
+      </ScrollableContent>
+    </Container>
   );
 };
+
+export default Change;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  align-items: stretch;
+  width: 100%;
+`;
+
 const Header = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
-  margin-top: 20px;
+  padding: 10px;
+  flex-shrink: 0;
+  background: white;
 `;
 
 const BackButton = styled.button`
@@ -109,4 +124,9 @@ const Title = styled.h1`
   letter-spacing: -0.408px;
   margin-left: 120px;
 `;
-export default Change;
+
+const ScrollableContent = styled.div`
+  flex: 1;
+  overflow-y: auto;
+  background: #f9f9f9;
+`;
