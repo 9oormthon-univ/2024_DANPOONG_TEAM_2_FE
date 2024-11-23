@@ -9,7 +9,7 @@ const MileageHeader: React.FC<MileageHeaderProps> = ({ mileage }) => {
   return (
     <Container>
       <Title>나의 마일리지</Title>
-      <Mileage>{mileage.toLocaleString()} P</Mileage>
+      <Mileage>{mileage} P</Mileage>
       <HorizontalContainer>
         <ChangeButton>교환하기</ChangeButton>
         <CheckButton>리턴 확인하기</CheckButton>

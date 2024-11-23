@@ -14,7 +14,6 @@ const Portfolio: React.FC = () => {
       { category: "region", ratio: 70 },
       { category: "energy", ratio: 30 },
     ],
-    purpose: "투자 그래프 끌어~올려~!",
   };
   const [isPopupVisible, setIsPopupVisible] = useState(false);
 
@@ -32,7 +31,7 @@ const Portfolio: React.FC = () => {
         <LogoContainer src="/assets/logo.svg" alt="Logo" />
       </Header>
       <Title>포트폴리오</Title>
-      <InvestPurpose purpose={dummyData.purpose} />
+      <InvestPurpose />
       <PortfolioList mileage={1200} />
       <HorizontalContainer>
         <MonthlyReport onOpenPopup={openPopup} />

@@ -38,7 +38,10 @@ const Coupon: React.FC = () => {
   if (loading) {
     return <CouponContainer>로딩 중...</CouponContainer>;
   }
-
+  const usecoupon = () => {
+    localStorage.setItem("fundingAmount", "10000")!; // 일단 1만원으로 하드코딩
+    navigate("/fundingSuccess");
+  };
   return (
     <CouponContainer>
       <Header>
@@ -54,6 +57,7 @@ const Coupon: React.FC = () => {
             amount={`${coupon.amount}원`}
             title={coupon.description}
             validity={coupon.expirationDate}
+            usecoupon={usecoupon}
           />
         ))}
       </CouponList>

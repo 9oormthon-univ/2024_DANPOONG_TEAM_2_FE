@@ -3,39 +3,40 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 interface InvestCardProps {
-  date: string;
-  description: string;
-  points: string;
-  invest_id: string;
-  onClick: (invest_id: string) => void;
+  storeId: number;
+  fundingDate: string;
+  storeName: string;
+  amount: string;
+  onClick: (storeId: number) => void;
 }
 
 const InvestCard: React.FC<InvestCardProps> = ({
-  date,
-  description,
-  points,
-  invest_id,
+  storeId,
+  fundingDate,
+  storeName,
+  amount,
 }) => {
   const navigate = useNavigate();
 
-  const handleCheckDetails = (id: string) => {
-    navigate(`/return/${id}`);
+  const handleCheckDetails = (storeId: number) => {
+    navigate(`/return/${storeId}`);
   };
   return (
     <CardContainer>
       <TopRow>
-        <Date>{date}</Date>
-        <Arrow onClick={() => handleCheckDetails(invest_id)}>&gt;</Arrow>
+        <Date>{fundingDate}</Date>
+        <Arrow onClick={() => handleCheckDetails(storeId)}>&gt;</Arrow>
       </TopRow>
       <BottomRow>
-        <Description>{description}</Description>
-        <Points>-{points}P</Points>
+        <StoreName>{storeName}</StoreName>
+        <Points>- {amount}</Points>
       </BottomRow>
     </CardContainer>
   );
 };
 
 export default InvestCard;
+
 const TopRow = styled.div`
   display: flex;
   justify-content: space-between;
@@ -71,7 +72,7 @@ const BottomRow = styled.div`
   margin-top: 5px;
 `;
 
-const Description = styled.div`
+const StoreName = styled.div`
   color: #000;
   font-family: Pretendard;
   font-size: 15px;
@@ -79,6 +80,7 @@ const Description = styled.div`
   font-weight: 500;
   line-height: 22px;
   letter-spacing: -0.408px;
+  margin-right: 40px;
 `;
 
 const Points = styled.div`

@@ -1,13 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import token from "../token";
 
-interface InvestPurposeProps {
-  purpose: string;
-}
-
-const InvestPurpose: React.FC<InvestPurposeProps> = ({ purpose }) => {
+const InvestPurpose: React.FC = () => {
   const navigate = useNavigate();
+  const [investmentGoal, setPurpose] = useState<string>("로딩 중...");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        console.log("Fetching investment goal...");
+        const response = await token.patch<{ investmentGoal: string }>(
+          "/api/members/investment-goal",
+          {
+            investmentGoal: "투자 그래프 끌어올리자 ! ",
+          }
+        );
+        console.log("API Response:", response.data);
+        setPurpose(response.data.investmentGoal);
+      } catch (error) {
+        console.error("Error fetching investment goal:", error);
+
+        setPurpose("데이터를 불러올 수 없습니다.");
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleEdit = () => {
     navigate("/purposeEdit");
@@ -18,7 +38,7 @@ const InvestPurpose: React.FC<InvestPurposeProps> = ({ purpose }) => {
       <TitleContainer>
         <Title>⛳ 투자 목표</Title>
       </TitleContainer>
-      <Purpose>{purpose}</Purpose>
+      <Purpose>{investmentGoal}</Purpose>
       <EditButton onClick={handleEdit}>편집하기</EditButton>
     </Card>
   );
