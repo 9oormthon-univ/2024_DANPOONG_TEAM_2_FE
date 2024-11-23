@@ -66,34 +66,39 @@ const Maps = ({ searchKeyword, selectedFilters }: propsType) => {
       // 기존 마커 제거
       removeMarker();
 
-      const newMarkers = data
+      // 전체 검색 결과 마커 데이터
+      const allMarkers = data.map((place, i) => {
+        const position = new kakao.maps.LatLng(place.y, place.x);
+        const marker = addMarker(position, i);
+        bounds.extend(position);
+        return marker;
+      });
+
+      // 필터링된 마커 데이터
+      const filteredMarkers = data
         .map((place, i) => {
-          // 필터링 조건: certifiedType[0]이 selectedFilters에 포함되어 있어야 마커를 표시
           if (selectedFilters.includes(place.certifiedType[0])) {
             const position = new kakao.maps.LatLng(place.y, place.x);
-
-            // 마커 생성
             const marker = addMarker(position, i);
-
-            // 지도 범위를 확장
             bounds.extend(position);
-
             return marker;
           }
-
-          return null; // 필터링되지 않은 마커는 null로 처리
+          return null;
         })
-        .filter((marker) => marker !== null); // null 값을 제거
+        .filter((marker) => marker !== null); // null 값 제거
 
-      // 새 마커를 상태로 설정
-      if (newMarkers.length === 0) {
-        alert("해당 가치를 추구하는 가게가 없습니다.");
-        return;
+      if (filteredMarkers.length === 0) {
+        // 필터에 해당하는 마커가 없을 경우 경고창과 전체 마커 표시
+        alert(
+          "해당 가치를 추구하는 가게가 없습니다. 전체 검색 결과를 표시합니다."
+        );
+        setMarkers(allMarkers); // 전체 마커 표시
       } else {
-        setMarkers(newMarkers);
+        // 필터에 해당하는 마커가 있을 경우 해당 마커 표시
+        setMarkers(filteredMarkers);
       }
 
-      // 검색된 장소 위치를 기준으로 지도 범위를 재설정
+      // 지도 범위를 모든 마커에 맞게 설정
       map?.setBounds(bounds);
     }
 
