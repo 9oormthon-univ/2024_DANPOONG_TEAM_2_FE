@@ -1,93 +1,71 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import ProjectLankCard from "./project_lank_card";
+import token from "../token";
 
 const categories = [
-  { id: "animal", label: "🐶 동물 복지" },
-  { id: "region", label: "🌍 지역 생산" },
-  { id: "energy", label: "🌿 재생에너지" },
-  { id: "culture", label: "🏛️ 문화 보존" },
-  { id: "hire", label: "💪 취약계층 고용" },
-  { id: "footprint", label: "♻️ 탄소발자국 절감" },
+  { id: "ANIMAL_FRIENDLY", label: "🐶 동물 복지" },
+  { id: "LOCAL_PRODUCT", label: "🌍 지역 생산" },
+  { id: "RECYCLE_ENERGY", label: "🌿 재생에너지" },
+  { id: "CULTURAL_PRESERVE", label: "🏛️ 문화 보존" },
+  { id: "EMPLOY_VULNERABLE_CLASS", label: "💪 취약계층 고용" },
+  { id: "CO2_FOOTPRINT", label: "♻️ 탄소발자국 절감" },
+  { id: "ORGANIC", label: "🍀 유기농" },
 ];
 
-const dummyProjects = [
-  {
-    id: 1,
-    category: "animal",
-    title: "프로젝트명",
-    company: "업체명",
-    likes: 142,
-  },
-  {
-    id: 2,
-    category: "region",
-    title: "프로젝트명",
-    company: "업체명",
-    likes: 98,
-  },
-  {
-    id: 3,
-    category: "energy",
-    title: "프로젝트명",
-    company: "업체명",
-    likes: 75,
-  },
-  {
-    id: 4,
-    category: "culture",
-    title: "프로젝트명",
-    company: "업체명",
-    likes: 64,
-  },
-  {
-    id: 5,
-    category: "hire",
-    title: "프로젝트명",
-    company: "업체명",
-    likes: 82,
-  },
-  {
-    id: 6,
-    category: "footprint",
-    title: "프로젝트명",
-    company: "업체명",
-    likes: 55,
-  },
-  {
-    id: 7,
-    category: "animal",
-    title: "프로젝트명",
-    company: "업체명",
-    likes: 142,
-  },
-  {
-    id: 8,
-    category: "region",
-    title: "프로젝트명",
-    company: "업체명",
-    likes: 98,
-  },
-];
+interface Project {
+  id: number;
+  certifiedType: string[];
+  name: string;
+  profileImage: string;
+  fundingTarget: number;
+  fundingCurrent: number;
+  fundedCount: number;
+  likeCount: number;
+  images: string[0];
+}
 
 const ProjectLank: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const filteredProjects =
-    selectedCategory === "all"
-      ? dummyProjects
-      : dummyProjects.filter(
-          (project) => project.category === selectedCategory
+  console.log("보내는 selectedCategory", selectedCategory);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      setLoading(true);
+      try {
+        const response = await token.post(
+          "/api/store/list",
+          {
+            certifiedType:
+              selectedCategory === "all" ? undefined : selectedCategory,
+            page: 0,
+            size: 10,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
         );
+        console.log("API Response:", response.data);
+        setProjects(response.data.data || []);
+      } catch (error) {
+        console.error("Error fetching projects:", error);
+        setProjects([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProjects();
+  }, [selectedCategory]);
+
   return (
     <Container>
       <CategoryList>
-        <CategoryButton
-          isActive={selectedCategory === "all"}
-          onClick={() => setSelectedCategory("all")}
-        >
-          전체
-        </CategoryButton>
         {categories.map((category) => (
           <CategoryButton
             key={category.id}
@@ -98,19 +76,37 @@ const ProjectLank: React.FC = () => {
           </CategoryButton>
         ))}
       </CategoryList>
-      <ProjectGrid>
-        {filteredProjects.map((project) => (
-          <ProjectLankCard
-            key={project.id}
-            tag={
-              categories.find((cat) => cat.id === project.category)?.label || ""
-            }
-            category={project.company}
-            title={project.title}
-            likes={project.likes}
-          />
-        ))}
-      </ProjectGrid>
+      {loading ? (
+        <LoadingMessage>로딩 중...</LoadingMessage>
+      ) : (
+        <ProjectGrid>
+          {projects
+            .filter((project) =>
+              selectedCategory === "all"
+                ? true
+                : project.certifiedType.includes(selectedCategory)
+            )
+            .map((project) => (
+              <ProjectLankCard
+                key={project.id}
+                tag={
+                  project.certifiedType
+                    .map((type) =>
+                      categories.find(
+                        (cat) => cat.id.toLowerCase() === type.toLowerCase()
+                      )
+                    )
+                    .filter(Boolean)
+                    .map((cat) => cat?.label)
+                    .join(", ") || "기타"
+                }
+                category={project.name}
+                title={project.images}
+                likes={project.likeCount}
+              />
+            ))}
+        </ProjectGrid>
+      )}
     </Container>
   );
 };
@@ -154,6 +150,12 @@ const CategoryButton = styled.button<{ isActive?: boolean }>`
   &:hover {
     background-color: ${({ isActive }) => (isActive ? "#00b344" : "#e0e0e0")};
   }
+`;
+
+const LoadingMessage = styled.div`
+  text-align: center;
+  font-size: 16px;
+  color: #818787;
 `;
 
 const ProjectGrid = styled.div`

@@ -42,6 +42,7 @@ const Home: React.FC = () => {
           if (!data || data.statusCode != 200) {
             throw new Error("프로젝트 추천 가져오기 실패");
           }
+
           return data.data;
         })
         .then((data: Store[]) => {
@@ -75,6 +76,7 @@ const Home: React.FC = () => {
               category={store.category}
               title={store.name}
               likes={store.likeCount}
+              profileImage={store.profileImage}
             />
           ))}
         </HorizontalScrollContainer>
