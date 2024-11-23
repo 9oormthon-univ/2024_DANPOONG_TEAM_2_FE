@@ -43,8 +43,11 @@ const FundingBS = ({
 
   const handleMethod = (e: ChangeEvent<HTMLInputElement>) => {
     localStorage.setItem("fundingTarget", id);
-    if (e.target.id == "milage") setFundingMethod("milage");
-    else navigator("/coupon");
+    if (e.target.id === "mileage") {
+      setFundingMethod("mileage");
+    } else {
+      navigator("/coupon");
+    }
   };
 
   return (
@@ -89,7 +92,7 @@ const FundingBS = ({
                 </FundingMethod>
                 <input
                   type="radio"
-                  id="milage"
+                  id="mileage"
                   onChange={(e) => handleMethod(e)}
                 />
               </MethodCondainer>
