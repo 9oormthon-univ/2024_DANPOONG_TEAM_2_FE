@@ -16,6 +16,8 @@ import FundingSuccessPage from "../pages/fundingSuccessPage/FundingSuccessPage";
 import Category from "./category";
 import Mypage from "../pages/mypage/Mypage";
 import { path } from "framer-motion/client";
+import MyInterestValue from "../pages/mypage/MyInterestValue";
+import MyScrap from "../pages/mypage/MyScrap";
 
 const router = createBrowserRouter([
   { path: "/", element: <Login /> }, // 로그인 페이지
@@ -42,7 +44,11 @@ const router = createBrowserRouter([
   {
     path: "/mypage",
     element: <Layout />,
-    children: [{ path: "", element: <Mypage /> }],
+    children: [
+      { path: "", element: <Mypage /> },
+      { path: "social-value", element: <MyInterestValue />},
+      { path: "scrap", element: <MyScrap />},
+    ],
   }, // 마이페이지
   {
     path: "/map/:id",
