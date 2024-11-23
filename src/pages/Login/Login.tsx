@@ -86,8 +86,9 @@ const Login: React.FC = () => {
   // 카카오 로그인 버튼 클릭 시
   const kakaoHandleLogin = () => {
     localStorage.setItem("provider", "kakao"); // 선택된 소셜 로그인 제공자 저장
-    window.location.href =
-      "https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=c88d155ce18616f58d5b8694aafec094&redirect_uri=http://localhost:5173";
+    const clientId = import.meta.env.VITE_KAKAO_CLIENT_ID;
+    const redirectUri = import.meta.env.VITE_KAKAO_REDIRECT_URI;
+    window.location.href = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}`;
   };
 
   return (
