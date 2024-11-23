@@ -1,4 +1,3 @@
-import testImg from "../../assets/image.png";
 import populationIcon from "../../assets/projectDetail/populationIcon.svg";
 import starIcon from "../../assets/projectDetail/starIcon.svg";
 import { translateToKorean } from "../../utils/certifiedTypeConverter";

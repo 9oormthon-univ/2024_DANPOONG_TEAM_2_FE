@@ -1,5 +1,4 @@
 import GeneralNavBar from "../../component/generalNavBar/GeneralNavBar";
-import testImg from "../../assets/image.png";
 import populationIcon from "../../assets/projectDetail/populationIcon.svg";
 import starIcon from "../../assets/projectDetail/starIcon.svg";
 import FundingBS from "../../component/bottomSheet/FundingBS";
