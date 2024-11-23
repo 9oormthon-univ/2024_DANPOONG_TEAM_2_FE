@@ -10,7 +10,7 @@ export const StepInterestContainer = styled.div`
 
 export const InterestHeaderContainer = styled.div`
   width: 100%; 
-  height: 10%;
+  height: 5%;
   
 `;
 
@@ -18,10 +18,9 @@ export const InterestMainContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0px 20px;
-  margin-bottom: 50px;
   justify-content: flex-start;
   width: 100%;
-  height: 75%;
+  height: 85%;
 `;
 
 export const Title = styled.h2`
@@ -36,25 +35,27 @@ export const Title = styled.h2`
 export const Subtitle = styled.p`
   font-size: 14px;
   color: #666;
-  margin-bottom: 20px;
+  font-weight: 500;
+  margin-bottom: 40px;
 `;
 
 export const InterestList = styled.div`
 width: 100%;
   display: flex;
+  grid-template-columns: 1fr;
   flex-wrap: wrap;
-  gap: 15px;
+  gap: 10px;
 `;
 
 export const InterestItem = styled.div<{ selected: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 145px;
+  width: 100%;
   height: 50px;
-  border-radius: 25px;
-  border: 1px solid ${({ selected }) => (selected ? "#00df82" : "#ccc")};
-  background-color: ${({ selected }) => (selected ? "#f6fff8" : "white")};
+  border-radius: 12px;
+  border: 1px solid ${({ selected }) => (selected ? "#00df82" : "white")};
+  background-color: ${({ selected }) => (selected ? "#f6fff8" : "#F2F3F3")};
   color: ${({ selected }) => (selected ? "#00df82" : "#333")};
   font-size: 13px;
   font-weight: 500;
@@ -72,12 +73,11 @@ export const InterestBottomContainer = styled.div`
 
 export interface Props {
   onNext: () => void;
-  onBack: () => void;
   currentStep: number;
   totalSteps: number;
 }
 
-const StepSocialValue: React.FC<Props> = ({ onNext, onBack, currentStep, totalSteps }) => {
+const StepSocialValue: React.FC<Props> = ({ onNext, currentStep, totalSteps }) => {
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
 
   const interests = [
@@ -101,9 +101,6 @@ const StepSocialValue: React.FC<Props> = ({ onNext, onBack, currentStep, totalSt
   return (
     <StepInterestContainer>
       <InterestHeaderContainer>
-        <BackButton>
-          <img onClick={onBack} src="/assets/backArrow.png" />
-        </BackButton>
       </InterestHeaderContainer>
       <InterestMainContainer>
         <Title>당신의 관심 분야를 선택해주세요!</Title>

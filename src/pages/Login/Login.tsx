@@ -71,7 +71,7 @@ const Login: React.FC = () => {
 
       // 회원 유형에 따라 경로 설정
       if (memberType === "null") {
-        navigate("/select-member-type"); // 회원 유형 선택 페이지로 이동
+        navigate("/select-type"); // 회원 유형 선택 페이지로 이동
       } else {
         navigate("/home"); // 홈으로 이동
       }
