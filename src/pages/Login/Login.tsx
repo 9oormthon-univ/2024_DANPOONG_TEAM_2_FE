@@ -51,6 +51,9 @@ const Login: React.FC = () => {
 
       console.log("발급된 Access Token:", accessToken);
 
+      // 로컬 스토리지에 저장
+      localStorage.setItem("accessToken", accessToken);
+
       // Context에 토큰 저장
       setToken(accessToken);
 
@@ -79,8 +82,6 @@ const Login: React.FC = () => {
       }
     }
   };
-
-  
 
   // 카카오 로그인 버튼 클릭 시
   const kakaoHandleLogin = () => {
