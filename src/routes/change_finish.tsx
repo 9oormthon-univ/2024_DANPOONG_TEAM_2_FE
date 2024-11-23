@@ -25,7 +25,7 @@ const ChangeFinish: React.FC = () => {
       <Content>
         <SuccessIcon>✔</SuccessIcon>
         <Message>상품권으로 교환 완료!</Message>
-        <Amount>{myFundingAmount.toLocaleString()}권</Amount>
+        <Amount>{myFundingAmount.toLocaleString()}원 권</Amount>
       </Content>
       <ConfirmButton onClick={handleConfirm}>확인</ConfirmButton>
     </Container>

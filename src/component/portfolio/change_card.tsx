@@ -121,7 +121,8 @@ const FundingTitle = styled.p`
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
-  line-height: 22px; /* 157.143% */
+  line-height: 22px;
+  margin-right: 10px;
   letter-spacing: -0.408px;
 `;
 const FundingAmount = styled.p`

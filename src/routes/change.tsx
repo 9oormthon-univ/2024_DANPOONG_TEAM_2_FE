@@ -1,38 +1,66 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ChangeCard from "../component/portfolio/change_card";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import token from "../component/token";
+
+interface Project {
+  storeId: number;
+  storeName: string;
+  storePicture: string;
+  isProjectCompleted: boolean;
+  myFundingAmount: number;
+}
 
 const Change: React.FC = () => {
   const navigate = useNavigate();
-  const [projects, setProjects] = useState([
-    {
-      storeId: 1,
-      storeName: "민무네 찰옥수수",
-      storePicture: "https://via.placeholder.com/150",
-      isProjectCompleted: false,
-      myFundingAmount: 10000,
-    },
-    {
-      storeId: 2,
-      storeName: "차로 하는 이야기 녹차담",
-      storePicture: "https://via.placeholder.com/150",
-      isProjectCompleted: true,
-      myFundingAmount: 10000,
-    },
-  ]);
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleClick = (storeId: number, myFundingAmount: number) => {
-    navigate("/change_finish", {
-      state: { storeId, myFundingAmount },
-    });
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const response = await token.get("/api/fundings/my");
+        console.log("API Response:", response.data);
+
+        const projectData = response.data.data.myFundingInfoResDtos.map(
+          (item: any) => ({
+            storeId: item.storeId,
+            storeName: item.storeName,
+            storePicture: item.storePicture,
+            isProjectCompleted: item.isProjectCompleted,
+            myFundingAmount: item.myFundingAmount,
+          })
+        );
+        setProjects(projectData);
+        setLoading(false);
+      } catch (err) {
+        console.error("Error fetching projects:", err);
+        setError("프로젝트 데이터를 가져오는 데 실패했습니다.");
+        setLoading(false);
+      }
+    };
+
+    fetchProjects();
+  }, []);
+  const handleClick = () => {
+    navigate("/coupon_select");
   };
+
+  if (loading) {
+    return <div>로딩 중...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
 
   return (
     <div style={{ display: "flex", flexWrap: "wrap" }}>
       <Header>
         <BackButton onClick={() => navigate("/portfolio")}>{"<"}</BackButton>
-        <Title>투자 관리</Title>
+        <Title>교환하기</Title>
       </Header>
       {projects.map((project) => (
         <ChangeCard
@@ -42,7 +70,7 @@ const Change: React.FC = () => {
           storePicture={project.storePicture}
           isProjectCompleted={project.isProjectCompleted}
           myFundingAmount={project.myFundingAmount}
-          onClick={() => handleClick(project.storeId, project.myFundingAmount)}
+          onClick={() => handleClick()}
         />
       ))}
     </div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PortfolioList from "../component/portfolio/portfolio_list";
 import styled from "styled-components";
 import MonthlyReport from "../component/portfolio/MonthlyReport";
@@ -6,17 +6,36 @@ import PremiumPopup from "../component/portfolio/premium_popup";
 import ValueImportant from "../component/portfolio/value_important";
 import MyList from "../component/portfolio/my_list";
 import InvestPurpose from "../component/portfolio/invest_purpose";
+import token from "../component/token";
+
+interface UserData {
+  nickname: string;
+  totalMileageAmount: number;
+  favoriteCertifiedType: string;
+  investmentGoal: string;
+}
 
 const Portfolio: React.FC = () => {
-  const dummyData = {
-    userName: "모아",
-    topCategories: [
-      { category: "region", ratio: 70 },
-      { category: "energy", ratio: 30 },
-    ],
-  };
+  const [userData, setUserData] = useState<UserData | null>(null);
   const [isPopupVisible, setIsPopupVisible] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await token.get("/api/members");
+        console.log("API Response:", response.data);
+        setUserData(response.data.data);
+        setLoading(false);
+      } catch (err) {
+        console.error("Error fetching user data:", err);
+        setError("사용자 데이터를 가져오는 데 실패했습니다.");
+        setLoading(false);
+      }
+    };
 
+    fetchUserData();
+  }, []);
   const openPopup = () => {
     setIsPopupVisible(true);
   };
@@ -31,16 +50,16 @@ const Portfolio: React.FC = () => {
         <LogoContainer src="/assets/logo.svg" alt="Logo" />
       </Header>
       <Title>포트폴리오</Title>
-      <InvestPurpose />
-      <PortfolioList mileage={1200} />
+      <InvestPurpose goal={userData?.investmentGoal || "알 수 없음"} />
+      <PortfolioList mileage={userData?.totalMileageAmount || 0} />
       <HorizontalContainer>
         <MonthlyReport onOpenPopup={openPopup} />
         <MyList />
       </HorizontalContainer>
       {isPopupVisible && <PremiumPopup onClose={closePopup} />}
       <ValueImportant
-        userName={dummyData.userName}
-        topCategories={dummyData.topCategories}
+        nickname={userData?.nickname || "알 수 없음"}
+        favoriteCertifiedType={userData?.favoriteCertifiedType || "알 수 없음"}
       />
     </PortfolioContainer>
   );
@@ -86,8 +105,8 @@ const HorizontalContainer = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  gap: 1px;
-  margin-top: 20px;
+  gap: 10px;
+  margin-top: 10px;
 `;
 
 export default Portfolio;
