@@ -81,7 +81,9 @@ const Title = styled.h3`
   font-weight: 600;
   line-height: 22px;
   letter-spacing: -0.408px;
-  margin-right: 95px;
+  margin-right: 75px;
+  width: 80px;
+  text-align: left;
 `;
 
 const Likes = styled.div`
