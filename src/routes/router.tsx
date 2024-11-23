@@ -29,7 +29,6 @@ const router = createBrowserRouter([
       { path: "invest-list", element: <InvestList /> },
       { path: "map", element: <MapPage /> },
       { path: "map/:id", element: <ProjectDetailPage /> },
-      { path: "map/:id", element: <ProjectDetailPage /> },
       { path: "category", element: <Category /> },
     ],
   },
