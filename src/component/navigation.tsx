@@ -17,7 +17,7 @@ const Navigation: React.FC<NavigationProps> = ({ activeItem }) => {
     <NavContainer>
       <NavItem
         isActive={activeItem === "home"}
-        onClick={() => handleNavigation("/")}
+        onClick={() => handleNavigation("/home")}
       >
         <Icon
           src={
@@ -31,7 +31,7 @@ const Navigation: React.FC<NavigationProps> = ({ activeItem }) => {
       </NavItem>
       <NavItem
         isActive={activeItem === "category"}
-        onClick={() => handleNavigation("/category")}
+        onClick={() => handleNavigation("category")}
       >
         <Icon
           src={
@@ -45,7 +45,7 @@ const Navigation: React.FC<NavigationProps> = ({ activeItem }) => {
       </NavItem>
       <NavItem
         isActive={activeItem === "map"}
-        onClick={() => handleNavigation("/map")}
+        onClick={() => handleNavigation("map")}
       >
         <Icon
           src={
@@ -59,7 +59,7 @@ const Navigation: React.FC<NavigationProps> = ({ activeItem }) => {
       </NavItem>
       <NavItem
         isActive={activeItem === "portfolio"}
-        onClick={() => handleNavigation("/portfolio")}
+        onClick={() => handleNavigation("portfolio")}
       >
         <Icon
           src={
@@ -73,7 +73,7 @@ const Navigation: React.FC<NavigationProps> = ({ activeItem }) => {
       </NavItem>
       <NavItem
         isActive={activeItem === "mypage"}
-        onClick={() => handleNavigation("/mypage")}
+        onClick={() => handleNavigation("mypage")}
       >
         <Icon
           src={
