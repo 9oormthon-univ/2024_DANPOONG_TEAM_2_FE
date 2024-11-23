@@ -34,12 +34,6 @@ const Login: React.FC = () => {
     }
   }, []);
 
-  useEffect(() => {
-    if (token) {
-      console.log("Token 변경 후:", token);
-    }
-  }, [token]);
-
   const handleAuth = async (code: string, provider: string) => {
     try {
       // 토큰 요청
@@ -49,8 +43,6 @@ const Login: React.FC = () => {
       );
       const accessToken = response.data.data.accessToken;
 
-      console.log("발급된 Access Token:", accessToken);
-
       // 로컬 스토리지에 저장
       localStorage.setItem("accessToken", accessToken);
 
@@ -58,7 +50,6 @@ const Login: React.FC = () => {
       setToken(accessToken);
 
       // 사용자 정보 조회
-      console.log("Authorization 헤더:", `Bearer ${accessToken}`);
       const userInfoResponse = await axios.get(
         `https://moa-api.duckdns.org/api/members`,
         {
@@ -67,7 +58,6 @@ const Login: React.FC = () => {
       );
 
       const memberType = userInfoResponse.data.data.memberType;
-      console.log("회원 유형:", memberType);
 
       // 회원 유형에 따라 경로 설정
       if (memberType === "null") {
