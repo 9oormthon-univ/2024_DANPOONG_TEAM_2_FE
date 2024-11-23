@@ -1,17 +1,8 @@
-import axios from "axios";
+import token from "../component/token";
 
 export const getProjectRecommend = async () => {
-  let config = {
-    headers: {
-      Authorization: `Bearer ${import.meta.env.VITE_TEST_ACCESS_TOKEN}`,
-    },
-  };
-
   try {
-    const response = await axios.get(
-      `${import.meta.env.VITE_API_BASE_URL}/api/store/curation`,
-      config
-    );
+    const response = await token.get(`/api/store/curation`);
     return response.status === 200 ? response.data : null;
   } catch (error) {
     console.error("프로젝트 추천 조회 실패:", error);
