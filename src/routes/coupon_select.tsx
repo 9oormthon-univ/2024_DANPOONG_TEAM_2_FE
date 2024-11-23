@@ -22,6 +22,7 @@ const CouponSelect: React.FC = () => {
   const handleSelect = (myFundingAmount: number) => {
     setSelectedCoupon(myFundingAmount);
   };
+
   const handleConfirm = async () => {
     const selectedCouponData = coupons.find(
       (coupon) => coupon.myFundingAmount === selectedCoupon

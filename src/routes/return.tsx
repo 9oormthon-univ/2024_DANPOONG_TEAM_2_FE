@@ -38,6 +38,18 @@ const Return: React.FC = () => {
   const [data, setData] = useState<StoreData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const handleReturnMileage = async () => {
+    try {
+      const response = await token.post("/api/vouchers/return-mileage", {
+        storeId: id,
+      });
+      console.log("API Response:", response.data);
+      alert("마일리지가 성공적으로 반환되었습니다.");
+    } catch (error) {
+      console.error("Error while returning mileage:", error);
+      alert("마일리지 반환 중 오류가 발생했습니다.");
+    }
+  };
 
   useEffect(() => {
     console.log("useEffect triggered with id:", id);
@@ -144,13 +156,11 @@ const Return: React.FC = () => {
         }
       />
       <Divider />
-      <ButtonContainer>
-        {isFinished ? (
-          <ActionButton>리턴 받기</ActionButton>
-        ) : (
-          <InactiveButton>아직 진행 중이에요.</InactiveButton>
-        )}
-      </ButtonContainer>
+      {isFinished ? (
+        <ActionButton onClick={handleReturnMileage}>리턴 받기</ActionButton>
+      ) : (
+        <InactiveButton>아직 진행 중이에요.</InactiveButton>
+      )}
     </Container>
   );
 };
@@ -379,5 +389,3 @@ const InactiveButton = styled.div`
   border-radius: 8px;
   margin-top: 40px;
 `;
-
-const ButtonContainer = styled.div``;
