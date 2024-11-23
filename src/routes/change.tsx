@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ChangeCard from "../component/portfolio/change_card";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
 const Change: React.FC = () => {
   const navigate = useNavigate();
@@ -29,6 +30,10 @@ const Change: React.FC = () => {
 
   return (
     <div style={{ display: "flex", flexWrap: "wrap" }}>
+      <Header>
+        <BackButton onClick={() => navigate("/portfolio")}>{"<"}</BackButton>
+        <Title>투자 관리</Title>
+      </Header>
       {projects.map((project) => (
         <ChangeCard
           key={project.storeId}
@@ -43,5 +48,37 @@ const Change: React.FC = () => {
     </div>
   );
 };
+const Header = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  margin-top: 20px;
+`;
 
+const BackButton = styled.button`
+  background: none;
+  border: none;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+  margin-right: 5px;
+  margin-left: 10px;
+  margin-bottom: 5px;
+  &:hover {
+    color: #00c853;
+  }
+`;
+
+const Title = styled.h1`
+  color: #000;
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: -0.408px;
+  margin-left: 120px;
+`;
 export default Change;

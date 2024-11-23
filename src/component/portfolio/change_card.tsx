@@ -20,18 +20,21 @@ const ChangeCard: React.FC<ChangeCardProps> = ({
 }) => {
   return (
     <CardContainer>
-      <ImageContainer>
-        <Image src={storePicture} alt={`${storeName} 이미지`} />
-      </ImageContainer>
-      <Details>
-        <ProjectStatus>
-          {isProjectCompleted ? "완료된 프로젝트" : "진행 중인 프로젝트"}
-        </ProjectStatus>
-        <StoreName>{storeName}</StoreName>
-        <FundingAmount>
-          나의 펀딩 금액 {myFundingAmount.toLocaleString()}원
-        </FundingAmount>
-      </Details>
+      <HorizontalContainer>
+        <ImageContainer>
+          <Image src={storePicture} alt={`${storeName} 이미지`} />
+        </ImageContainer>
+        <Details>
+          <ProjectStatus>
+            {isProjectCompleted ? "완료된 프로젝트" : "진행 중인 프로젝트"}
+          </ProjectStatus>
+          <StoreName>{storeName}</StoreName>
+          <HorizontalContainer>
+            <FundingTitle>나의 펀딩 금액</FundingTitle>
+            <FundingAmount> {myFundingAmount.toLocaleString()}원</FundingAmount>
+          </HorizontalContainer>
+        </Details>
+      </HorizontalContainer>
       <ActionButton
         completed={isProjectCompleted}
         onClick={() => onClick(storeId)}
@@ -45,25 +48,36 @@ const ChangeCard: React.FC<ChangeCardProps> = ({
 export default ChangeCard;
 
 const CardContainer = styled.div`
-  width: 300px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  background-color: #fff;
+  width: 330px;
+  height: 210px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
   overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 16px;
+  padding-left: 16px;
+  padding-right: 16px;
   margin: 16px;
 `;
 
-const ImageContainer = styled.div`
-  width: 100%;
-  height: 150px;
-  background-color: #f0f0f0;
+const HorizontalContainer = styled.div`
   display: flex;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
+  gap: 1px;
+  margin-top: 15px;
+`;
+
+const ImageContainer = styled.div`
+  width: 100px;
+  height: 100px;
+  flex-shrink: 0;
+  background-color: #f0f0f0;
+  margin-right: 30px;
 `;
 
 const Image = styled.img`
@@ -79,22 +93,45 @@ const Details = styled.div`
 `;
 
 const ProjectStatus = styled.p`
+  font-family: Pretendard;
   font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 22px;
+  letter-spacing: -0.408px;
   color: ${({ children }) =>
-    children === "완료된 프로젝트" ? "#36c787" : "#03624c"};
+    children === "완료된 프로젝트" ? "#818787" : "#03624C"};
   font-weight: bold;
   margin-bottom: 8px;
 `;
 
 const StoreName = styled.h3`
-  font-size: 18px;
-  color: #333;
-  margin-bottom: 4px;
+  color: #030f0f;
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 22px; /* 122.222% */
+  letter-spacing: -0.408px;
 `;
 
-const FundingAmount = styled.p`
+const FundingTitle = styled.p`
+  color: #030f0f;
+  font-family: Pretendard;
   font-size: 14px;
-  color: #666;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 22px; /* 157.143% */
+  letter-spacing: -0.408px;
+`;
+const FundingAmount = styled.p`
+  color: #030f0f;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 22px; /* 157.143% */
+  letter-spacing: -0.408px;
 `;
 
 const ActionButton = styled.button<{ completed: boolean }>`
@@ -104,7 +141,14 @@ const ActionButton = styled.button<{ completed: boolean }>`
   color: #fff;
   border: none;
   border-radius: 4px;
+  font-family: Pretendard;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 22px;
+  letter-spacing: -0.408px;
   font-size: 16px;
+  margin-top: 10px;
   cursor: ${({ completed }) => (completed ? "pointer" : "not-allowed")};
   pointer-events: ${({ completed }) => (completed ? "auto" : "none")};
   transition: background-color 0.3s;
