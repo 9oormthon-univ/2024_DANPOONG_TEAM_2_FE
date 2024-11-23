@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import Navigation from "./navigation";
 import styled from "styled-components";
 import { Outlet, useLocation } from "react-router-dom";
-
+import { useAuth } from "../AuthContext";
 const Layout: React.FC = () => {
   const location = useLocation();
+  const { token } = useAuth();
+  
+  console.log("홈의 useAuth의 AceessToken 확인: ", token); // 홈에 토큰 값 확인
 
   const getActiveItem = () => {
     if (location.pathname.startsWith("/map")) {
@@ -30,9 +33,12 @@ const Layout: React.FC = () => {
     "home" | "category" | "map" | "portfolio" | "mypage"
   >(getActiveItem());
 
+    
   React.useEffect(() => {
     setActiveItem(getActiveItem());
   }, [location]);
+
+  
 
   return (
     <Container>

@@ -17,7 +17,7 @@ const Navigation: React.FC<NavigationProps> = ({ activeItem }) => {
     <NavContainer>
       <NavItem
         isActive={activeItem === "home"}
-        onClick={() => handleNavigation("/")}
+        onClick={() => handleNavigation("/home")}
       >
         <Icon
           src={
