@@ -1,15 +1,15 @@
 import axios from "axios";
 
-const token = axios.create({
-  baseURL: "https://moa-api.duckdns.org",
+const axiosInstance = axios.create({
+  baseURL: import.meta.env.VITE_BACKEND_URL,
 });
 
-const TEST_ACCESS_TOKEN =
-  "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJybGRuZDEyMzQ1NUBuYXZlci5jb20iLCJpYXQiOjE3MzIyNTQ3NDQsImV4cCI6MTczMjg1OTU0NH0.lFD6Cy-x4uFXFVxbEafl3XUTZ4OHswydVEJWTI68Kg8WlvMl7SYcYmnxUjLf7ZSnYPrKmlK_GmHZQeb3XlPMAQ";
-
-token.interceptors.request.use(
+axiosInstance.interceptors.request.use(
   (config) => {
-    config.headers.Authorization = `Bearer ${TEST_ACCESS_TOKEN}`;
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
     return config;
   },
   (error) => {
@@ -17,4 +17,4 @@ token.interceptors.request.use(
   }
 );
 
-export default token;
+export default axiosInstance;
