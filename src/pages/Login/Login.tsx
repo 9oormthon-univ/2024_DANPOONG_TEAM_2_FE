@@ -21,7 +21,7 @@ import axios from "axios";
 const Login: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>("investor"); // 투자자 회원 기본값
   const navigate = useNavigate();
-  const { token, setToken } = useAuth();
+  const { setToken } = useAuth();
   // 인증 로직 처리
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
