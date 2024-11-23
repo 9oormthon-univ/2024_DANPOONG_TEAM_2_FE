@@ -80,7 +80,7 @@ const StoreName = styled.div`
   font-weight: 500;
   line-height: 22px;
   letter-spacing: -0.408px;
-  margin-right: 40px;
+  align-item: left;
 `;
 
 const Points = styled.div`

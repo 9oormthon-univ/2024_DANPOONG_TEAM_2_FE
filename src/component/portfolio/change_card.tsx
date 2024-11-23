@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import token from "../token";
 
 interface ChangeCardProps {
   storeId: number;
@@ -7,7 +8,6 @@ interface ChangeCardProps {
   storePicture: string;
   isProjectCompleted: boolean;
   myFundingAmount: number;
-  onClick: (storeId: number) => void;
 }
 
 const ChangeCard: React.FC<ChangeCardProps> = ({
@@ -16,8 +16,32 @@ const ChangeCard: React.FC<ChangeCardProps> = ({
   storePicture,
   isProjectCompleted,
   myFundingAmount,
-  onClick,
 }) => {
+  const [loading, setLoading] = useState(false);
+  const [isReturned, setIsReturned] = useState(false);
+
+  const handleReturnClick = async (storeId: number) => {
+    if (!isProjectCompleted || isReturned) return;
+
+    try {
+      setLoading(true);
+      console.log("리턴 요청 중:", storeId);
+
+      const response = await token.post("/api/vouchers/return-mileage", {
+        storeId,
+      });
+
+      console.log("리턴 성공:", response.data);
+      alert("마일리지가 성공적으로 리턴되었습니다!");
+      setIsReturned(true);
+    } catch (error) {
+      console.error("리턴 요청 실패:", error);
+      alert("리턴 요청에 실패했습니다. 다시 시도해주세요.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <CardContainer>
       <HorizontalContainer>
@@ -36,10 +60,17 @@ const ChangeCard: React.FC<ChangeCardProps> = ({
         </Details>
       </HorizontalContainer>
       <ActionButton
-        completed={isProjectCompleted}
-        onClick={() => onClick(storeId)}
+        completed={!loading && isProjectCompleted}
+        disabled={isReturned || !isProjectCompleted}
+        onClick={() => handleReturnClick(storeId)}
       >
-        {isProjectCompleted ? "리턴 받기" : "진행 중"}
+        {loading
+          ? "처리 중..."
+          : isReturned
+          ? "리턴 완료"
+          : isProjectCompleted
+          ? "리턴 받기"
+          : "진행 중"}
       </ActionButton>
     </CardContainer>
   );
@@ -111,7 +142,7 @@ const StoreName = styled.h3`
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
-  line-height: 22px; /* 122.222% */
+  line-height: 22px;
   letter-spacing: -0.408px;
 `;
 
@@ -125,13 +156,14 @@ const FundingTitle = styled.p`
   margin-right: 10px;
   letter-spacing: -0.408px;
 `;
+
 const FundingAmount = styled.p`
   color: #030f0f;
   font-family: Pretendard;
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
-  line-height: 22px; /* 157.143% */
+  line-height: 22px;
   letter-spacing: -0.408px;
 `;
 
@@ -150,8 +182,8 @@ const ActionButton = styled.button<{ completed: boolean }>`
   letter-spacing: -0.408px;
   font-size: 16px;
   margin-top: 10px;
-  cursor: ${({ completed }) => (completed ? "pointer" : "not-allowed")};
-  pointer-events: ${({ completed }) => (completed ? "auto" : "none")};
+  cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
+  pointer-events: ${({ disabled }) => (disabled ? "none" : "auto")};
   transition: background-color 0.3s;
 
   &:hover {

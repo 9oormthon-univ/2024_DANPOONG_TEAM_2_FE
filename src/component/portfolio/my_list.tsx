@@ -24,6 +24,7 @@ const Card = styled.div`
   border-radius: 10px;
   border: 1px solid #d9d9d9;
   margin-top: 10px;
+  margin-right: 15px;
   padding: 20px;
   text-align: center;
   display: flex;
