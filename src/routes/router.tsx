@@ -15,11 +15,19 @@ import StepMemberType from "../component/Signup/StepMemberType";
 import FundingSuccessPage from "../pages/fundingSuccessPage/FundingSuccessPage";
 import Category from "./category";
 import Mypage from "../pages/mypage/Mypage";
+<<<<<<< HEAD
+=======
+
+>>>>>>> 231afb564c23d2685b75e911672c3141faa9efe5
 import Change from "./change";
 import ChangeFinish from "./change_finish";
 import { path } from "framer-motion/client";
 import MyInterestValue from "../pages/mypage/MyInterestValue";
 import MyScrap from "../pages/mypage/MyScrap";
+<<<<<<< HEAD
+=======
+
+>>>>>>> 231afb564c23d2685b75e911672c3141faa9efe5
 
 const router = createBrowserRouter([
   { path: "/", element: <Login /> }, // 로그인 페이지
