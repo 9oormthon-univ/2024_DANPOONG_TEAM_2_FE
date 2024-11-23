@@ -53,7 +53,7 @@ const router = createBrowserRouter([
   { path: "/return/:invest_id", element: <Return /> }, // 반환
   { path: "/coupon_select", element: <CouponSelect /> }, // 쿠폰 선택
   { path: "/signup", element: <Signup /> }, // 회원가입
-  { path: "/select-member-type", element: <StepMemberType /> }, // 회원 유형 선택
+  { path: "/select-type", element: <StepMemberType /> }, // 회원 유형 선택
   { path: "/fundingSuccess", element: <FundingSuccessPage /> }, // 펀딩 성공 페이지
 ]);
 
