@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 interface MileageHeaderProps {
@@ -6,13 +7,21 @@ interface MileageHeaderProps {
 }
 
 const MileageHeader: React.FC<MileageHeaderProps> = ({ mileage }) => {
+  const navigate = useNavigate();
+
+  const handleChange = () => {
+    navigate("/change");
+  };
+  const handleReturnCheck = () => {
+    navigate("/return-check");
+  };
   return (
     <Container>
       <Title>나의 마일리지</Title>
       <Mileage>{mileage} P</Mileage>
       <HorizontalContainer>
-        <ChangeButton>교환하기</ChangeButton>
-        <CheckButton>리턴 확인하기</CheckButton>
+        <ChangeButton onClick={handleChange}>교환하기</ChangeButton>
+        <CheckButton onClick={handleReturnCheck}>리턴 확인하기</CheckButton>
       </HorizontalContainer>
     </Container>
   );

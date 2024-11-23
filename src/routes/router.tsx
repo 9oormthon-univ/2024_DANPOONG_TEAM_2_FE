@@ -15,6 +15,8 @@ import StepMemberType from "../component/Signup/StepMemberType";
 import FundingSuccessPage from "../component/fundingSuccess/FundingSuccess";
 import Category from "./category";
 import Mypage from "../pages/mypage/Mypage";
+import Change from "./change";
+import ChangeFinish from "./change_finish";
 
 const router = createBrowserRouter([
   { path: "/", element: <Login /> }, // 로그인 페이지
@@ -45,12 +47,14 @@ const router = createBrowserRouter([
   }, // 마이페이지
   { path: "/map/:id", element: <ProjectDetailPage /> }, // 프로젝트 상세 페이지
   { path: "/coupon", element: <Coupon /> }, // 쿠폰
+  { path: "/invest-list", element: <InvestList /> }, //투자관리
+  { path: "/change", element: <Change /> },
+  { path: "/change_finish", element: <ChangeFinish /> },
   { path: "/return/:invest_id", element: <Return /> }, // 반환
   { path: "/coupon_select", element: <CouponSelect /> }, // 쿠폰 선택
   { path: "/signup", element: <Signup /> }, // 회원가입
   { path: "/select-member-type", element: <StepMemberType /> }, // 회원 유형 선택
   { path: "/fundingSuccess", element: <FundingSuccessPage /> }, // 펀딩 성공 페이지
 ]);
-
 
 export default router;
