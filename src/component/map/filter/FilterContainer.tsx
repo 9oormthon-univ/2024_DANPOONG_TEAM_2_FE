@@ -1,18 +1,16 @@
 import FilterBtn from "./FilterBtn";
 import styled from "styled-components";
+import { values } from "../../../constants/Values";
 
 export default function FilterContainer() {
-  const filterDummy = [
-    { id: 0, content: "동물복지" },
-    { id: 1, content: "지역생산" },
-    { id: 2, content: "재생에너지" },
-    { id: 3, content: "하암" },
-    { id: 4, content: "졸리다" },
-  ];
   return (
     <Container>
-      {filterDummy.map((filter) => (
-        <FilterBtn key={filter.id} value={filter.content} />
+      {Object.values(values).map((value) => (
+        <FilterBtn
+          key={value.englishName}
+          id={value.englishName}
+          value={value.name}
+        />
       ))}
     </Container>
   );
