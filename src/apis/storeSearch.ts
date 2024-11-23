@@ -1,16 +1,10 @@
-import axios from "axios";
+import axiosInstance from "../component/token";
 
 export const storeSearch = async (keyword: string) => {
   try {
-    const response = await axios.get(
-      `${import.meta.env.VITE_API_BASE_URL}/api/store/map/search`,
-      {
-        params: { address: keyword },
-        headers: {
-          Authorization: `Bearer ${import.meta.env.VITE_TEST_ACCESS_TOKEN}`,
-        },
-      }
-    );
+    const response = await axiosInstance.get(`/api/store/map/search`, {
+      params: { address: keyword },
+    });
     if (response.status === 200) {
       return response.data;
     } else {

@@ -1,16 +1,8 @@
-import axios from "axios";
+import axiosInstance from "../component/token";
 
 export const getStoreInfo = async (id: number) => {
-  let config = {
-    headers: {
-      Authorization: `Bearer ${import.meta.env.VITE_TEST_ACCESS_TOKEN}`,
-    },
-  };
   try {
-    const response = await axios.get(
-      `${import.meta.env.VITE_API_BASE_URL}/api/store/${id}`,
-      config
-    );
+    const response = await axiosInstance.get(`/api/store/${id}`);
     if (response.status === 200) {
       console.log("상점 정보", response.data);
       return response.data;

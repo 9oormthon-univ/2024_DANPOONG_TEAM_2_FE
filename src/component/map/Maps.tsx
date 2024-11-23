@@ -4,6 +4,7 @@ import { Map, MapMarker } from "react-kakao-maps-sdk";
 import { useNavigate } from "react-router-dom";
 import markerIcon from "../../assets/map/markerIcon.svg";
 import { storeSearch } from "../../apis/storeSearch";
+import { useMarkerStore } from "../../stores/useMarkerStore";
 
 // head에 작성한 Kakao API 불러오기
 const { kakao } = window as any;
@@ -17,6 +18,7 @@ const Maps = ({ searchKeyword, selectedFilters }: propsType) => {
   const [map, setMap] = useState<kakao.maps.Map | null>(null);
   const [markers, setMarkers] = useState<any[]>([]);
   const mapRef = useRef<kakao.maps.Map>(null);
+  const { setGlobalMarkers } = useMarkerStore();
 
   // 초기 지도 중심 : 카카오 판교 아지트
   const initial_lat = 37.39556485367976;
@@ -66,20 +68,12 @@ const Maps = ({ searchKeyword, selectedFilters }: propsType) => {
       // 기존 마커 제거
       removeMarker();
 
-      // 전체 검색 결과 마커 데이터
-      const allMarkers = data.map((place, i) => {
-        const position = new kakao.maps.LatLng(place.y, place.x);
-        const marker = addMarker(position, i);
-        bounds.extend(position);
-        return marker;
-      });
-
       // 필터링된 마커 데이터
       const filteredMarkers = data
-        .map((place, i) => {
+        .map((place) => {
           if (selectedFilters.includes(place.certifiedType[0])) {
             const position = new kakao.maps.LatLng(place.y, place.x);
-            const marker = addMarker(position, i);
+            const marker = addMarker(position, place.storeId);
             bounds.extend(position);
             return marker;
           }
@@ -92,10 +86,19 @@ const Maps = ({ searchKeyword, selectedFilters }: propsType) => {
         alert(
           "해당 가치를 추구하는 가게가 없습니다. 전체 검색 결과를 표시합니다."
         );
+        // 전체 검색 결과 마커 데이터
+        const allMarkers = data.map((place) => {
+          const position = new kakao.maps.LatLng(place.y, place.x);
+          const marker = addMarker(position, place.storeId);
+          bounds.extend(position);
+          return marker;
+        });
         setMarkers(allMarkers); // 전체 마커 표시
+        setGlobalMarkers(allMarkers);
       } else {
         // 필터에 해당하는 마커가 있을 경우 해당 마커 표시
         setMarkers(filteredMarkers);
+        setGlobalMarkers(filteredMarkers);
       }
 
       // 지도 범위를 모든 마커에 맞게 설정
@@ -137,7 +140,7 @@ const Maps = ({ searchKeyword, selectedFilters }: propsType) => {
       {markers.map((marker) => (
         <MapMarker
           key={marker.storeId}
-          image={{ src: markerIcon, size: { width: 13, height: 13 } }}
+          image={{ src: markerIcon, size: { width: 15, height: 15 } }}
           position={{
             lat: marker.getPosition().getLat(),
             lng: marker.getPosition().getLng(),

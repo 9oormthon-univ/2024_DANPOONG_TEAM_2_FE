@@ -51,7 +51,7 @@ const router = createBrowserRouter([
     ],
   }, // 마이페이지
   {
-    path: "/map/:id",
+    path: "/map/:storeId",
     element: <Layout />,
     children: [{ path: "", element: <ProjectDetailPage /> }],
   }, // 프로젝트 상세 페이지

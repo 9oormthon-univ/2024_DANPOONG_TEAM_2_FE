@@ -1,5 +1,4 @@
 import GeneralNavBar from "../../component/generalNavBar/GeneralNavBar";
-import testImg from "../../assets/image.png";
 import populationIcon from "../../assets/projectDetail/populationIcon.svg";
 import starIcon from "../../assets/projectDetail/starIcon.svg";
 import FundingBS from "../../component/bottomSheet/FundingBS";
@@ -33,17 +32,17 @@ const ProjectDetailPage = () => {
     profileImg: string;
   }>();
   const goToFundingSuccess = () => setPage("fundingsuccess");
-  const { id } = useParams<{ id: string }>();
-  if (!id) {
+  const { storeId } = useParams<{ storeId: string }>();
+  if (!storeId) {
     throw new Error("Error : 데이터를 불러오지 못했습니다.");
   }
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await getStoreInfo(parseInt(id, 10));
+        const response = await getStoreInfo(parseInt(storeId, 10));
         if (response) {
-          console.log(response.data);
+          console.log("디테일", response.data);
           setData(response.data); // API 응답 데이터를 상태에 저장
           setSuccessPageProps({
             name: response.data.name,
@@ -57,7 +56,7 @@ const ProjectDetailPage = () => {
       }
     };
     fetchData();
-  }, [id]);
+  }, [storeId]);
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState<boolean>(false);
 
   if (page === "detail" && data) {
@@ -65,9 +64,9 @@ const ProjectDetailPage = () => {
       <S.Page>
         <GeneralNavBar hasBackBtn={true} hasRightBtn={true} />
         <S.ImageContainer>
-          <Image src={testImg} />
-          <Image src={testImg} />
-          <Image src={testImg} />
+          {data.images?.map((img) => (
+            <Image src={img} />
+          ))}
         </S.ImageContainer>
         <S.Content>
           <S.DefaultContainer>
