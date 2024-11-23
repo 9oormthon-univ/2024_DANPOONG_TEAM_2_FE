@@ -2,7 +2,7 @@ import useScrapStore from "../stores/useScrapStore";
 import postScarpStore from "../apis/postScrapStore";
 import deleteScrapStore from "../apis/deleteScrapStore";
 import favIcon from "../assets/projectDetail/favIcon.svg";
-
+import favIconFill from "../assets/projectDetail/favIconFill.svg";
 const ScrapButton = ({ storeId }: { storeId: number }) => {
   const { scraps, addScrap, removeScrap } = useScrapStore(); // Zustand 훅
   const isScraped = scraps.includes(storeId);
@@ -30,8 +30,18 @@ const ScrapButton = ({ storeId }: { storeId: number }) => {
     }
   };
 
-  if (isScraped) return <button onClick={unScrapStore}>스크랩 취소</button>;
-  else return <button onClick={scrapStore}>스크랩</button>;
+  if (isScraped)
+    return (
+      <button onClick={unScrapStore}>
+        <img src={favIconFill} height={23} />
+      </button>
+    );
+  else
+    return (
+      <button onClick={scrapStore}>
+        <img src={favIcon} height={23} />
+      </button>
+    );
 };
 
 export default ScrapButton;
