@@ -8,6 +8,7 @@ interface ChangeCardProps {
   storePicture: string;
   isProjectCompleted: boolean;
   myFundingAmount: number;
+  onClick: () => void;
 }
 
 const ChangeCard: React.FC<ChangeCardProps> = ({

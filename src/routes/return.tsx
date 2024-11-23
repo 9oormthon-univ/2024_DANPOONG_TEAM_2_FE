@@ -29,7 +29,7 @@ interface StoreData {
   endAt: string;
   fundedCount: number;
   likeCount: number;
-  isFinished: boolean; // 추가된 필드
+  isFinished: boolean;
 }
 
 const Return: React.FC = () => {
@@ -90,7 +90,6 @@ const Return: React.FC = () => {
     name,
     category,
     profileImage,
-    caption,
     fundingTarget,
     fundingCurrent,
     images,
