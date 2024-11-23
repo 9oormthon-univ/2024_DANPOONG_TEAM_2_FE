@@ -46,12 +46,12 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       { path: "", element: <Mypage /> },
-      { path: "social-value", element: <MyInterestValue />},
-      { path: "scrap", element: <MyScrap />},
+      { path: "social-value", element: <MyInterestValue /> },
+      { path: "scrap", element: <MyScrap /> },
     ],
   }, // 마이페이지
   {
-    path: "/map/:id",
+    path: "/map/:storeId",
     element: <Layout />,
     children: [{ path: "", element: <ProjectDetailPage /> }],
   }, // 프로젝트 상세 페이지

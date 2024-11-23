@@ -1,16 +1,16 @@
 export default interface IProjectInfo {
-  id: number | undefined;
+  storeId: number | undefined;
   name: string | undefined;
   profileImg: string | undefined;
   caption: string | undefined;
-  fundingTarget: number | 0;
-  fundingCurrent: number | 0;
+  fundingTarget: number;
+  fundingCurrent: number;
   images?: string[] | undefined;
   content: string | undefined;
   address: string;
   x: number;
   y: number;
   certifiedType: string[] | undefined;
-  fundedCount: number | 0;
-  likeCount: number | 0;
+  fundedCount: number;
+  likeCount: number;
 }

@@ -23,7 +23,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import getStoreInfo from "../../apis/getStoreInfo";
 import IProjectInfo from "../../types/ProjectnfoType";
-import { translateToKorean } from "../../utils/CertifiedTypeConverter";
+import { translateToKorean } from "../../utils/certifiedTypeConverter";
 
 const ProjectDetailPage = () => {
   const [page, setPage] = useState("detail");
@@ -33,15 +33,15 @@ const ProjectDetailPage = () => {
     profileImg: string;
   }>();
   const goToFundingSuccess = () => setPage("fundingsuccess");
-  const { id } = useParams<{ id: string }>();
-  if (!id) {
+  const { storeId } = useParams<{ storeId: string }>();
+  if (!storeId) {
     throw new Error("Error : 데이터를 불러오지 못했습니다.");
   }
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await getStoreInfo(parseInt(id, 10));
+        const response = await getStoreInfo(parseInt(storeId, 10));
         if (response) {
           console.log(response.data);
           setData(response.data); // API 응답 데이터를 상태에 저장
@@ -57,7 +57,7 @@ const ProjectDetailPage = () => {
       }
     };
     fetchData();
-  }, [id]);
+  }, [storeId]);
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState<boolean>(false);
 
   if (page === "detail" && data) {

@@ -1,8 +1,8 @@
 import { useMemo, useState } from "react";
 import { useDragControls } from "framer-motion";
 import useMeasure from "react-use-measure";
-import { projectDetailDummy } from "../../moks/projectDetailDummy";
 import ProjectPrev from "../projectPrev/ProjectPrev";
+import { useMarkerStore } from "../../stores/useMarkerStore";
 import {
   BackgroundOverlay,
   SheetBackground,
@@ -24,14 +24,14 @@ const ProjectListBS = ({
   const [isOpened, setIsOpened] = useState(false);
   const [contentRef, contentBounds] = useMeasure();
   const dragControls = useDragControls();
-
   const animateState = isOpened ? "opened" : "closed";
+  const { globalMarkers } = useMarkerStore();
 
   const expandedHeight = useMemo(
     () => Math.min(contentBounds.height + 100, window.innerHeight - 110),
     [contentBounds.height]
   );
-
+  console.log("글로벌 마커", globalMarkers);
   return (
     <>
       <BackgroundOverlay
@@ -65,7 +65,7 @@ const ProjectListBS = ({
         dragListener={false}
         dragConstraints={{ top: 0, bottom: 0 }}
         dragElastic={0.2}
-        onDragEnd={(event, info) => {
+        onDragEnd={(_, info) => {
           const offsetThreshold = 150;
           const deltaThreshold = 5;
 
@@ -91,9 +91,10 @@ const ProjectListBS = ({
             <Title>{title}</Title>
           </TitleContainer>
           <Projects>
-            {projectDetailDummy.map((proj) => {
-              return <ProjectPrev data={proj} />;
-            })}
+            {globalMarkers.length > 0 &&
+              globalMarkers.map((proj) => {
+                return <ProjectPrev storeId={proj.storeId} />;
+              })}
           </Projects>
         </SheetContentWrapper>
       </SheetBackground>
