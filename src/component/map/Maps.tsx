@@ -3,6 +3,7 @@ import { propsType } from "./searchBar/SearchBar";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import { useNavigate } from "react-router-dom";
 import markerIcon from "../../assets/map/markerIcon.svg";
+import { storeSearch } from "../../apis/storeSearch";
 
 // head에 작성한 Kakao API 불러오기
 const { kakao } = window as any;
@@ -21,57 +22,59 @@ const Maps = (props: propsType) => {
   useEffect(() => {
     if (!map) return;
 
-    // 장소 검색 객체
-    const ps = new kakao.maps.services.Places();
-
-    // 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성
+    // 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우 생성
     const infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
 
     searchPlaces();
 
     function searchPlaces() {
-      let keyword = props.searchKeyword;
+      const keyword = props.searchKeyword;
 
       if (!keyword.trim()) {
         console.log("키워드를 입력해주세요!");
         return;
       }
 
-      // 장소검색 객체를 통해 키워드로 장소검색을 요청
-      ps.keywordSearch(keyword, placesSearchCB);
+      // 키워드에 따른 상점 검색
+      const getStores = async (keyword: string) => {
+        try {
+          const response = await storeSearch(keyword); // 서버에서 데이터 검색
+          if (response && response.data) {
+            console.log("서버 API 검색 결과:", response.data);
+            if (response.data.length <= 0) {
+              alert("검색 결과가 없습니다!");
+              return;
+            }
+            placesSearchCB(response.data); // 검색 결과를 placesSearchCB로 전달
+          } else {
+            console.log("No response data:", response);
+          }
+        } catch (error) {
+          console.error("Error: 검색 요청 실패", error);
+        }
+      };
+
+      getStores(keyword); // getStores 실행
     }
 
-    // 장소검색이 완료됐을 때 호출되는 콜백함수
-    function placesSearchCB(data: any, status: any) {
-      if (status === kakao.maps.services.Status.OK) {
-        displayPlaces(data);
-      } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
-        alert("검색 결과가 존재하지 않습니다.");
-        return;
-      } else if (status === kakao.maps.services.Status.ERROR) {
-        alert("검색 결과 중 오류가 발생했습니다.");
-        return;
-      }
-    }
-
-    // 검색 결과 목록과 마커를 표출하는 함수
-    function displayPlaces(places: any[]) {
+    // 장소 검색 완료 후 호출되는 콜백 함수
+    function placesSearchCB(data: any[]) {
       const bounds = new kakao.maps.LatLngBounds();
       // 기존 마커 제거
       removeMarker();
 
-      const newMarkers = places.map((place, i) => {
+      const newMarkers = data.map((place, i) => {
         const position = new kakao.maps.LatLng(place.y, place.x);
 
-        // 마커를 생성
-        const marker = addMarker(position, i, place.place_name);
+        // 마커 생성
+        const marker = addMarker(position, i);
 
         // 지도 범위를 확장
         bounds.extend(position);
 
         // 마커에 마우스 이벤트 추가
         kakao.maps.event.addListener(marker, "mouseover", function () {
-          displayInfowindow(marker, place.place_name);
+          displayInfowindow(marker, place.name);
         });
 
         kakao.maps.event.addListener(marker, "mouseout", function () {
@@ -81,7 +84,7 @@ const Maps = (props: propsType) => {
         return marker;
       });
 
-      // 새로운 마커를 상태로 설정
+      // 새 마커를 상태로 설정
       setMarkers(newMarkers);
 
       // 검색된 장소 위치를 기준으로 지도 범위를 재설정
@@ -89,7 +92,7 @@ const Maps = (props: propsType) => {
     }
 
     // 마커를 생성하고 지도 위에 마커를 표시하는 함수
-    function addMarker(position: any, idx: number, title: string) {
+    function addMarker(position: any, storeId: number) {
       const markerImage = new kakao.maps.MarkerImage(
         markerIcon,
         new kakao.maps.Size(14, 14)
@@ -100,17 +103,19 @@ const Maps = (props: propsType) => {
         image: markerImage,
       });
 
+      (marker as any).storeId = storeId;
+
       marker.setMap(map); // 지도 위에 마커를 표시
       return marker;
     }
 
-    // 지도 위에 표시되고 있는 마커를 모두 제거합니다
+    // 지도 위에 표시되고 있는 마커를 모두 제거
     function removeMarker() {
       markers.forEach((marker) => marker.setMap(null)); // 지도에서 제거
       setMarkers([]); // 상태 초기화
     }
 
-    // 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수
+    // 검색 결과 목록 또는 마커를 클릭했을 때 호출되는 함수
     // 인포윈도우에 장소명을 표시
     function displayInfowindow(marker: any, title: string) {
       const content = `<div style="padding:5px;z-index:1;">${title}</div>`;
@@ -126,15 +131,15 @@ const Maps = (props: propsType) => {
       center={{ lat: initial_lat, lng: initial_lng }}
       style={{ width: "100%", height: "100%" }}
     >
-      {markers.map((marker, index) => (
+      {markers.map((marker) => (
         <MapMarker
-          key={index}
+          key={marker.storeId}
           image={{ src: markerIcon, size: { width: 13, height: 13 } }}
           position={{
             lat: marker.getPosition().getLat(),
             lng: marker.getPosition().getLng(),
           }}
-          onClick={() => navigator(`/map/${index}`)}
+          onClick={() => navigator(`/map/${marker.storeId}`)}
         />
       ))}
     </Map>
