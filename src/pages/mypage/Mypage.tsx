@@ -1,14 +1,12 @@
 import React from "react";
 import styled from "styled-components";
+import MemberTypeToggleButton from "../../component/mypage/memberTypeToggleButton";
 
 const Mypage: React.FC = () => {
   return (
     <MypageContainer>
       <MypageHeader>
-        <UserTypeSelector>
-          <UserTypeButton active>투자자</UserTypeButton>
-          <UserTypeButton>업체</UserTypeButton>
-        </UserTypeSelector>
+        <MemberTypeToggleButton />
         <UserProfile>
           <ProfileImage />
           <ProfileName>프롬컴퍼니</ProfileName>
@@ -30,28 +28,9 @@ const MypageContainer = styled.div`
 
 const MypageHeader = styled.div`
   color: black;
-  padding: 15px 0px;
+  padding: 30px 0px;
   width: 100%;
   height: 30%;
-`;
-
-const UserTypeSelector = styled.div`
-  display: flex;
-  width: 132px;
-  height: 36px;
-  margin-bottom: 20px;
-`;
-
-const UserTypeButton = styled.button<{ active?: boolean }>`
-  padding: 10px 20px;
-  border-radius: 20px;
-  font-size: 13px;
-  white-space: nowrap;
-  border: none;
-  background-color: ${({ active }) => (active ? "#004d3f" : "#e0e0e0")};
-  color: ${({ active }) => (active ? "#ffffff" : "#000000")};
-  font-weight: bold;
-  cursor: pointer;
 `;
 
 const UserProfile = styled.div`
