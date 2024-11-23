@@ -86,13 +86,9 @@ const StartButton = styled.button`
   }
 `;
 
-export interface Props {
-  onNext: () => void;
-  currentStep: number;
-  totalSteps: number;
-}
 
-const StepWelcomeScreen: React.FC<Props> = () => {
+
+const StepWelcomeScreen: React.FC = () => {
   // 랜덤한 위치와 색상을 가진 기둥 데이터 생성
   const pillars = [
     { top: "18%", left: "20%", color: "#FF66B3", rotation: 45 },
@@ -137,7 +133,7 @@ const StepWelcomeScreen: React.FC<Props> = () => {
         </Description>
       </WelcomeScreenMainContainer>
       <WelcomeScreenBottomContainer>
-        <StartButton onClick={() => navigate("/")}>시작하기</StartButton>
+        <StartButton onClick={() => navigate("/")}>확인</StartButton>
       </WelcomeScreenBottomContainer>
     </StepWelcomeScreenContainer>
   );
