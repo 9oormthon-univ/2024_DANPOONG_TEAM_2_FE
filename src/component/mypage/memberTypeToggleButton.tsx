@@ -1,20 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
-const MemberTypeToggleButton: React.FC = () => {
-  const [active, setActive] = useState<"investor" | "company">("investor");
+interface Props {
+  memberType: "INVESTOR" | "BUSINESS";
+  onChange: (newType: "INVESTOR" | "BUSINESS") => void;
+}
+const MemberTypeToggleButton: React.FC<Props> = ({ memberType, onChange }) => {
+  const [active, setActive] = useState<"INVESTOR" | "BUSINESS">(memberType); // 초기 상태를 부모 값으로 설정
+
+  // 부모에서 전달된 memberType 값을 초기화하거나 변경 시 동기화
+  useEffect(() => {
+    if (memberType) { // memberType 값이 유효할 때만 상태 동기화
+      setActive(memberType);
+    }
+  }, [memberType]);
+  
+
+  const handleToggle = (newType: "INVESTOR" | "BUSINESS") => {
+    setActive(newType); // 내부 상태 업데이트
+    onChange(newType); // 부모로 변경 사항 전달
+  };
+  
 
   return (
     <ToggleContainer>
       <ToggleOption
-        isActive={active === "investor"}
-        onClick={() => setActive("investor")}
+        isActive={active === "INVESTOR"}
+        onClick={() => handleToggle("INVESTOR")}
       >
         투자자
       </ToggleOption>
       <ToggleOption
-        isActive={active === "company"}
-        onClick={() => setActive("company")}
+        isActive={active === "BUSINESS"}
+        onClick={() => handleToggle("BUSINESS")}
       >
         업체
       </ToggleOption>
@@ -27,13 +45,15 @@ export default MemberTypeToggleButton;
 const ToggleContainer = styled.div`
   display: flex;
   align-items: center;
+  justify-self: flex-end;
   justify-content: space-between;
   background-color: #e0e0e0; /* 기본 배경 색 (회색) */
   border-radius: 30px; /* 원형 형태 */
   overflow: hidden; /* 초과 영역 잘림 */
-  width: 140px; /* 전체 너비 */
-  height: 40px; /* 전체 높이 */
+  width: 132px; /* 전체 너비 */
+  height: 36px; /* 전체 높이 */
   position: relative;
+  margin-bottom: 42px;
 `;
 
 const ToggleOption = styled.div<{ isActive: boolean }>`
@@ -41,7 +61,7 @@ const ToggleOption = styled.div<{ isActive: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
- position: relative;
+  position: relative;
   height: 100%;
   text-align: center;
   border-radius: 30px; /* 원형 내부의 옵션 */
@@ -49,10 +69,8 @@ const ToggleOption = styled.div<{ isActive: boolean }>`
   color: ${({ isActive }) => (isActive ? "#fff" : "#000")};
   z-index: 1; /* 글자를 배경보다 위로 설정 */
   font-weight: bold;
-  font-size: 14px;
+  font-size: 13px;
   cursor: pointer;
-
-  /* 선택된 옵션의 배경 확장 */
   &::before {
     content: "";
     position: absolute;
@@ -63,6 +81,5 @@ const ToggleOption = styled.div<{ isActive: boolean }>`
     background-color: #6be285; /* 선택된 옵션 배경색 */
     border-radius: 30px;
     z-index: -1; /* 배경을 글자 뒤로 */
-   
   }
 `;
