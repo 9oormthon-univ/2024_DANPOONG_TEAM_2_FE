@@ -8,7 +8,6 @@ import ScrapButton from "../ScrapButton";
 import * as S from "./ProjectPrev.style";
 
 const ProjectPrev = ({ data }: { data: IProjectInfo }) => {
-  console.log(data.id);
   return (
     <S.Container>
       <S.Hr />

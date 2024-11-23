@@ -12,7 +12,6 @@ export const storeSearch = async (keyword: string) => {
       }
     );
     if (response.status === 200) {
-      console.log("상점 정보", response.data);
       return response.data;
     } else {
       console.log("Error from getStoreInfo", response);
