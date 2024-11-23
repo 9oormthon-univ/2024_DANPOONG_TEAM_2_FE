@@ -7,10 +7,15 @@ import ProjectListBS from "../../component/bottomSheet/ProjectListBS";
 import { useEffect, useState } from "react";
 import useMeasure from "react-use-measure";
 import { useFilterStore } from "../../stores/useSelectedValues";
+import { useMarkerStore } from "../../stores/useMarkerStore";
 
 export default function MapPage() {
   const [Keyword, setKeyword] = useState("");
   const { selectedFilters } = useFilterStore();
+  const { globalMarkers } = useMarkerStore();
+  useEffect(() => {
+    console.log("markers", globalMarkers);
+  }, [globalMarkers]);
 
   const [viewportRef, { height: viewportHeight }] = useMeasure();
   const dummyLocationKeyword = "경기도 용인시";
@@ -29,10 +34,12 @@ export default function MapPage() {
         <SearchBar handleKeyword={setKeyword} />
         <FilterContainer />
       </Search>
-      <ProjectListBS
-        viewport={`${viewportHeight}px`}
-        title={dummyLocationKeyword}
-      />
+      {globalMarkers && globalMarkers.length > 0 ? (
+        <ProjectListBS
+          viewport={`${viewportHeight}px`}
+          title={dummyLocationKeyword}
+        />
+      ) : null}
     </Page>
   );
 }
