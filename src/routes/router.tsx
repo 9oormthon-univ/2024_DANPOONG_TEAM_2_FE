@@ -18,21 +18,24 @@ import Category from "./category";
 const router = createBrowserRouter([
   {
     path: "/",
+    element: <Login />
+  },
+  {
+    path: "/home",
     element: <Layout />,
     children: [
       { path: "", element: <Home /> },
       { path: "portfolio", element: <Portfolio /> },
-      { path: "/invest-list", element: <InvestList /> },
-      { path: "/map", element: <MapPage /> },
-      { path: "/map/:id", element: <ProjectDetailPage /> },
-      { path: "/map/:id", element: <ProjectDetailPage /> },
-      { path: "/category", element: <Category />},
+      { path: "invest-list", element: <InvestList /> },
+      { path: "map", element: <MapPage /> },
+      { path: "map/:id", element: <ProjectDetailPage /> },
+      { path: "map/:id", element: <ProjectDetailPage /> },
+      { path: "category", element: <Category /> },
     ],
   },
   { path: "/coupon", element: <Coupon /> },
   { path: "/return/:invest_id", element: <Return /> },
   { path: "/coupon_select", element: <CouponSelect /> },
-  { path: "/login", element: <Login /> },
   { path: "/signup", element: <Signup /> },
   { path: "/select-member-type", element: <StepMemberType /> },
   { path: "/fundingSuccess", element: <FundingSuccessPage /> },
