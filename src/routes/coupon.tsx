@@ -1,24 +1,47 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import CouponCard from "../component/portfolio/coupon_card";
+import token from "../component/token";
+
+interface Coupon {
+  couponId: number;
+  amount: number;
+  description: string;
+  expirationDate: string;
+  couponStatus: string;
+}
 
 const Coupon: React.FC = () => {
   const navigate = useNavigate();
+  const [coupons, setCoupons] = useState<Coupon[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const dummyData = [
-    {
-      amount: "10,000원",
-      title: "신규 회원 무료 펀딩 쿠폰",
-      validity: "2024.11.23~2024.11.24",
-    },
-    {
-      amount: "5,000원",
-      title: "재가입 감사 쿠폰",
-      validity: "2024.11.25~2024.11.30",
-    },
-  ];
+  useEffect(() => {
+    const fetchCoupons = async () => {
+      try {
+        console.log("Fetching coupons...");
+        const response = await token.get("/api/members/coupons");
+        console.log("API Response:", response.data);
+        setCoupons(response.data.data.couponInfoResDtos);
+      } catch (error) {
+        console.error("Error fetching coupons:", error);
+        setCoupons([]);
+      } finally {
+        setLoading(false);
+      }
+    };
 
+    fetchCoupons();
+  }, []);
+
+  if (loading) {
+    return <CouponContainer>로딩 중...</CouponContainer>;
+  }
+  const usecoupon = () => {
+    localStorage.setItem("fundingAmount", "10000")!; // 일단 1만원으로 하드코딩
+    navigate("/fundingSuccess");
+  };
   return (
     <CouponContainer>
       <Header>
@@ -26,14 +49,15 @@ const Coupon: React.FC = () => {
         <Title>쿠폰 관리</Title>
       </Header>
       <Divider />
-      <Subtitle>{dummyData.length}장 보유</Subtitle>
+      <Subtitle>{coupons.length}장 보유</Subtitle>
       <CouponList>
-        {dummyData.map((coupon, index) => (
+        {coupons.map((coupon, index) => (
           <CouponCard
             key={index}
-            amount={coupon.amount}
-            title={coupon.title}
-            validity={coupon.validity}
+            amount={`${coupon.amount}원`}
+            title={coupon.description}
+            validity={coupon.expirationDate}
+            usecoupon={usecoupon}
           />
         ))}
       </CouponList>
@@ -61,6 +85,7 @@ const BackButton = styled.button`
   color: #333;
   cursor: pointer;
   margin-right: 10px;
+  margin-bottom: 23px;
 
   &:hover {
     color: #00c853;
@@ -76,7 +101,8 @@ const Title = styled.h1`
   font-weight: 500;
   line-height: 22px;
   letter-spacing: -0.408px;
-  margin-left: 60px;
+  margin-left: 100px;
+  margin-bottom: 20px;
 `;
 
 const Divider = styled.div`
