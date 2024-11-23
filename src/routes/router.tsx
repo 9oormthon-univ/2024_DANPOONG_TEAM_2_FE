@@ -12,9 +12,10 @@ import Return from "./return";
 import Login from "../pages/Login/Login";
 import Signup from "../pages/Signup/Signup";
 import StepMemberType from "../component/Signup/StepMemberType";
-import FundingSuccessPage from "../component/fundingSuccess/FundingSuccess";
+import FundingSuccessPage from "../pages/fundingSuccessPage/FundingSuccessPage";
 import Category from "./category";
 import Mypage from "../pages/mypage/Mypage";
+import { path } from "framer-motion/client";
 
 const router = createBrowserRouter([
   { path: "/", element: <Login /> }, // 로그인 페이지
@@ -43,14 +44,17 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [{ path: "", element: <Mypage /> }],
   }, // 마이페이지
-  { path: "/map/:id", element: <ProjectDetailPage /> }, // 프로젝트 상세 페이지
+  {
+    path: "/map/:id",
+    element: <Layout />,
+    children: [{ path: "", element: <ProjectDetailPage /> }],
+  }, // 프로젝트 상세 페이지
   { path: "/coupon", element: <Coupon /> }, // 쿠폰
   { path: "/return/:invest_id", element: <Return /> }, // 반환
   { path: "/coupon_select", element: <CouponSelect /> }, // 쿠폰 선택
   { path: "/signup", element: <Signup /> }, // 회원가입
-  { path: "/select-member-type", element: <StepMemberType /> }, // 회원 유형 선택
+  { path: "/select-type", element: <StepMemberType /> }, // 회원 유형 선택
   { path: "/fundingSuccess", element: <FundingSuccessPage /> }, // 펀딩 성공 페이지
 ]);
-
 
 export default router;
