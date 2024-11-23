@@ -1,4 +1,3 @@
-// src/routes/router.tsx
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "../component/layout_navigation";
 import Home from "./home";

@@ -4,7 +4,7 @@ import styled from "styled-components";
 interface ProjectLankCardProps {
   tag: string;
   category: string;
-  title: string;
+  title: string[0];
   likes: number;
 }
 
@@ -18,11 +18,10 @@ const ProjectLankCard: React.FC<ProjectLankCardProps> = ({
     <Card>
       <ImageContainer>
         <Tag>{tag}</Tag>
-        <Image />
+        <Image src={title} alt={tag} />
       </ImageContainer>
       <Content>
-        <Title>{title}</Title>
-        <Category>{category}</Category>
+        <Title>{category}</Title>
         <Likes>⭐ {likes}</Likes>
       </Content>
     </Card>
@@ -61,10 +60,10 @@ const Tag = styled.div`
   border-radius: 16px;
 `;
 
-const Image = styled.div`
+const Image = styled.img`
   width: 100%;
   height: 100%;
-  background-color: #d9d9d9;
+  object-fit: cover;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
 `;
@@ -83,17 +82,6 @@ const Title = styled.h3`
   line-height: 22px;
   letter-spacing: -0.408px;
   margin-right: 95px;
-`;
-
-const Category = styled.p`
-  color: #cdcfcf;
-  font-family: Pretendard;
-  font-size: 8px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
-  letter-spacing: -0.408px;
-  margin-right: 125px;
 `;
 
 const Likes = styled.div`

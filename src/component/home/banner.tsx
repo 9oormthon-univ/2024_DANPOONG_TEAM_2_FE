@@ -56,7 +56,7 @@ const Tag = styled.div`
   height: 23px;
   flex-shrink: 0;
   align-self: flex-start;
-  margin-bottom: 160px;
+  margin-bottom: 180px;
   color: #fafafa;
   font-family: Pretendard;
   font-size: 10px;

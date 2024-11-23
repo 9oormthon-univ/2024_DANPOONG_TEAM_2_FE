@@ -8,14 +8,27 @@ interface ProjectRecommendProps {
   likes: number;
 }
 
+const categories = [
+  { id: "ANIMAL_FRIENDLY", label: "🐶 동물 복지" },
+  { id: "LOCAL_PRODUCT", label: "🌍 지역 생산" },
+  { id: "RECYCLE_ENERGY", label: "🌿 재생에너지" },
+  { id: "CULTURAL_PRESERVE", label: "🏛️ 문화 보존" },
+  { id: "EMPLOY_VULNERABLE_CLASS", label: "💪 취약계층 고용" },
+  { id: "CO2_FOOTPRINT", label: "♻️ 탄소발자국 절감" },
+  { id: "ORGANIC", label: "🍀 유기농" },
+];
+
 const ProjectRecommend: React.FC<ProjectRecommendProps> = ({
   tag,
   category,
   title,
   likes,
 }) => {
+  const matchedCategory = categories.find((item) => item.id === tag);
+  const label = matchedCategory ? matchedCategory.label : "💡 기타";
+
   const Data = {
-    tag: tag,
+    tag: label,
     category: category,
     title: title,
     likes: likes,
@@ -56,7 +69,7 @@ const Card = styled.div`
 const ImageContainer = styled.div`
   position: relative;
   width: 100%;
-  height: 150px;
+  height: 180px;
   border-radius: 12px 12px 0px 0px;
   background-color: #f2f2f2;
 `;
