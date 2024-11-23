@@ -14,6 +14,7 @@ import Signup from "../pages/Signup/Signup";
 import StepMemberType from "../component/Signup/StepMemberType";
 import FundingSuccessPage from "../component/fundingSuccess/FundingSuccess";
 import Category from "./category";
+import Mypage from "../pages/mypage/Mypage";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,7 @@ const router = createBrowserRouter([
       { path: "/map/:id", element: <ProjectDetailPage /> },
       { path: "/map/:id", element: <ProjectDetailPage /> },
       { path: "/category", element: <Category />},
+      { path: "/mypage" , element: <Mypage />},
     ],
   },
   { path: "/coupon", element: <Coupon /> },
