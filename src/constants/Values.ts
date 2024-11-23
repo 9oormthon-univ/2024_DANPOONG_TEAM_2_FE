@@ -8,11 +8,11 @@ type ValueDefinition = {
 
 // 2. 가치를 저장할 객체
 export const values: Record<string, ValueDefinition> = {
-  CO2_FOOTPRIN: {
+  CO2_FOOTPRINT: {
     name: "탄소발자국",
-    englishName: "CO2_FOOTPRIN",
+    englishName: "CO2_FOOTPRINT",
     color: "#A27BFF", // 보라색 계열-
-    imageUrl: "CO2_FOOTPRIN_IMG", // 예시 이미지 URL
+    imageUrl: "CO2_FOOTPRINT_IMG", // 예시 이미지 URL
   },
   EMPLOY_VULNERABLE_CLASS: {
     name: "취약계층 고용",

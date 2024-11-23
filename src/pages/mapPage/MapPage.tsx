@@ -14,11 +14,10 @@ export default function MapPage() {
   const { selectedFilters } = useFilterStore();
   const { globalMarkers } = useMarkerStore();
   useEffect(() => {
-    console.log("markers", globalMarkers);
+    console.log("globalMarkers", globalMarkers);
   }, [globalMarkers]);
 
   const [viewportRef, { height: viewportHeight }] = useMeasure();
-  const dummyLocationKeyword = "경기도 용인시";
 
   useEffect(() => {
     if (Keyword) {
@@ -35,10 +34,7 @@ export default function MapPage() {
         <FilterContainer />
       </Search>
       {globalMarkers && globalMarkers.length > 0 ? (
-        <ProjectListBS
-          viewport={`${viewportHeight}px`}
-          title={dummyLocationKeyword}
-        />
+        <ProjectListBS viewport={`${viewportHeight}px`} title={Keyword} />
       ) : null}
     </Page>
   );

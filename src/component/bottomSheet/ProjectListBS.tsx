@@ -31,7 +31,6 @@ const ProjectListBS = ({
     () => Math.min(contentBounds.height + 100, window.innerHeight - 110),
     [contentBounds.height]
   );
-  console.log("글로벌 마커", globalMarkers);
   return (
     <>
       <BackgroundOverlay

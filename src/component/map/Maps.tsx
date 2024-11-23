@@ -68,20 +68,12 @@ const Maps = ({ searchKeyword, selectedFilters }: propsType) => {
       // 기존 마커 제거
       removeMarker();
 
-      // 전체 검색 결과 마커 데이터
-      const allMarkers = data.map((place, i) => {
-        const position = new kakao.maps.LatLng(place.y, place.x);
-        const marker = addMarker(position, i);
-        bounds.extend(position);
-        return marker;
-      });
-
       // 필터링된 마커 데이터
       const filteredMarkers = data
-        .map((place, i) => {
+        .map((place) => {
           if (selectedFilters.includes(place.certifiedType[0])) {
             const position = new kakao.maps.LatLng(place.y, place.x);
-            const marker = addMarker(position, i);
+            const marker = addMarker(position, place.storeId);
             bounds.extend(position);
             return marker;
           }
@@ -94,8 +86,15 @@ const Maps = ({ searchKeyword, selectedFilters }: propsType) => {
         alert(
           "해당 가치를 추구하는 가게가 없습니다. 전체 검색 결과를 표시합니다."
         );
+        // 전체 검색 결과 마커 데이터
+        const allMarkers = data.map((place) => {
+          const position = new kakao.maps.LatLng(place.y, place.x);
+          const marker = addMarker(position, place.storeId);
+          bounds.extend(position);
+          return marker;
+        });
         setMarkers(allMarkers); // 전체 마커 표시
-        setGlobalMarkers([]);
+        setGlobalMarkers(allMarkers);
       } else {
         // 필터에 해당하는 마커가 있을 경우 해당 마커 표시
         setMarkers(filteredMarkers);
@@ -141,7 +140,7 @@ const Maps = ({ searchKeyword, selectedFilters }: propsType) => {
       {markers.map((marker) => (
         <MapMarker
           key={marker.storeId}
-          image={{ src: markerIcon, size: { width: 13, height: 13 } }}
+          image={{ src: markerIcon, size: { width: 15, height: 15 } }}
           position={{
             lat: marker.getPosition().getLat(),
             lng: marker.getPosition().getLng(),
