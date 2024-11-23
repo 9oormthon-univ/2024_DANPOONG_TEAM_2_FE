@@ -1,18 +1,38 @@
-import { useEffect } from "react";
-import * as S from "./FundingSuccess.style";
-import { Pillar, PillarsContainer } from "../Signup/StepWelcomeScreen";
+import { useEffect, useState } from "react";
+import * as S from "./FundingSuccessPage.style";
+import {
+  Pillar,
+  PillarsContainer,
+} from "../../component/Signup/StepWelcomeScreen";
 import completeIcon from "../../assets/completeIcon.svg";
 import confetti from "canvas-confetti";
+import getStoreInfo from "../../apis/getStoreInfo";
 import { useNavigate } from "react-router-dom";
-const FundingSuccess = ({
-  data,
-}: {
-  data: { name: string; profileImg: string };
-}) => {
+import IProjectInfo from "../../types/ProjectnfoType";
+
+const FundingSuccessPage = () => {
+  const [data, setData] = useState<IProjectInfo>();
+  const id = localStorage.getItem("fundingTarget")!;
+  console.log("상점 아이디", id);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getStoreInfo(parseInt(id, 10));
+        if (response) {
+          console.log(response.data);
+          setData(response.data); // API 응답 데이터를 상태에 저장
+        }
+      } catch (error) {
+        console.error("Failed to fetch store info:", error);
+      }
+    };
+    fetchData();
+  }, []);
   const navigate = useNavigate();
 
   const fundingAmount = () => {
-    const amount = localStorage.getItem("successAmount");
+    const amount = localStorage.getItem("fundingAmount");
+    console.log(amount);
     if (amount) {
       return parseInt(amount).toLocaleString("ko-KR");
     } else {
@@ -57,12 +77,12 @@ const FundingSuccess = ({
         ))}
       </PillarsContainer>
       <S.Icon src={completeIcon} alt="펀딩 완료 아이콘" />
-      <S.Name>{data.name}</S.Name>
+      <S.Name>{data?.name}</S.Name>
       <S.Amount>{fundingAmount()}원</S.Amount>
       <S.GreetingContainer>
         <S.Profile
           src={
-            data.profileImg
+            data?.profileImg
               ? data.profileImg
               : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
           }
@@ -71,7 +91,7 @@ const FundingSuccess = ({
           alt="프로젝트 이미지"
         />
         <S.TextContainer>
-          <S.NameSub>{data.name}</S.NameSub>
+          <S.NameSub>{data?.name}</S.NameSub>
           <S.Comment>💬정말 감사합니다! 믿고 맡겨주세요 :)</S.Comment>
         </S.TextContainer>
       </S.GreetingContainer>
@@ -82,4 +102,4 @@ const FundingSuccess = ({
     </S.Page>
   );
 };
-export default FundingSuccess;
+export default FundingSuccessPage;

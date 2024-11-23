@@ -2,7 +2,7 @@ import { ChangeEvent, useMemo, useState } from "react";
 import useMeasure from "react-use-measure";
 import FundingForm from "../fundingForm/FundingForm";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   BackgroundOverlay,
   SheetBackground,
@@ -27,6 +27,10 @@ const FundingBS = ({
   const [methodPhaseRef, methodSelectBounds] = useMeasure();
   const [fundingMethod, setFundingMethod] = useState<string | null>(null);
   const navigator = useNavigate();
+  const { id } = useParams<{ id: string }>();
+  if (!id) {
+    throw new Error("Error : 데이터를 불러오지 못했습니다.");
+  }
 
   const expandedHeight = useMemo(() => {
     if (fundingMethod === "mileage" || fundingMethod === "coupon") {
@@ -37,6 +41,7 @@ const FundingBS = ({
   }, [contentBounds.height, methodSelectBounds.height, fundingMethod]);
 
   const handleMethod = (e: ChangeEvent<HTMLInputElement>) => {
+    localStorage.setItem("fundingTarget", id);
     if (e.target.id == "milage") setFundingMethod("milage");
     else navigator("/coupon");
   };

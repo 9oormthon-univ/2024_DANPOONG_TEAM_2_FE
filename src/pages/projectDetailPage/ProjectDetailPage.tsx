@@ -3,7 +3,7 @@ import testImg from "../../assets/image.png";
 import populationIcon from "../../assets/projectDetail/populationIcon.svg";
 import starIcon from "../../assets/projectDetail/starIcon.svg";
 import FundingBS from "../../component/bottomSheet/FundingBS";
-import FundingSuccessPage from "../../component/fundingSuccess/FundingSuccess";
+import FundingSuccessPage from "../fundingSuccessPage/FundingSuccessPage";
 import {
   Hr,
   Image,
@@ -137,7 +137,7 @@ const ProjectDetailPage = () => {
   }
   // 펀딩 완료 시 렌더링
   if (page === "fundingsuccess" && successPageProps) {
-    return <FundingSuccessPage data={successPageProps} />;
+    return <FundingSuccessPage />;
   }
 };
 

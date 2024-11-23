@@ -14,6 +14,7 @@ import CouponSelect from "./routes/coupon_select";
 import Home from "./routes/home";
 import ProjectDetailPage from "./pages/projectDetailPage/ProjectDetailPage";
 import Category from "./routes/category";
+import FundingSuccessPage from "./pages/fundingSuccessPage/FundingSuccessPage";
 
 const GlobalStyles = createGlobalStyle`
   ${reset}
@@ -111,6 +112,10 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <Signup />,
+  },
+  {
+    path: "/fundingSuccess",
+    element: <FundingSuccessPage />,
   },
 ]);
 function App() {
