@@ -28,8 +28,8 @@ const FundingBS = ({
   const [methodPhaseRef, methodSelectBounds] = useMeasure();
   const [fundingMethod, setFundingMethod] = useState<string | null>(null);
   const navigator = useNavigate();
-  const { id } = useParams<{ id: string }>();
-  if (!id) {
+  const { storeId } = useParams<{ storeId: string }>();
+  if (!storeId) {
     throw new Error("Error : 데이터를 불러오지 못했습니다.");
   }
 
@@ -42,7 +42,7 @@ const FundingBS = ({
   }, [contentBounds.height, methodSelectBounds.height, fundingMethod]);
 
   const handleMethod = (e: ChangeEvent<HTMLInputElement>) => {
-    localStorage.setItem("fundingTarget", id);
+    localStorage.setItem("fundingTarget", storeId);
     if (e.target.id === "mileage") {
       setFundingMethod("mileage");
     } else {
@@ -67,7 +67,7 @@ const FundingBS = ({
         drag="y"
         dragConstraints={{ top: 0, bottom: 0 }}
         dragElastic={0.2}
-        onDragEnd={(event, info) => {
+        onDragEnd={(_, info) => {
           const dragThreshold = 120;
           if (info.offset.y > dragThreshold) {
             setIsOpened(false);
