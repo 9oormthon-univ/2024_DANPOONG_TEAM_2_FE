@@ -5,10 +5,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "../AuthContext";
 const Layout: React.FC = () => {
   const location = useLocation();
-  const { token } = useAuth();
   
-  console.log("홈의 useAuth의 AceessToken 확인: ", token); // 홈에 토큰 값 확인
-
   const getActiveItem = () => {
     if (location.pathname.startsWith("/map")) {
       return "map";
@@ -33,21 +30,25 @@ const Layout: React.FC = () => {
     "home" | "category" | "map" | "portfolio" | "mypage"
   >(getActiveItem());
 
-    
   React.useEffect(() => {
     setActiveItem(getActiveItem());
   }, [location]);
 
-  
+  // mypage 사용자의 관심 가치 페이지 및 찜한 프로젝트 페이지에서 Footer를 숨기기
+  const hideFooter =
+    location.pathname.includes("/mypage/social-value") ||
+    location.pathname.includes("/mypage/scrap");
 
   return (
     <Container>
       <Main>
         <Outlet />
       </Main>
-      <Footer>
-        <Navigation activeItem={activeItem} />
-      </Footer>
+      {!hideFooter && (
+        <Footer>
+          <Navigation activeItem={activeItem} />
+        </Footer>
+      )}
     </Container>
   );
 };

@@ -133,7 +133,7 @@ const StepWelcomeScreen: React.FC = () => {
         </Description>
       </WelcomeScreenMainContainer>
       <WelcomeScreenBottomContainer>
-        <StartButton onClick={() => navigate("/")}>확인</StartButton>
+        <StartButton onClick={() => navigate("/home")}>확인</StartButton>
       </WelcomeScreenBottomContainer>
     </StepWelcomeScreenContainer>
   );

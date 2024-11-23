@@ -71,7 +71,6 @@ const GlobalStyles = createGlobalStyle`
     }
   }
 `;
-
 function App() {
   return (
     <>
