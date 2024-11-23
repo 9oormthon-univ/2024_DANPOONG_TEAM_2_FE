@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import ReturnCheckModal from "../component/portfolio/return_check";
 import token from "../component/token";
 
 const certificationIcons: Record<string, string> = {
@@ -10,8 +9,8 @@ const certificationIcons: Record<string, string> = {
   ANIMAL_FRIENDLY: "/assets/animal.png",
   RECYCLE_ENERGY: "/assets/energy.png",
   EMPLOY_VULNERABLE_CLASS: "/assets/hire.png",
-  CULTURAL_PRESERVE: "assets/culture.png",
-  CO2_FOOTPRINT: "assets/footprint.png",
+  CULTURAL_PRESERVE: "/assets/culture.png",
+  CO2_FOOTPRINT: "/assets/footprint.png",
 };
 
 interface StoreData {
@@ -25,39 +24,32 @@ interface StoreData {
   images: string[];
   content: string;
   address: string;
-  x: number;
-  y: number;
   certifiedType: string[];
   startAt: string;
   endAt: string;
   fundedCount: number;
   likeCount: number;
+  isFinished: boolean; // 추가된 필드
 }
 
 const Return: React.FC = () => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
-  const [isModalVisible, setModalVisible] = useState(false);
   const [data, setData] = useState<StoreData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleOpenModal = () => {
-    setModalVisible(true);
-  };
-
-  const handleCloseModal = () => {
-    setModalVisible(false);
-  };
   useEffect(() => {
+    console.log("useEffect triggered with id:", id);
     const fetchData = async () => {
       try {
-        console.log("Fetching return...");
+        console.log("Fetching data for ID:", id);
         const response = await token.get(`/api/store/${id}`);
-        console.log("API Response:", response.data.data);
+        console.log("API Response:", response.data);
         setData(response.data.data);
       } catch (error) {
         console.error("Error fetching data:", error);
-        setData(null);
+        setError("데이터를 가져오는 데 실패했습니다.");
       } finally {
         setLoading(false);
       }
@@ -67,7 +59,19 @@ const Return: React.FC = () => {
   }, [id]);
 
   if (loading) {
-    return <Container>로딩 중...</Container>;
+    return <LoadingContainer>로딩 중...</LoadingContainer>;
+  }
+
+  if (error) {
+    return (
+      <Container>
+        <Header>
+          <BackButton onClick={() => navigate(-1)}>{"<"}</BackButton>
+          <HeaderTitle>오류 발생</HeaderTitle>
+        </Header>
+        <ErrorMessage>{error}</ErrorMessage>
+      </Container>
+    );
   }
 
   if (!data) {
@@ -77,7 +81,7 @@ const Return: React.FC = () => {
           <BackButton onClick={() => navigate(-1)}>{"<"}</BackButton>
           <HeaderTitle>투자 정보 없음</HeaderTitle>
         </Header>
-        <InfoContent>해당 투자 정보를 찾을 수 없습니다.</InfoContent>
+        <ErrorMessage>해당 투자 정보를 찾을 수 없습니다.</ErrorMessage>
       </Container>
     );
   }
@@ -95,6 +99,7 @@ const Return: React.FC = () => {
     certifiedType,
     startAt,
     endAt,
+    isFinished,
   } = data;
 
   return (
@@ -104,12 +109,11 @@ const Return: React.FC = () => {
         <HeaderTitle>{name}</HeaderTitle>
       </Header>
       <ImageContainer>
-        <MainImage src={images[0]} alt={name} />
-        {/* <StatusButton>{finish ? "펀딩 완료!" : "진행 중"}</StatusButton> */}
+        {images?.[0] && <MainImage src={images[0]} alt={name} />}
       </ImageContainer>
       <ProfileContainer>
         <ProfileImage src={profileImage} alt="profile" />
-        <BusinessTitle>{caption}</BusinessTitle>
+        <BusinessTitle>{name}</BusinessTitle>
         <Location>{address}</Location>
       </ProfileContainer>
       <Divider />
@@ -118,38 +122,34 @@ const Return: React.FC = () => {
         <SectionContent>{content}</SectionContent>
       </Section>
       <Divider />
-      <InfoRow>
-        <InfoTitle>업종</InfoTitle>
-        <InfoContent>{category}</InfoContent>
-      </InfoRow>
-      <InfoRow>
-        <InfoTitle>인증 확인</InfoTitle>
-        <CertificationContainer>
-          {certifiedType.map((cert, index) => (
-            <Certification key={index}>
-              <CertificationIcon src={certificationIcons[cert]} alt={cert} />
-            </Certification>
-          ))}
-        </CertificationContainer>
-      </InfoRow>
-      <InfoRow>
-        <InfoTitle>펀딩 기간</InfoTitle>
-        <InfoContent>
-          {startAt}~{endAt}
-        </InfoContent>
-      </InfoRow>
-      <InfoRow>
-        <InfoTitle>펀딩 완료 금액</InfoTitle>
-        {/* <InfoContent>
-          {finish ? fundingCurrent : fundingTarget}
-        </InfoContent> */}
-      </InfoRow>
-      {/* {finish ? (
-        <ActionButton onClick={handleOpenModal}>리턴 받기</ActionButton>
+      <InfoRow title="업종" content={category} />
+      <InfoRow title="펀딩 기간" content={`${startAt} ~ ${endAt}`} />
+      <InfoRow
+        title="펀딩 목표 금액"
+        content={`${fundingTarget.toLocaleString()}원`}
+      />
+      <InfoRow
+        title="현재 펀딩 금액"
+        content={`${fundingCurrent.toLocaleString()}원`}
+      />
+      <InfoRow
+        title="인증 확인"
+        content={
+          <CertificationContainer>
+            {certifiedType.map((cert, index) => (
+              <Certification key={index}>
+                <CertificationIcon src={certificationIcons[cert]} alt={cert} />
+              </Certification>
+            ))}
+          </CertificationContainer>
+        }
+      />
+      <Divider />
+      {isFinished ? (
+        <ActionButton>리턴 받기</ActionButton>
       ) : (
         <InactiveButton>아직 진행 중이에요.</InactiveButton>
       )}
-      {isModalVisible && <ReturnCheckModal onClose={handleCloseModal} />} */}
     </Container>
   );
 };
@@ -162,6 +162,15 @@ const Container = styled.div`
   padding: 20px;
   background: #ffffff;
   min-height: 100vh;
+`;
+
+const LoadingContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 18px;
+  color: #333;
 `;
 
 const Header = styled.div`
@@ -177,6 +186,7 @@ const BackButton = styled.button`
   font-weight: bold;
   color: #333;
   cursor: pointer;
+  margin-right: 60px;
 
   &:hover {
     color: #00c853;
@@ -195,6 +205,13 @@ const HeaderTitle = styled.h1`
   letter-spacing: -0.408px;
 `;
 
+const ErrorMessage = styled.div`
+  color: #ff5252;
+  font-size: 16px;
+  text-align: center;
+  margin-top: 20px;
+`;
+
 const ImageContainer = styled.div`
   position: relative;
 `;
@@ -204,57 +221,28 @@ const MainImage = styled.img`
   border-radius: 8px;
 `;
 
-const StatusButton = styled.div`
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: #00c853;
-  color: #fff;
-  padding: 5px 10px;
-  border-radius: 8px;
-  font-size: 12px;
-  font-weight: bold;
-`;
-
 const ProfileContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: -15px;
-  position: relative;
 `;
 
 const ProfileImage = styled.img`
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  position: absolute;
-  top: -40px;
 `;
 
 const BusinessTitle = styled.h2`
-  color: #000;
-  text-align: center;
-  font-family: Pretendard;
-  font-size: 24px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-  text-transform: capitalize;
-  text-align: center;
-  margin-top: 50px;
+  margin-top: 10px;
+  font-size: 20px;
+  color: #333;
 `;
 
 const Location = styled.span`
+  font-size: 14px;
   color: #818787;
-  text-align: center;
-  font-family: Pretendard;
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  text-transform: capitalize;
-  margin-top: 5px;
 `;
 
 const Divider = styled.hr`
@@ -269,51 +257,42 @@ const Section = styled.div`
 `;
 
 const SectionTitle = styled.h3`
+  font-size: 16px;
+  font-weight: bold;
   color: #03624c;
-  font-family: Pretendard;
-  font-size: 13px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 24px;
-  text-transform: capitalize;
-  margin-bottom: 5px;
-  margin-left: 120px;
 `;
 
 const SectionContent = styled.p`
-  color: #353f3f;
-  font-family: Pretendard;
-  font-size: 13px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 19px;
-  text-transform: capitalize;
+  font-size: 14px;
+  color: #333;
 `;
 
-const InfoRow = styled.div`
+const InfoRow = ({
+  title,
+  content,
+}: {
+  title: string;
+  content: React.ReactNode;
+}) => (
+  <InfoRowContainer>
+    <InfoTitle>{title}</InfoTitle>
+    <InfoContent>{content}</InfoContent>
+  </InfoRowContainer>
+);
+
+const InfoRowContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
   margin: 10px 0;
 `;
 
 const InfoTitle = styled.span`
+  font-size: 14px;
   color: #6c6c6c;
-  font-family: Pretendard;
-  font-size: 13px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
-  text-transform: capitalize;
 `;
 
 const InfoContent = styled.span`
-  font-family: Pretendard;
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-  text-transform: capitalize;
+  font-size: 14px;
   color: #333;
 `;
 
@@ -332,8 +311,8 @@ const Certification = styled.div`
 `;
 
 const CertificationIcon = styled.img`
-  width: 50px;
-  height: 18px;
+  width: 35px;
+  height: 35px;
 `;
 
 const ActionButton = styled.button`

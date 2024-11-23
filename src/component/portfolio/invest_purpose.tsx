@@ -1,28 +1,47 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import GoalEditModal from "./goal_edit";
 
 interface InvestPurposeProps {
   goal: string;
+  onGoalUpdate: (newGoal: string) => void;
 }
 
-const InvestPurpose: React.FC<InvestPurposeProps> = ({ goal }) => {
-  const navigate = useNavigate();
+const InvestPurpose: React.FC<InvestPurposeProps> = ({
+  goal,
+  onGoalUpdate,
+}) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleEdit = () => {
-    navigate("/purposeEdit");
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleGoalSubmit = (newGoal: string) => {
+    onGoalUpdate(newGoal);
+    handleModalClose();
   };
 
   return (
-    <Card>
-      <TitleContainer>
-        <Title>⛳ 투자 목표</Title>
-      </TitleContainer>
-      <Purpose>{goal}</Purpose>
-      <EditButton onClick={handleEdit}>편집하기</EditButton>
-    </Card>
+    <>
+      <Card>
+        <TitleContainer>
+          <Title>⛳ 투자 목표</Title>
+        </TitleContainer>
+        <Purpose>{goal}</Purpose>
+        <EditButton onClick={handleEdit}>편집하기</EditButton>
+      </Card>
+      {isModalOpen && (
+        <GoalEditModal onClose={handleModalClose} onSubmit={handleGoalSubmit} />
+      )}
+    </>
   );
 };
+
 export default InvestPurpose;
 
 const Card = styled.div`

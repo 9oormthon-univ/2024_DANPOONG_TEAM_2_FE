@@ -50,7 +50,7 @@ const router = createBrowserRouter([
   { path: "/invest-list", element: <InvestList /> }, //투자관리
   { path: "/change", element: <Change /> },
   { path: "/change_finish", element: <ChangeFinish /> },
-  { path: "/return/:invest_id", element: <Return /> }, // 반환
+  { path: "/return/:id", element: <Return /> }, // 반환
   { path: "/coupon_select", element: <CouponSelect /> }, // 쿠폰 선택
   { path: "/signup", element: <Signup /> }, // 회원가입
   { path: "/select-member-type", element: <StepMemberType /> }, // 회원 유형 선택

@@ -16,6 +16,7 @@ interface ResponseData {
   data: {
     totalMileageAmount: number;
     historyInfoResDtos: FundingHistory[];
+    investmentGoal: string;
   };
 }
 
@@ -23,6 +24,7 @@ const InvestList: React.FC = () => {
   const [mileage, setMileage] = useState<number>(0);
   const [fundingHistory, setFundingHistory] = useState<FundingHistory[]>([]);
   const [loading, setLoading] = useState(true);
+
   const navigate = useNavigate();
   useEffect(() => {
     const fetchFundingHistory = async () => {
