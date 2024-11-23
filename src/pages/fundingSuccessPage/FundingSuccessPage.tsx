@@ -44,7 +44,7 @@ const FundingSuccessPage = () => {
   };
   const comfirmFundingResult = () => {
     removeStorage();
-    navigate("/");
+    navigate("/home");
   };
 
   const pillars = [
