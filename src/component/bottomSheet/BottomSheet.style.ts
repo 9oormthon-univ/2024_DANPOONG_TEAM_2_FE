@@ -33,7 +33,7 @@ const BottomHeader = styled.div`
 `;
 const HandleBar = styled.div`
   width: 51px;
-  height: 5px;
+  height: 12px;
   margin: 0 auto;
   border-radius: 403px;
   background: #9f9f9f;
