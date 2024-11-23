@@ -12,17 +12,11 @@ const MileageHeader: React.FC<MileageHeaderProps> = ({ mileage }) => {
   const handleChange = () => {
     navigate("/change");
   };
-  const handleReturnCheck = () => {
-    navigate("/return-check");
-  };
   return (
     <Container>
       <Title>나의 마일리지</Title>
       <Mileage>{mileage} P</Mileage>
-      <HorizontalContainer>
-        <ChangeButton onClick={handleChange}>교환하기</ChangeButton>
-        <CheckButton onClick={handleReturnCheck}>리턴 확인하기</CheckButton>
-      </HorizontalContainer>
+      <CheckButton onClick={handleChange}>교환하기</CheckButton>
     </Container>
   );
 };
@@ -58,41 +52,15 @@ const CheckButton = styled.button`
   font-size: 14px;
   padding: 10px 20px;
   border: none;
-  width: 150px;
-  height: 48px;
+  width: 100%;
+  height: 40px;
   flex-shrink: 0;
   cursor: pointer;
   font-family: Pretendard, sans-serif;
-
-  &:hover {
-    background: #024b3a;
-  }
-`;
-
-const ChangeButton = styled.button`
-  border-radius: 10px;
-  background: #828787;
-  color: #fff;
-  font-size: 14px;
-  padding: 10px 20px;
-  border: none;
-  width: 150px;
-  height: 48px;
-  flex-shrink: 0;
-  cursor: pointer;
-  margin-right: 10px;
-  font-family: Pretendard, sans-serif;
-
-  &:hover {
-    background: #024b3a;
-  }
-`;
-
-const HorizontalContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1px;
+  margin-bottom: 10px;
   margin-top: 10px;
+
+  &:hover {
+    background: #024b3a;
+  }
 `;

@@ -68,7 +68,6 @@ const Date = styled.span`
 const BottomRow = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
   margin-top: 5px;
 `;
 
@@ -81,6 +80,8 @@ const StoreName = styled.div`
   line-height: 22px;
   letter-spacing: -0.408px;
   align-item: left;
+  margin-left: 8px;
+  width: 160px;
 `;
 
 const Points = styled.div`
@@ -93,7 +94,8 @@ const Points = styled.div`
   line-height: 22px;
   letter-spacing: -0.408px;
   text-align: right;
-  margin-left: 120px;
+  margin-left: 80px;
+  width: 80px;
 `;
 
 const Arrow = styled.button`
