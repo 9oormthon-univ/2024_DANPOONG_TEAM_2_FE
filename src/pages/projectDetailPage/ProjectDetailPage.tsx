@@ -43,7 +43,7 @@ const ProjectDetailPage = () => {
       try {
         const response = await getStoreInfo(parseInt(storeId, 10));
         if (response) {
-          console.log(response.data);
+          console.log("디테일", response.data);
           setData(response.data); // API 응답 데이터를 상태에 저장
           setSuccessPageProps({
             name: response.data.name,
@@ -65,9 +65,9 @@ const ProjectDetailPage = () => {
       <S.Page>
         <GeneralNavBar hasBackBtn={true} hasRightBtn={true} />
         <S.ImageContainer>
-          <Image src={testImg} />
-          <Image src={testImg} />
-          <Image src={testImg} />
+          {data.images?.map((img) => (
+            <Image src={img} />
+          ))}
         </S.ImageContainer>
         <S.Content>
           <S.DefaultContainer>

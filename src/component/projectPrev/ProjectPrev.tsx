@@ -32,9 +32,9 @@ const ProjectPrev = ({ storeId }: { storeId: number }) => {
     <S.Container>
       <S.Hr />
       <S.ImageContainer>
-        <S.Image src={testImg} />
-        <S.Image src={testImg} />
-        <S.Image src={testImg} />
+        {data?.images?.map((img) => (
+          <S.Image src={img} />
+        ))}
       </S.ImageContainer>
       <S.CertificationComment>
         ⭐ MOA PICK! 지역 생산 인증을 받은 업체에요.
