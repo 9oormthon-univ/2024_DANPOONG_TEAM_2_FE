@@ -14,6 +14,7 @@ import Signup from "../pages/Signup/Signup";
 import StepMemberType from "../component/Signup/StepMemberType";
 import FundingSuccessPage from "../component/fundingSuccess/FundingSuccess";
 import Category from "./category";
+import Mypage from "../pages/mypage/Mypage";
 
 const router = createBrowserRouter([
   {
@@ -28,7 +29,6 @@ const router = createBrowserRouter([
       { path: "portfolio", element: <Portfolio /> },
       { path: "invest-list", element: <InvestList /> },
       { path: "map", element: <MapPage /> },
-      { path: "map/:id", element: <ProjectDetailPage /> },
       { path: "map/:id", element: <ProjectDetailPage /> },
       { path: "category", element: <Category /> },
     ],
