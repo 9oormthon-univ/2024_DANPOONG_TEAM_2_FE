@@ -145,11 +145,13 @@ const Return: React.FC = () => {
         }
       />
       <Divider />
-      {isFinished ? (
-        <ActionButton>리턴 받기</ActionButton>
-      ) : (
-        <InactiveButton>아직 진행 중이에요.</InactiveButton>
-      )}
+      <ButtonContainer>
+        {isFinished ? (
+          <ActionButton>리턴 받기</ActionButton>
+        ) : (
+          <InactiveButton>아직 진행 중이에요.</InactiveButton>
+        )}
+      </ButtonContainer>
     </Container>
   );
 };
@@ -219,30 +221,44 @@ const ImageContainer = styled.div`
 const MainImage = styled.img`
   width: 100%;
   border-radius: 8px;
+  height: 140px;
 `;
 
 const ProfileContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: -15px;
+  margin-top: -40px;
+  z-index: 1;
 `;
 
 const ProfileImage = styled.img`
   width: 80px;
   height: 80px;
   border-radius: 50%;
+  border: 2px solid #d9d9d9;
 `;
 
 const BusinessTitle = styled.h2`
-  margin-top: 10px;
-  font-size: 20px;
-  color: #333;
+  color: #000;
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-transform: capitalize;
 `;
 
 const Location = styled.span`
-  font-size: 14px;
   color: #818787;
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-transform: capitalize;
 `;
 
 const Divider = styled.hr`
@@ -257,14 +273,23 @@ const Section = styled.div`
 `;
 
 const SectionTitle = styled.h3`
-  font-size: 16px;
-  font-weight: bold;
   color: #03624c;
+  font-family: Pretendard;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px;
+  text-transform: capitalize;
 `;
 
 const SectionContent = styled.p`
-  font-size: 14px;
-  color: #333;
+  color: #353f3f;
+  font-family: Pretendard;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 19px;
+  text-transform: capitalize;
 `;
 
 const InfoRow = ({
@@ -287,13 +312,25 @@ const InfoRowContainer = styled.div`
 `;
 
 const InfoTitle = styled.span`
+  color: #000;
+  text-align: center;
+  font-family: Pretendard;
   font-size: 14px;
-  color: #6c6c6c;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-transform: capitalize;
 `;
 
 const InfoContent = styled.span`
-  font-size: 14px;
-  color: #333;
+  color: #000;
+  text-align: right;
+  font-family: Pretendard;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-transform: capitalize;
 `;
 
 const CertificationContainer = styled.div`
@@ -343,3 +380,5 @@ const InactiveButton = styled.div`
   border-radius: 8px;
   margin-top: 40px;
 `;
+
+const ButtonContainer = styled.div``;
