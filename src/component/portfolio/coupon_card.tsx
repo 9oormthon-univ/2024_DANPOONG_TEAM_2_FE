@@ -5,11 +5,17 @@ interface CouponCardProps {
   amount: string;
   title: string;
   validity: string;
+  usecoupon: Function;
 }
 
-const CouponCard: React.FC<CouponCardProps> = ({ amount, title, validity }) => {
+const CouponCard: React.FC<CouponCardProps> = ({
+  usecoupon,
+  amount,
+  title,
+  validity,
+}) => {
   return (
-    <Card>
+    <Card onClick={() => usecoupon()}>
       <IconContainer>
         <Icon src="/assets/coupon_icon.svg" alt="쿠폰 아이콘" />
       </IconContainer>
