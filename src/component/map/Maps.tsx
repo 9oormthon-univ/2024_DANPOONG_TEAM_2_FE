@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { propsType } from "./searchBar/SearchBar";
+// import { propsType } from "./searchBar/SearchBar";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import { useNavigate } from "react-router-dom";
 import markerIcon from "../../assets/map/markerIcon.svg";
@@ -8,7 +8,11 @@ import { storeSearch } from "../../apis/storeSearch";
 // head에 작성한 Kakao API 불러오기
 const { kakao } = window as any;
 
-const Maps = (props: propsType) => {
+export interface propsType {
+  searchKeyword: string;
+  selectedFilters: string[]; // selectedFilters 속성 추가
+}
+const Maps = ({ searchKeyword, selectedFilters }: propsType) => {
   const navigator = useNavigate();
   const [map, setMap] = useState<kakao.maps.Map | null>(null);
   const [markers, setMarkers] = useState<any[]>([]);
@@ -21,14 +25,13 @@ const Maps = (props: propsType) => {
   // 검색어가 바뀔 때마다 재렌더링되도록 useEffect 사용
   useEffect(() => {
     if (!map) return;
-
+    console.log("현재 선택된 필터: ", selectedFilters);
     // 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우 생성
-    const infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
 
     searchPlaces();
 
     function searchPlaces() {
-      const keyword = props.searchKeyword;
+      const keyword = searchKeyword;
 
       if (!keyword.trim()) {
         console.log("키워드를 입력해주세요!");
@@ -63,29 +66,32 @@ const Maps = (props: propsType) => {
       // 기존 마커 제거
       removeMarker();
 
-      const newMarkers = data.map((place, i) => {
-        const position = new kakao.maps.LatLng(place.y, place.x);
+      const newMarkers = data
+        .map((place, i) => {
+          // 필터링 조건: certifiedType[0]이 selectedFilters에 포함되어 있어야 마커를 표시
+          if (selectedFilters.includes(place.certifiedType[0])) {
+            const position = new kakao.maps.LatLng(place.y, place.x);
 
-        // 마커 생성
-        const marker = addMarker(position, i);
+            // 마커 생성
+            const marker = addMarker(position, i);
 
-        // 지도 범위를 확장
-        bounds.extend(position);
+            // 지도 범위를 확장
+            bounds.extend(position);
 
-        // 마커에 마우스 이벤트 추가
-        kakao.maps.event.addListener(marker, "mouseover", function () {
-          displayInfowindow(marker, place.name);
-        });
+            return marker;
+          }
 
-        kakao.maps.event.addListener(marker, "mouseout", function () {
-          infowindow.close();
-        });
-
-        return marker;
-      });
+          return null; // 필터링되지 않은 마커는 null로 처리
+        })
+        .filter((marker) => marker !== null); // null 값을 제거
 
       // 새 마커를 상태로 설정
-      setMarkers(newMarkers);
+      if (newMarkers.length === 0) {
+        alert("해당 가치를 추구하는 가게가 없습니다.");
+        return;
+      } else {
+        setMarkers(newMarkers);
+      }
 
       // 검색된 장소 위치를 기준으로 지도 범위를 재설정
       map?.setBounds(bounds);
@@ -114,15 +120,7 @@ const Maps = (props: propsType) => {
       markers.forEach((marker) => marker.setMap(null)); // 지도에서 제거
       setMarkers([]); // 상태 초기화
     }
-
-    // 검색 결과 목록 또는 마커를 클릭했을 때 호출되는 함수
-    // 인포윈도우에 장소명을 표시
-    function displayInfowindow(marker: any, title: string) {
-      const content = `<div style="padding:5px;z-index:1;">${title}</div>`;
-      infowindow.setContent(content);
-      infowindow.open(map, marker);
-    }
-  }, [props.searchKeyword, map]);
+  }, [searchKeyword, map, selectedFilters]);
 
   return (
     <Map

@@ -6,9 +6,12 @@ import FilterContainer from "../../component/map/filter/FilterContainer";
 import ProjectListBS from "../../component/bottomSheet/ProjectListBS";
 import { useEffect, useState } from "react";
 import useMeasure from "react-use-measure";
+import { useFilterStore } from "../../stores/useSelectedValues";
 
 export default function MapPage() {
   const [Keyword, setKeyword] = useState("");
+  const { selectedFilters } = useFilterStore();
+
   const [viewportRef, { height: viewportHeight }] = useMeasure();
   const dummyLocationKeyword = "경기도 용인시";
 
@@ -21,7 +24,7 @@ export default function MapPage() {
 
   return (
     <Page ref={viewportRef}>
-      <Maps searchKeyword={Keyword} />
+      <Maps searchKeyword={Keyword} selectedFilters={selectedFilters} />
       <Search>
         <SearchBar handleKeyword={setKeyword} />
         <FilterContainer />
